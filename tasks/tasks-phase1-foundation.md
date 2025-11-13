@@ -98,21 +98,21 @@
 |      |     |        | performance: trades(strategy_id,          |     |              |     |            |
 |      |     |        | stock_id, timestamps), signals,           |     |              |     |            |
 |      |     |        | events                                    |     |              |     |            |
-|  3   |     |   -    | **Set Up FastAPI Backend Application**    | 🟢  |      -       |  -  |     -      |
-|      |  1  |   -    | Create backend/app/main.py with basic     | 🟢  |      2       |  2  |     -      |
+|  3   |     |   🔄   | **Set Up FastAPI Backend Application**    | 🟢  |      -       |  -  |     -      |
+|      |  1  |   ✅   | Create backend/app/main.py with basic     | 🟢  |      2       |  2  |    10m     |
 |      |     |        | FastAPI app, CORS, health check           |     |              |     |            |
 |      |     |        | endpoint                                  |     |              |     |            |
-|      |  2  |   -    | Manually test health endpoint with curl   | 🟡  |     3.1      | 0.5 |     -      |
+|      |  2  |   ✅   | Manually test health endpoint with curl   | 🟡  |     3.1      | 0.5 |    5m      |
 |      |     |        | or browser: GET /health                   |     |              |     |            |
-|      |  3  |   -    | Create backend/app/api/ directory         | 🟢  |     3.1      |  1  |     -      |
+|      |  3  |   ✅   | Create backend/app/api/ directory         | 🟢  |     3.1      |  1  |    5m      |
 |      |     |        | structure with api/endpoints/,            |     |              |     |            |
 |      |     |        | api/deps.py                               |     |              |     |            |
-|      |  4  |   -    | Create backend/app/db/session.py with     | 🟢  |      2       |  3  |     -      |
+|      |  4  |   ✅   | Create backend/app/db/session.py with     | 🟢  |      2       |  3  |    10m     |
 |      |     |        | SessionLocal factory and                  |     |              |     |            |
 |      |     |        | get_db() dependency                       |     |              |     |            |
-|      |  5  |   -    | Create backend/app/db/base.py to          | 🟡  |     3.4      |  1  |     -      |
+|      |  5  |   ✅   | Create backend/app/db/base.py to          | 🟡  |     3.4      |  1  |    5m      |
 |      |     |        | import all models for Alembic             |     |              |     |            |
-|      |  6  |   -    | Add WebSocket support to main.py with     | 🟡  |     3.1      |  3  |     -      |
+|      |  6  |   ✅   | Add WebSocket support to main.py with     | 🟡  |     3.1      |  3  |    10m     |
 |      |     |        | test /ws endpoint                         |     |              |     |            |
 |      |  7  |   -    | Manually test WebSocket connection        | 🟡  |     3.6      |  1  |     -      |
 |      |     |        | using browser console or wscat            |     |              |     |            |
