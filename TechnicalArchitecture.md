@@ -427,6 +427,1002 @@ websockets             # WebSocket support
 pydantic               # Data validation
 ```
 
+## Technical Indicators System
+
+### Library Choice: pandas-ta
+
+**Decision**: Use `pandas-ta` as the primary indicator library
+
+**Rationale**:
+- Pure Python implementation (easier installation than TA-Lib which requires C dependencies)
+- Built on pandas DataFrames (seamless integration with our data pipeline)
+- 130+ indicators covering all common needs
+- Active development and good documentation
+- Easy to extend with custom indicators
+- Returns properly formatted DataFrames
+
+**Alternative considered**: TA-Lib is more established but difficult to install (requires compiled C libraries)
+
+**Installation**:
+```bash
+pip install pandas-ta
+```
+
+### Indicator Categories
+
+#### Trend Indicators
+- **Moving Averages**: SMA, EMA, WMA, HMA
+- **MACD**: MACD line, signal line, histogram
+- **ADX**: Average Directional Index (trend strength)
+- **Parabolic SAR**: Stop and Reverse
+- **Ichimoku Cloud**: Tenkan, Kijun, Senkou Span A/B
+
+#### Momentum Indicators
+- **RSI**: Relative Strength Index
+- **Stochastic**: %K, %D
+- **Williams %R**
+- **ROC**: Rate of Change
+- **CCI**: Commodity Channel Index
+- **MFI**: Money Flow Index
+
+#### Volatility Indicators
+- **Bollinger Bands**: Upper, middle, lower bands
+- **ATR**: Average True Range
+- **Keltner Channels**
+- **Standard Deviation**
+
+#### Volume Indicators
+- **OBV**: On-Balance Volume
+- **Volume SMA/EMA**
+- **VWAP**: Volume Weighted Average Price
+- **A/D Line**: Accumulation/Distribution
+
+### Backend Implementation
+
+#### Indicator Service Structure
+
+```python
+# backend/app/services/indicators/calculator.py
+
+import pandas as pd
+import pandas_ta as ta
+from typing import Dict, List, Optional
+from app.core.config import settings
+
+class IndicatorCalculator:
+    """
+    Calculates technical indicators using pandas-ta
+    """
+
+    # Default parameters for each indicator
+    DEFAULT_PARAMS = {
+        'sma': {'length': 20},
+        'ema': {'length': 20},
+        'rsi': {'length': 14},
+        'macd': {'fast': 12, 'slow': 26, 'signal': 9},
+        'bbands': {'length': 20, 'std': 2},
+        'atr': {'length': 14},
+        'stoch': {'k': 14, 'd': 3, 'smooth_k': 3},
+        'adx': {'length': 14},
+        'obv': {},
+        'vwap': {},
+    }
+
+    def calculate(self,
+                  df: pd.DataFrame,
+                  indicator: str,
+                  params: Optional[Dict] = None) -> pd.DataFrame:
+        """
+        Calculate a single indicator
+
+        Args:
+            df: DataFrame with OHLCV data (columns: open, high, low, close, volume)
+            indicator: Indicator name (e.g., 'sma', 'ema', 'rsi')
+            params: Custom parameters (uses defaults if not provided)
+
+        Returns:
+            Original DataFrame with indicator columns added
+        """
+        # Use default params if not provided
+        if params is None:
+            params = self.DEFAULT_PARAMS.get(indicator, {})
+
+        # Ensure proper column names (pandas-ta expects lowercase)
+        df = df.copy()
+        df.columns = df.columns.str.lower()
+
+        # Calculate indicator
+        indicator_method = getattr(df.ta, indicator, None)
+        if indicator_method is None:
+            raise ValueError(f"Indicator '{indicator}' not found")
+
+        # Apply indicator calculation
+        result = indicator_method(**params, append=True)
+
+        return df
+
+    def calculate_multiple(self,
+                          df: pd.DataFrame,
+                          indicators: List[Dict]) -> pd.DataFrame:
+        """
+        Calculate multiple indicators
+
+        Args:
+            df: DataFrame with OHLCV data
+            indicators: List of dicts with 'name' and 'params' keys
+                       Example: [
+                           {'name': 'sma', 'params': {'length': 20}},
+                           {'name': 'rsi', 'params': {'length': 14}}
+                       ]
+
+        Returns:
+            DataFrame with all indicators added
+        """
+        result_df = df.copy()
+
+        for indicator in indicators:
+            name = indicator.get('name')
+            params = indicator.get('params', {})
+            result_df = self.calculate(result_df, name, params)
+
+        return result_df
+
+    def calculate_for_strategy(self,
+                              df: pd.DataFrame,
+                              strategy_config: Dict) -> pd.DataFrame:
+        """
+        Calculate all indicators needed for a strategy
+
+        Args:
+            df: DataFrame with OHLCV data
+            strategy_config: Strategy configuration with 'indicators' list
+
+        Returns:
+            DataFrame with all strategy indicators calculated
+        """
+        indicators = strategy_config.get('indicators', [])
+        return self.calculate_multiple(df, indicators)
+
+    def get_indicator_value(self,
+                           df: pd.DataFrame,
+                           indicator: str,
+                           index: int = -1) -> float:
+        """
+        Get the current value of an indicator
+
+        Args:
+            df: DataFrame with calculated indicators
+            indicator: Column name of the indicator
+            index: Row index (-1 for most recent)
+
+        Returns:
+            Indicator value
+        """
+        if indicator not in df.columns:
+            raise ValueError(f"Indicator '{indicator}' not found in DataFrame")
+
+        return df.iloc[index][indicator]
+
+    @staticmethod
+    def get_available_indicators() -> Dict:
+        """
+        Returns list of available indicators with their parameters
+
+        Returns:
+            Dict mapping indicator names to parameter specifications
+        """
+        return {
+            'sma': {
+                'name': 'Simple Moving Average',
+                'category': 'trend',
+                'params': {
+                    'length': {
+                        'type': 'int',
+                        'default': 20,
+                        'min': 2,
+                        'max': 200,
+                        'description': 'Period length'
+                    }
+                }
+            },
+            'ema': {
+                'name': 'Exponential Moving Average',
+                'category': 'trend',
+                'params': {
+                    'length': {
+                        'type': 'int',
+                        'default': 20,
+                        'min': 2,
+                        'max': 200,
+                        'description': 'Period length'
+                    }
+                }
+            },
+            'rsi': {
+                'name': 'Relative Strength Index',
+                'category': 'momentum',
+                'params': {
+                    'length': {
+                        'type': 'int',
+                        'default': 14,
+                        'min': 2,
+                        'max': 50,
+                        'description': 'Period length'
+                    }
+                }
+            },
+            'macd': {
+                'name': 'MACD',
+                'category': 'trend',
+                'params': {
+                    'fast': {
+                        'type': 'int',
+                        'default': 12,
+                        'min': 2,
+                        'max': 50,
+                        'description': 'Fast EMA period'
+                    },
+                    'slow': {
+                        'type': 'int',
+                        'default': 26,
+                        'min': 2,
+                        'max': 100,
+                        'description': 'Slow EMA period'
+                    },
+                    'signal': {
+                        'type': 'int',
+                        'default': 9,
+                        'min': 2,
+                        'max': 50,
+                        'description': 'Signal line period'
+                    }
+                }
+            },
+            'bbands': {
+                'name': 'Bollinger Bands',
+                'category': 'volatility',
+                'params': {
+                    'length': {
+                        'type': 'int',
+                        'default': 20,
+                        'min': 2,
+                        'max': 100,
+                        'description': 'Period length'
+                    },
+                    'std': {
+                        'type': 'float',
+                        'default': 2.0,
+                        'min': 0.5,
+                        'max': 4.0,
+                        'step': 0.1,
+                        'description': 'Standard deviations'
+                    }
+                }
+            },
+            'atr': {
+                'name': 'Average True Range',
+                'category': 'volatility',
+                'params': {
+                    'length': {
+                        'type': 'int',
+                        'default': 14,
+                        'min': 2,
+                        'max': 50,
+                        'description': 'Period length'
+                    }
+                }
+            },
+            'stoch': {
+                'name': 'Stochastic Oscillator',
+                'category': 'momentum',
+                'params': {
+                    'k': {
+                        'type': 'int',
+                        'default': 14,
+                        'min': 2,
+                        'max': 50,
+                        'description': '%K period'
+                    },
+                    'd': {
+                        'type': 'int',
+                        'default': 3,
+                        'min': 2,
+                        'max': 20,
+                        'description': '%D period'
+                    },
+                    'smooth_k': {
+                        'type': 'int',
+                        'default': 3,
+                        'min': 1,
+                        'max': 20,
+                        'description': '%K smoothing'
+                    }
+                }
+            },
+            'adx': {
+                'name': 'Average Directional Index',
+                'category': 'trend',
+                'params': {
+                    'length': {
+                        'type': 'int',
+                        'default': 14,
+                        'min': 2,
+                        'max': 50,
+                        'description': 'Period length'
+                    }
+                }
+            },
+            'obv': {
+                'name': 'On-Balance Volume',
+                'category': 'volume',
+                'params': {}
+            },
+            'vwap': {
+                'name': 'Volume Weighted Average Price',
+                'category': 'volume',
+                'params': {}
+            }
+        }
+```
+
+#### API Endpoints
+
+```python
+# backend/app/api/endpoints/indicators.py
+
+from fastapi import APIRouter, Depends, HTTPException
+from typing import List, Dict, Optional
+from datetime import date
+from app.services.indicators.calculator import IndicatorCalculator
+from app.services.data.data_service import DataService
+from app.schemas.indicators import (
+    IndicatorRequest,
+    IndicatorResponse,
+    AvailableIndicatorsResponse
+)
+
+router = APIRouter()
+
+@router.get("/available")
+async def get_available_indicators() -> AvailableIndicatorsResponse:
+    """
+    Get list of all available indicators with their parameter specifications
+    """
+    indicators = IndicatorCalculator.get_available_indicators()
+    return {"indicators": indicators}
+
+@router.post("/calculate")
+async def calculate_indicators(
+    symbol: str,
+    start_date: date,
+    end_date: date,
+    indicators: List[Dict],
+    data_service: DataService = Depends()
+) -> IndicatorResponse:
+    """
+    Calculate indicators for a stock symbol
+
+    Request body:
+    {
+        "symbol": "AAPL",
+        "start_date": "2024-01-01",
+        "end_date": "2024-12-31",
+        "indicators": [
+            {"name": "sma", "params": {"length": 20}},
+            {"name": "rsi", "params": {"length": 14}}
+        ]
+    }
+    """
+    # Fetch historical data
+    df = await data_service.get_historical_data(symbol, start_date, end_date)
+
+    if df.empty:
+        raise HTTPException(status_code=404, detail=f"No data found for {symbol}")
+
+    # Calculate indicators
+    calculator = IndicatorCalculator()
+    result_df = calculator.calculate_multiple(df, indicators)
+
+    # Convert to JSON-friendly format
+    result = result_df.to_dict(orient='records')
+
+    return {
+        "symbol": symbol,
+        "data": result,
+        "indicators_calculated": [ind['name'] for ind in indicators]
+    }
+
+@router.get("/strategy/{strategy_id}/indicators")
+async def get_strategy_indicators(strategy_id: int) -> Dict:
+    """
+    Get indicator configuration for a specific strategy
+    """
+    # Fetch strategy from database
+    strategy = await strategy_service.get_strategy(strategy_id)
+
+    if not strategy:
+        raise HTTPException(status_code=404, detail="Strategy not found")
+
+    return {
+        "strategy_id": strategy_id,
+        "indicators": strategy.parameters.get('indicators', [])
+    }
+
+@router.put("/strategy/{strategy_id}/indicators")
+async def update_strategy_indicators(
+    strategy_id: int,
+    indicators: List[Dict]
+) -> Dict:
+    """
+    Update indicator configuration for a strategy
+
+    Request body:
+    {
+        "indicators": [
+            {"name": "sma", "params": {"length": 50}},
+            {"name": "rsi", "params": {"length": 14}}
+        ]
+    }
+    """
+    # Update strategy in database
+    updated = await strategy_service.update_indicators(strategy_id, indicators)
+
+    return {
+        "strategy_id": strategy_id,
+        "indicators": indicators,
+        "updated": updated
+    }
+```
+
+### Frontend UI Components
+
+#### Component Architecture
+
+```
+frontend/src/components/indicators/
+├── IndicatorPanel.tsx          # Main container for indicator controls
+├── IndicatorSelector.tsx       # Dropdown to select indicator type
+├── IndicatorConfig.tsx         # Parameter configuration form
+├── IndicatorList.tsx           # List of active indicators
+├── IndicatorPreview.tsx        # Visual preview of indicator on chart
+└── types.ts                    # TypeScript types
+```
+
+#### Main Indicator Panel Component
+
+```typescript
+// frontend/src/components/indicators/IndicatorPanel.tsx
+
+import React, { useState, useEffect } from 'react';
+import { IndicatorSelector } from './IndicatorSelector';
+import { IndicatorConfig } from './IndicatorConfig';
+import { IndicatorList } from './IndicatorList';
+import { getAvailableIndicators, updateStrategyIndicators } from '../../services/api';
+import { Indicator, IndicatorSpec } from './types';
+
+interface IndicatorPanelProps {
+  strategyId: number;
+  onIndicatorsChange?: (indicators: Indicator[]) => void;
+}
+
+export const IndicatorPanel: React.FC<IndicatorPanelProps> = ({
+  strategyId,
+  onIndicatorsChange
+}) => {
+  const [availableIndicators, setAvailableIndicators] = useState<Record<string, IndicatorSpec>>({});
+  const [activeIndicators, setActiveIndicators] = useState<Indicator[]>([]);
+  const [selectedIndicator, setSelectedIndicator] = useState<string | null>(null);
+  const [isConfiguring, setIsConfiguring] = useState(false);
+
+  // Fetch available indicators on mount
+  useEffect(() => {
+    const fetchIndicators = async () => {
+      const response = await getAvailableIndicators();
+      setAvailableIndicators(response.indicators);
+    };
+    fetchIndicators();
+  }, []);
+
+  // Fetch strategy's current indicators
+  useEffect(() => {
+    const fetchStrategyIndicators = async () => {
+      const response = await fetch(`/api/indicators/strategy/${strategyId}/indicators`);
+      const data = await response.json();
+      setActiveIndicators(data.indicators || []);
+    };
+    fetchStrategyIndicators();
+  }, [strategyId]);
+
+  const handleAddIndicator = (indicatorName: string) => {
+    setSelectedIndicator(indicatorName);
+    setIsConfiguring(true);
+  };
+
+  const handleSaveIndicator = async (indicator: Indicator) => {
+    const updated = [...activeIndicators, indicator];
+    setActiveIndicators(updated);
+    setIsConfiguring(false);
+    setSelectedIndicator(null);
+
+    // Save to backend
+    await updateStrategyIndicators(strategyId, updated);
+
+    // Notify parent component
+    onIndicatorsChange?.(updated);
+  };
+
+  const handleRemoveIndicator = async (index: number) => {
+    const updated = activeIndicators.filter((_, i) => i !== index);
+    setActiveIndicators(updated);
+
+    // Save to backend
+    await updateStrategyIndicators(strategyId, updated);
+
+    // Notify parent component
+    onIndicatorsChange?.(updated);
+  };
+
+  const handleUpdateIndicator = async (index: number, indicator: Indicator) => {
+    const updated = [...activeIndicators];
+    updated[index] = indicator;
+    setActiveIndicators(updated);
+
+    // Save to backend
+    await updateStrategyIndicators(strategyId, updated);
+
+    // Notify parent component
+    onIndicatorsChange?.(updated);
+  };
+
+  return (
+    <div className="indicator-panel">
+      <div className="panel-header">
+        <h3>Technical Indicators</h3>
+        <IndicatorSelector
+          availableIndicators={availableIndicators}
+          onSelect={handleAddIndicator}
+        />
+      </div>
+
+      <IndicatorList
+        indicators={activeIndicators}
+        indicatorSpecs={availableIndicators}
+        onRemove={handleRemoveIndicator}
+        onUpdate={handleUpdateIndicator}
+      />
+
+      {isConfiguring && selectedIndicator && (
+        <IndicatorConfig
+          indicatorName={selectedIndicator}
+          spec={availableIndicators[selectedIndicator]}
+          onSave={handleSaveIndicator}
+          onCancel={() => {
+            setIsConfiguring(false);
+            setSelectedIndicator(null);
+          }}
+        />
+      )}
+    </div>
+  );
+};
+```
+
+#### Indicator Configuration Component
+
+```typescript
+// frontend/src/components/indicators/IndicatorConfig.tsx
+
+import React, { useState } from 'react';
+import { IndicatorSpec, Indicator } from './types';
+
+interface IndicatorConfigProps {
+  indicatorName: string;
+  spec: IndicatorSpec;
+  initialParams?: Record<string, any>;
+  onSave: (indicator: Indicator) => void;
+  onCancel: () => void;
+}
+
+export const IndicatorConfig: React.FC<IndicatorConfigProps> = ({
+  indicatorName,
+  spec,
+  initialParams,
+  onSave,
+  onCancel
+}) => {
+  const [params, setParams] = useState<Record<string, any>>(
+    initialParams || getDefaultParams(spec)
+  );
+
+  const handleParamChange = (paramName: string, value: any) => {
+    setParams(prev => ({
+      ...prev,
+      [paramName]: value
+    }));
+  };
+
+  const handleSave = () => {
+    onSave({
+      name: indicatorName,
+      params: params
+    });
+  };
+
+  return (
+    <div className="indicator-config-modal">
+      <div className="modal-content">
+        <h4>Configure {spec.name}</h4>
+
+        <div className="params-form">
+          {Object.entries(spec.params).map(([paramName, paramSpec]) => (
+            <div key={paramName} className="param-field">
+              <label>{paramSpec.description}</label>
+
+              {paramSpec.type === 'int' && (
+                <input
+                  type="number"
+                  min={paramSpec.min}
+                  max={paramSpec.max}
+                  value={params[paramName] || paramSpec.default}
+                  onChange={(e) => handleParamChange(paramName, parseInt(e.target.value))}
+                />
+              )}
+
+              {paramSpec.type === 'float' && (
+                <input
+                  type="number"
+                  min={paramSpec.min}
+                  max={paramSpec.max}
+                  step={paramSpec.step || 0.1}
+                  value={params[paramName] || paramSpec.default}
+                  onChange={(e) => handleParamChange(paramName, parseFloat(e.target.value))}
+                />
+              )}
+
+              <div className="param-info">
+                <small>
+                  Range: {paramSpec.min} - {paramSpec.max}, Default: {paramSpec.default}
+                </small>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <div className="modal-actions">
+          <button onClick={onCancel} className="btn-secondary">
+            Cancel
+          </button>
+          <button onClick={handleSave} className="btn-primary">
+            Add Indicator
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+function getDefaultParams(spec: IndicatorSpec): Record<string, any> {
+  const defaults: Record<string, any> = {};
+  Object.entries(spec.params).forEach(([name, paramSpec]) => {
+    defaults[name] = paramSpec.default;
+  });
+  return defaults;
+}
+```
+
+#### Indicator List Component
+
+```typescript
+// frontend/src/components/indicators/IndicatorList.tsx
+
+import React, { useState } from 'react';
+import { Indicator, IndicatorSpec } from './types';
+import { IndicatorConfig } from './IndicatorConfig';
+
+interface IndicatorListProps {
+  indicators: Indicator[];
+  indicatorSpecs: Record<string, IndicatorSpec>;
+  onRemove: (index: number) => void;
+  onUpdate: (index: number, indicator: Indicator) => void;
+}
+
+export const IndicatorList: React.FC<IndicatorListProps> = ({
+  indicators,
+  indicatorSpecs,
+  onRemove,
+  onUpdate
+}) => {
+  const [editingIndex, setEditingIndex] = useState<number | null>(null);
+
+  const formatParams = (indicator: Indicator): string => {
+    return Object.entries(indicator.params)
+      .map(([key, value]) => `${key}=${value}`)
+      .join(', ');
+  };
+
+  const handleEdit = (index: number) => {
+    setEditingIndex(index);
+  };
+
+  const handleSaveEdit = (indicator: Indicator) => {
+    if (editingIndex !== null) {
+      onUpdate(editingIndex, indicator);
+      setEditingIndex(null);
+    }
+  };
+
+  if (indicators.length === 0) {
+    return (
+      <div className="indicator-list-empty">
+        <p>No indicators added yet. Click "Add Indicator" to get started.</p>
+      </div>
+    );
+  }
+
+  return (
+    <div className="indicator-list">
+      {indicators.map((indicator, index) => {
+        const spec = indicatorSpecs[indicator.name];
+
+        return (
+          <div key={index} className="indicator-item">
+            <div className="indicator-info">
+              <span className="indicator-name">{spec?.name || indicator.name}</span>
+              <span className="indicator-params">{formatParams(indicator)}</span>
+              <span className={`indicator-category ${spec?.category}`}>
+                {spec?.category}
+              </span>
+            </div>
+
+            <div className="indicator-actions">
+              <button
+                onClick={() => handleEdit(index)}
+                className="btn-icon"
+                title="Edit parameters"
+              >
+                ✏️
+              </button>
+              <button
+                onClick={() => onRemove(index)}
+                className="btn-icon"
+                title="Remove indicator"
+              >
+                🗑️
+              </button>
+            </div>
+          </div>
+        );
+      })}
+
+      {editingIndex !== null && (
+        <IndicatorConfig
+          indicatorName={indicators[editingIndex].name}
+          spec={indicatorSpecs[indicators[editingIndex].name]}
+          initialParams={indicators[editingIndex].params}
+          onSave={handleSaveEdit}
+          onCancel={() => setEditingIndex(null)}
+        />
+      )}
+    </div>
+  );
+};
+```
+
+#### TypeScript Types
+
+```typescript
+// frontend/src/components/indicators/types.ts
+
+export interface ParamSpec {
+  type: 'int' | 'float' | 'bool' | 'string';
+  default: any;
+  min?: number;
+  max?: number;
+  step?: number;
+  description: string;
+  options?: string[]; // For dropdown params
+}
+
+export interface IndicatorSpec {
+  name: string;
+  category: 'trend' | 'momentum' | 'volatility' | 'volume';
+  params: Record<string, ParamSpec>;
+}
+
+export interface Indicator {
+  name: string;
+  params: Record<string, any>;
+}
+
+export interface IndicatorValue {
+  timestamp: string;
+  value: number;
+  metadata?: Record<string, number>; // For multi-value indicators like MACD
+}
+```
+
+#### API Service
+
+```typescript
+// frontend/src/services/api.ts
+
+export const getAvailableIndicators = async () => {
+  const response = await fetch('/api/indicators/available');
+  return response.json();
+};
+
+export const calculateIndicators = async (
+  symbol: string,
+  startDate: string,
+  endDate: string,
+  indicators: Indicator[]
+) => {
+  const response = await fetch('/api/indicators/calculate', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      symbol,
+      start_date: startDate,
+      end_date: endDate,
+      indicators
+    })
+  });
+  return response.json();
+};
+
+export const updateStrategyIndicators = async (
+  strategyId: number,
+  indicators: Indicator[]
+) => {
+  const response = await fetch(`/api/indicators/strategy/${strategyId}/indicators`, {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ indicators })
+  });
+  return response.json();
+};
+```
+
+### UI/UX Design
+
+#### Indicator Panel Layout
+
+```
+┌─────────────────────────────────────────────────┐
+│ Technical Indicators              [+ Add ▼]     │
+├─────────────────────────────────────────────────┤
+│                                                  │
+│ ┌──────────────────────────────────────────┐   │
+│ │ SMA (20)                        [✏️] [🗑️] │   │
+│ │ Simple Moving Average                     │   │
+│ │ length=20                                 │   │
+│ │ Category: Trend                           │   │
+│ └──────────────────────────────────────────┘   │
+│                                                  │
+│ ┌──────────────────────────────────────────┐   │
+│ │ RSI (14)                        [✏️] [🗑️] │   │
+│ │ Relative Strength Index                   │   │
+│ │ length=14                                 │   │
+│ │ Category: Momentum                        │   │
+│ └──────────────────────────────────────────┘   │
+│                                                  │
+│ ┌──────────────────────────────────────────┐   │
+│ │ MACD (12, 26, 9)                [✏️] [🗑️] │   │
+│ │ Moving Average Convergence Divergence     │   │
+│ │ fast=12, slow=26, signal=9                │   │
+│ │ Category: Trend                           │   │
+│ └──────────────────────────────────────────┘   │
+│                                                  │
+└─────────────────────────────────────────────────┘
+```
+
+#### Configuration Modal
+
+```
+┌───────────────────────────────────┐
+│ Configure Simple Moving Average   │
+├───────────────────────────────────┤
+│                                    │
+│ Period Length                      │
+│ ┌──────────────────────────┐      │
+│ │ [20]          ░░░▓░░░░░  │      │
+│ └──────────────────────────┘      │
+│ Range: 2-200  Default: 20         │
+│                                    │
+│ ┌──────────────────────────┐      │
+│ │ Preview on Chart          │      │
+│ │  [Mini chart preview]     │      │
+│ └──────────────────────────┘      │
+│                                    │
+│        [Cancel]  [Add Indicator]  │
+└───────────────────────────────────┘
+```
+
+### Data Flow
+
+```
+┌──────────────┐
+│   User UI    │ (1) User adds/edits indicator
+└──────┬───────┘
+       │
+       ↓
+┌──────────────┐
+│   Frontend   │ (2) Send indicator config to backend
+│   (React)    │
+└──────┬───────┘
+       │
+       ↓ HTTP PUT /api/indicators/strategy/{id}/indicators
+┌──────────────┐
+│   Backend    │ (3) Save to database
+│   (FastAPI)  │
+└──────┬───────┘
+       │
+       ↓
+┌──────────────┐
+│  PostgreSQL  │ (4) Store in strategies.parameters JSONB
+└──────┬───────┘
+       │
+       ↓ (5) When strategy runs or chart loads
+┌──────────────┐
+│  Indicator   │ (6) Calculate indicators using pandas-ta
+│  Calculator  │
+└──────┬───────┘
+       │
+       ↓
+┌──────────────┐
+│  WebSocket   │ (7) Push calculated values to frontend
+└──────┬───────┘
+       │
+       ↓
+┌──────────────┐
+│   Chart UI   │ (8) Display indicators on chart
+└──────────────┘
+```
+
+### Integration with Chart Display
+
+When indicators are updated, the chart component should:
+1. Receive the new indicator configuration
+2. Fetch calculated indicator data from backend
+3. Render indicator overlays on the main chart (e.g., SMA lines)
+4. Render indicator sub-charts (e.g., MACD, RSI below main chart)
+
+```typescript
+// Example chart integration
+const ChartContainer = () => {
+  const [indicators, setIndicators] = useState([]);
+  const [indicatorData, setIndicatorData] = useState([]);
+
+  const handleIndicatorsChange = async (newIndicators) => {
+    setIndicators(newIndicators);
+
+    // Fetch calculated indicator data
+    const data = await calculateIndicators(
+      symbol,
+      startDate,
+      endDate,
+      newIndicators
+    );
+
+    setIndicatorData(data);
+  };
+
+  return (
+    <>
+      <IndicatorPanel
+        strategyId={strategyId}
+        onIndicatorsChange={handleIndicatorsChange}
+      />
+
+      <CandlestickChart
+        data={priceData}
+        indicators={indicatorData}
+      />
+    </>
+  );
+};
+```
+
 ## Backtesting System
 
 ### Overview
@@ -967,14 +1963,18 @@ async def run_backtest(
 
 ## Open Technical Questions
 
-1. **Data Granularity**: What timeframe resolution? (1min, 5min, 1hour?)
-2. **Historical Data**: How much history to store? (1 year, 5 years?)
-3. **Backtesting**: Need separate backtesting engine?
-4. **Monitoring**: Error tracking (Sentry?), logging strategy?
-5. **Notifications**: Email, SMS, Slack for trade alerts?
-6. **Authentication**: User login needed or single-user app?
-7. **Data Retention**: Archive old data? For how long?
-8. **High Availability**: Failover strategy for autonomous trading?
+1. **Data Granularity**: What timeframe resolution beyond daily? (1min, 5min, 1hour for future phases?)
+2. **Historical Data**: How much history to store? (1 year, 5 years?) Balance between backtest quality and storage costs
+3. **Indicator Performance**: Maximum number of concurrent indicator calculations? Caching strategy for calculated indicators?
+4. **Real-time Updates**: WebSocket vs polling for price updates? Update frequency for indicator recalculation?
+5. **Monitoring**: Error tracking system (Sentry, Rollbar, CloudWatch)? Logging strategy and retention?
+6. **Notifications**: Email, SMS, Slack, or push notifications for trade alerts? What events trigger notifications?
+7. **Authentication**: User login needed or single-user app? If multi-user, role-based access control?
+8. **Data Retention**: Archive old data? For how long? Separate cold storage for historical data?
+9. **High Availability**: Failover strategy for autonomous trading? Active-passive redundancy?
+10. **Charting Library Integration**: How to efficiently render indicators on Lightweight Charts? Performance with multiple overlays?
+11. **API Rate Limits**: How to handle Twelve Data API rate limits? Caching strategy? Fallback data source?
+12. **Database Optimization**: TimescaleDB extension for time-series? Partitioning strategy for large datasets?
 
 ## Security Considerations
 
