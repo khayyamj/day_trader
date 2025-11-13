@@ -13,6 +13,16 @@
 
 ## Relevant Files
 
+### Created:
+- `backend/` - Root backend directory ✅
+- `backend/requirements.txt` - Python dependencies ✅
+- `backend/venv/` - Python virtual environment ✅
+- `.gitignore` - Git ignore patterns ✅
+- `.env.example` - Example environment variables template ✅
+- `.env` - Environment variables (gitignored) ✅
+- `docker-compose.yml` - Docker services (PostgreSQL, Redis) ✅
+- `frontend/` - React application root ✅
+
 ### To Be Created:
 - `backend/` - Root backend directory
 - `backend/app/` - Main application code
@@ -47,27 +57,27 @@
 
 | Task |  #  | Status | Description                               |     | Dependencies | Pts | Time Spent |
 | :--: | :-: | :----: | ----------------------------------------- | :-: | :----------: | :-: | :--------: |
-|  1   |     |   -    | **Set Up Project Structure and            | 🟢  |      -       |  -  |     -      |
+|  1   |     |   🔄   | **Set Up Project Structure and            | 🟢  |      -       |  -  |     -      |
 |      |     |        | Development Environment**                 |     |              |     |            |
-|      |  1  |   -    | Create root project directory with        | 🟢  |      -       |  1  |     -      |
+|      |  1  |   ✅   | Create root project directory with        | 🟢  |      -       |  1  |    5m      |
 |      |     |        | backend/ and frontend/ folders            |     |              |     |            |
-|      |  2  |   -    | Initialize Git repository and create      | 🟢  |     1.1      | 0.5 |     -      |
+|      |  2  |   ✅   | Initialize Git repository and create      | 🟢  |     1.1      | 0.5 |    5m      |
 |      |     |        | .gitignore with Python, Node, env         |     |              |     |            |
 |      |     |        | patterns                                  |     |              |     |            |
-|      |  3  |   -    | Create backend/requirements.txt with      | 🟢  |     1.1      |  2  |     -      |
+|      |  3  |   ✅   | Create backend/requirements.txt with      | 🟢  |     1.1      |  2  |    10m     |
 |      |     |        | FastAPI, SQLAlchemy, psycopg2,            |     |              |     |            |
 |      |     |        | alembic, pandas-ta, ib_insync             |     |              |     |            |
-|      |  4  |   -    | Set up Python virtual environment and     | 🟡  |     1.3      |  1  |     -      |
+|      |  4  |   ✅   | Set up Python virtual environment and     | 🟡  |     1.3      |  1  |    20m     |
 |      |     |        | install dependencies                      |     |              |     |            |
-|      |  5  |   -    | Create docker-compose.yml for             | 🟢  |     1.1      |  2  |     -      |
+|      |  5  |   ✅   | Create docker-compose.yml for             | 🟢  |     1.1      |  2  |    10m     |
 |      |     |        | PostgreSQL (port 5432) and Redis          |     |              |     |            |
 |      |     |        | (port 6379)                               |     |              |     |            |
-|      |  6  |   -    | Start Docker services and manually        | 🟡  |     1.5      |  1  |     -      |
+|      |  6  |   ❌   | Start Docker services and manually        | 🔴  |     1.5      |  1  |    5m      |
 |      |     |        | verify PostgreSQL connection with         |     |              |     |            |
-|      |     |        | psql                                      |     |              |     |            |
-|      |  7  |   -    | Create .env.example template with all     | 🟢  |     1.1      |  1  |     -      |
+|      |     |        | psql (BLOCKED: Docker not installed)      |     |              |     |            |
+|      |  7  |   ✅   | Create .env.example template with all     | 🟢  |     1.1      |  1  |    5m      |
 |      |     |        | required variables (DB_URL, API keys)     |     |              |     |            |
-|      |  8  |   -    | Copy .env.example to .env and add to      | 🟡  |     1.7      | 0.5 |     -      |
+|      |  8  |   ✅   | Copy .env.example to .env and add to      | 🟡  |     1.7      | 0.5 |    5m      |
 |      |     |        | .gitignore                                |     |              |     |            |
 |  2   |     |   -    | **Initialize Database and Schema**        | 🟢  |      -       |  -  |     -      |
 |      |  1  |   -    | Create backend/alembic.ini                | 🟢  |      1       |  2  |     -      |
