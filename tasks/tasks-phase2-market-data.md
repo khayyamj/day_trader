@@ -46,21 +46,21 @@
 
 | Task |  #  | Status | Description                               |     | Dependencies | Pts | Time Spent |
 | :--: | :-: | :----: | ----------------------------------------- | :-: | :----------: | :-: | :--------: |
-|  1   |     |   -    | **Implement Twelve Data API Client**      | 🟢  |      -       |  -  |     -      |
-|      |  1  |   -    | Create                                    | 🟢  |      -       |  3  |     -      |
+|  1   |     |   🔄   | **Implement Twelve Data API Client**      | 🟢  |      -       |  -  |     -      |
+|      |  1  |   ✅   | Create                                    | 🟢  |      -       |  3  |    15m     |
 |      |     |        | services/data/twelve_data_client.py       |     |              |     |            |
 |      |     |        | with base HTTP client using httpx         |     |              |     |            |
-|      |  2  |   -    | Implement get_time_series() method for    | 🟡  |     1.1      |  3  |     -      |
+|      |  2  |   ✅   | Implement get_time_series() method for    | 🟡  |     1.1      |  3  |    10m     |
 |      |     |        | historical OHLCV with params:             |     |              |     |            |
 |      |     |        | symbol, interval, start/end dates         |     |              |     |            |
-|      |  3  |   -    | Implement get_quote() method for          | 🟡  |     1.1      |  2  |     -      |
+|      |  3  |   ✅   | Implement get_quote() method for          | 🟡  |     1.1      |  2  |    5m      |
 |      |     |        | real-time price with symbol param         |     |              |     |            |
-|      |  4  |   -    | Add error handling for API errors         | 🟡  |     1.2-1.3  |  3  |     -      |
+|      |  4  |   ✅   | Add error handling for API errors         | 🟡  |     1.2-1.3  |  3  |    10m     |
 |      |     |        | (rate limits, invalid symbols,            |     |              |     |            |
 |      |     |        | network issues)                           |     |              |     |            |
-|      |  5  |   -    | Manually test API client by calling       | 🟡  |     1.4      |  1  |     -      |
+|      |  5  |   ✅   | Manually test API client by calling       | 🟡  |     1.4      |  1  |    5m      |
 |      |     |        | methods in Python shell with AAPL         |     |              |     |            |
-|      |  6  |   -    | Implement response validation using       | 🟡  |     1.2-1.3  |  2  |     -      |
+|      |  6  |   ✅   | Implement response validation using       | 🟡  |     1.2-1.3  |  2  |    10m     |
 |      |     |        | Pydantic schemas                          |     |              |     |            |
 |  2   |     |   -    | **Create Historical Data Fetching         | 🟢  |      -       |  -  |     -      |
 |      |     |        | Service**                                 |     |              |     |            |
