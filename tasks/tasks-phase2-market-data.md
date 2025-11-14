@@ -46,7 +46,7 @@
 
 | Task |  #  | Status | Description                               |     | Dependencies | Pts | Time Spent |
 | :--: | :-: | :----: | ----------------------------------------- | :-: | :----------: | :-: | :--------: |
-|  1   |     |   🔄   | **Implement Twelve Data API Client**      | 🟢  |      -       |  -  |     -      |
+|  1   |     |   ✅   | **Implement Twelve Data API Client**      | 🟢  |      -       |  -  |    55m     |
 |      |  1  |   ✅   | Create                                    | 🟢  |      -       |  3  |    15m     |
 |      |     |        | services/data/twelve_data_client.py       |     |              |     |            |
 |      |     |        | with base HTTP client using httpx         |     |              |     |            |
@@ -62,7 +62,7 @@
 |      |     |        | methods in Python shell with AAPL         |     |              |     |            |
 |      |  6  |   ✅   | Implement response validation using       | 🟡  |     1.2-1.3  |  2  |    10m     |
 |      |     |        | Pydantic schemas                          |     |              |     |            |
-|  2   |     |   🔄   | **Create Historical Data Fetching         | 🟢  |      -       |  -  |     -      |
+|  2   |     |   ✅   | **Create Historical Data Fetching         | 🟢  |      -       |  -  |    1h 25m  |
 |      |     |        | Service**                                 |     |              |     |            |
 |      |  1  |   ✅   | Create core/rate_limiter.py with token    | 🟢  |      -       |  3  |    20m     |
 |      |     |        | bucket algorithm (8 calls/min, 800/day)   |     |              |     |            |
@@ -84,7 +84,7 @@
 |      |  8  |   ⏭️   | Manually test by fetching AAPL 1 year     | 🟡  |     2.7      |  2  |     -      |
 |      |     |        | data via Postman (needs API key + stock)  |     |              |     |            |
 |      |     |        |                                           |     |              |     |            |
-|  3   |     |   🔄   | **Build Stock Watchlist Management**      | 🟢  |      -       |  -  |     -      |
+|  3   |     |   ✅   | **Build Stock Watchlist Management**      | 🟢  |      -       |  -  |    1h      |
 |      |  1  |   ✅   | Create schemas/stock.py with              | 🟢  |      -       |  2  |    5m      |
 |      |     |        | StockCreate, StockResponse schemas        |     |              |     |            |
 |      |  2  |   ✅   | Create api/endpoints/stocks.py with       | 🟡  |     3.1      |  3  |    15m     |
@@ -104,7 +104,7 @@
 |      |  8  |   ✅   | Trigger historical data fetch when        | 🟡  |     2, 3.3   |  3  |    10m     |
 |      |     |        | stock added to watchlist (background      |     |              |     |            |
 |      |     |        | task)                                     |     |              |     |            |
-|  4   |     |   🔄   | **Implement Real-time Price Streaming**   | 🟢  |      -       |  -  |     -      |
+|  4   |     |   ✅   | **Implement Real-time Price Streaming**   | 🟢  |      -       |  -  |    1h 10m  |
 |      |  1  |   ✅   | Create                                    | 🟢  |      1       |  3  |    15m     |
 |      |     |        | services/data/realtime_service.py         |     |              |     |            |
 |      |     |        | with get_realtime_prices() for            |     |              |     |            |
@@ -125,7 +125,7 @@
 |      |  7  |   ⏭️   | Manually test WebSocket by connecting     | 🟡  |     4.6      |  2  |     -      |
 |      |     |        | from browser (needs API key)              |     |              |     |            |
 |      |     |        |                                           |     |              |     |            |
-|  5   |     |   🔄   | **Create Data Update Scheduler**          | 🟢  |      -       |  -  |     -      |
+|  5   |     |   ✅   | **Create Data Update Scheduler**          | 🟢  |      -       |  -  |    1h 10m  |
 |      |  1  |   ✅   | Choose scheduler: APScheduler             | 🟢  |      -       |  1  |    2m      |
 |      |     |        | (simpler) or Celery Beat (if using        |     |              |     |            |
 |      |     |        | Celery)                                   |     |              |     |            |
@@ -148,8 +148,8 @@
 |      |  8  |   ⏭️   | Manually test by temporarily setting      | 🟡  |     5.7      |  2  |     -      |
 |      |     |        | job to run every 1 minute (can use        |     |              |     |            |
 |      |     |        | POST /api/scheduler/trigger endpoint)     |     |              |     |            |
-|  6   |     |   🔄   | **Add Market Hours Detection**            | 🟢  |      -       |  -  |     -      |
-|      |  1  |   🔄   | Create services/data/market_hours.py      | 🟢  |      -       |  3  |     -      |
+|  6   |     |   ✅   | **Add Market Hours Detection**            | 🟢  |      -       |  -  |    1h      |
+|      |  1  |   ✅   | Create services/data/market_hours.py      | 🟢  |      -       |  3  |    20m     |
 |      |     |        | with is_market_open() function            |     |              |     |            |
 |      |     |        | (9:30 AM - 4:00 PM ET weekdays)           |     |              |     |            |
 |      |  2  |   ✅   | Install pytz library and add to           | 🟡  |     6.1      |  1  |    2m      |
@@ -168,7 +168,7 @@
 |      |  7  |   ✅   | Add market hours guard to realtime        | 🟡  |     4, 6.1   |  2  |    5m      |
 |      |     |        | service (can be added when enabled)       |     |              |     |            |
 |      |     |        |                                           |     |              |     |            |
-|  7   |     |   🔄   | **Write Integration Tests for Market      | 🟢  |      -       |  -  |     -      |
+|  7   |     |   ✅   | **Write Integration Tests for Market      | 🟢  |      -       |  -  |    1h 5m   |
 |      |     |        | Data**                                    |     |              |     |            |
 |      |  1  |   ⏭️   | Create tests/test_twelve_data_client.py   | 🟢  |      6       |  3  |     -      |
 |      |     |        | (deferred - needs HTTP mocking)           |     |              |     |            |
@@ -184,19 +184,19 @@
 |      |     |        | (deferred - complex async testing)        |     |              |     |            |
 |      |  7  |   ✅   | Run pytest and ensure all Phase 2         | 🟡  |     7.2-7.6  |  1  |    5m      |
 |      |     |        | tests pass (32/32 passed, 60% coverage)   |     |              |     |            |
-|  8   |     |   -    | **Document Market Data Integration**      | 🟢  |      -       |  -  |     -      |
-|      |  1  |   -    | Update README with Phase 2 setup:         | 🟢  |      7       |  2  |     -      |
+|  8   |     |   ✅   | **Document Market Data Integration**      | 🟢  |      -       |  -  |    1h 10m  |
+|      |  1  |   ✅   | Update README with Phase 2 setup:         | 🟢  |      7       |  2  |    10m     |
 |      |     |        | Twelve Data API key, testing data         |     |              |     |            |
 |      |     |        | fetch                                     |     |              |     |            |
-|      |  2  |   -    | Create docs/MARKET_DATA.md documenting    | 🟡  |     8.1      |  3  |     -      |
+|      |  2  |   ✅   | Create docs/MARKET_DATA.md documenting    | 🟡  |     8.1      |  3  |    30m     |
 |      |     |        | API integration, rate limits,             |     |              |     |            |
 |      |     |        | caching strategy                          |     |              |     |            |
-|      |  3  |   -    | Document scheduler jobs and timing in     | 🟡  |     8.2      |  2  |     -      |
+|      |  3  |   ✅   | Document scheduler jobs and timing in     | 🟡  |     8.2      |  2  |    10m     |
 |      |     |        | MARKET_DATA.md                            |     |              |     |            |
-|      |  4  |   -    | Add API endpoint documentation with       | 🟡  |     8.2      |  2  |     -      |
+|      |  4  |   ✅   | Add API endpoint documentation with       | 🟡  |     8.2      |  2  |    10m     |
 |      |     |        | examples for watchlist and data           |     |              |     |            |
 |      |     |        | fetching                                  |     |              |     |            |
-|      |  5  |   -    | Document troubleshooting: rate limit      | 🟡  |     8.4      |  2  |     -      |
+|      |  5  |   ✅   | Document troubleshooting: rate limit      | 🟡  |     8.4      |  2  |    10m     |
 |      |     |        | errors, missing data, API failures        |     |              |     |            |
 
 ---

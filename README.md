@@ -290,9 +290,9 @@ source venv/bin/activate
 python -c "from app.core.config import settings; print('OK')"
 ```
 
-## Phase 1 Status
+## Project Status
 
-**Completed:**
+**Phase 1: Foundation ✅ COMPLETE**
 - ✅ Project structure and development environment
 - ✅ Docker services (PostgreSQL, Redis)
 - ✅ Database schema and migrations
@@ -302,11 +302,36 @@ python -c "from app.core.config import settings; print('OK')"
 - ✅ Comprehensive logging infrastructure
 - ✅ Unit tests with 87% coverage
 
+**Phase 2: Market Data Integration ✅ COMPLETE**
+- ✅ Twelve Data API client integration
+- ✅ Historical data fetching (1 year daily bars)
+- ✅ Stock watchlist management (max 10 stocks)
+- ✅ Rate limiting (8/min, 800/day)
+- ✅ Real-time price streaming via WebSocket
+- ✅ Daily data update scheduler (4:05 PM ET)
+- ✅ Market hours detection (regular/pre-market/after-hours)
+- ✅ Integration tests (32 passing)
+
 **Next Phase:**
-- Phase 2: Market data fetching and technical indicators
-- Phase 3: Signal generation and strategy logic
+- Phase 3: Technical indicators and signal generation
 - Phase 4: Trading dashboard UI
 - Phase 5: Broker integration and live trading
+
+## Testing with Swagger UI
+
+**Best way to explore the API:**
+```bash
+cd backend
+source venv/bin/activate
+uvicorn app.main:app --reload --port 8000
+# Visit: http://localhost:8000/docs
+```
+
+**Interactive features:**
+- Try all endpoints directly in browser
+- See request/response examples
+- Test with real data
+- No Postman needed!
 
 ## License
 
