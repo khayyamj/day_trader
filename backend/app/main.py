@@ -9,21 +9,43 @@ from datetime import datetime
 from app.core.config import settings
 from app.core.logging import logger, get_logger
 from app.api.endpoints import market_data, stocks
+from app.services.data.realtime_service import connection_manager
+from app.db.session import SessionLocal
 
 # Module logger
 app_logger = get_logger("main")
+
+# Global background task
+price_streaming_task = None
 
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     """Application lifespan manager."""
+    global price_streaming_task
+
     # Startup
     logger.info("Starting up Trading Application...")
     logger.info(f"Environment: {settings.ENVIRONMENT}")
     logger.info(f"Debug mode: {settings.DEBUG}")
+
+    # Start price streaming in background
+    # Commented out for now - will be enabled when API key is configured
+    # from app.services.data.realtime_service import RealtimeService
+    # db = SessionLocal()
+    # service = RealtimeService(db)
+    # price_streaming_task = asyncio.create_task(service.start_price_streaming())
+    # logger.info("Price streaming task started")
+
     yield
+
     # Shutdown
     logger.info("Shutting down Trading Application...")
+
+    # Stop price streaming
+    # if price_streaming_task:
+    #     price_streaming_task.cancel()
+    #     logger.info("Price streaming task stopped")
 
 
 app = FastAPI(
@@ -118,26 +140,70 @@ async def root():
     }
 
 
-@app.websocket("/ws")
-async def websocket_endpoint(websocket: WebSocket):
+@app.websocket("/ws/prices")
+async def websocket_prices(websocket: WebSocket):
     """
-    WebSocket endpoint for real-time updates.
+    WebSocket endpoint for real-time price updates.
 
-    Test with: wscat -c ws://localhost:8000/ws
-    Or from browser console:
-        const ws = new WebSocket('ws://localhost:8000/ws');
-        ws.onmessage = (event) => console.log(event.data);
+    Clients connect here to receive price updates every 30 seconds.
+
+    Test with browser console:
+        const ws = new WebSocket('ws://localhost:8000/ws/prices');
+        ws.onmessage = (event) => console.log(JSON.parse(event.data));
+
+    Message format:
+    {
+        "type": "price_update",
+        "timestamp": "2025-01-15T12:00:00",
+        "prices": {
+            "AAPL": {"symbol": "AAPL", "close": "150.25", ...},
+            "MSFT": {"symbol": "MSFT", "close": "380.50", ...}
+        }
+    }
     """
-    await websocket.accept()
+    await connection_manager.connect(websocket)
+
     try:
         # Send welcome message
-        await websocket.send_json({
+        await connection_manager.send_personal(websocket, {
             "type": "connection",
-            "message": "Connected to Trading API WebSocket",
+            "message": "Connected to price streaming",
             "timestamp": datetime.utcnow().isoformat()
         })
 
-        # Echo loop for testing
+        # Keep connection alive
+        while True:
+            # Wait for client messages (ping/pong to keep alive)
+            try:
+                data = await websocket.receive_text()
+                # Echo back for testing
+                if data == "ping":
+                    await websocket.send_text("pong")
+            except WebSocketDisconnect:
+                break
+
+    except Exception as e:
+        logger.error(f"WebSocket error: {e}")
+
+    finally:
+        connection_manager.disconnect(websocket)
+
+
+@app.websocket("/ws")
+async def websocket_legacy(websocket: WebSocket):
+    """
+    Legacy WebSocket endpoint for testing.
+
+    Use /ws/prices for price updates.
+    """
+    await websocket.accept()
+    try:
+        await websocket.send_json({
+            "type": "info",
+            "message": "This is a test endpoint. Use /ws/prices for real-time price updates.",
+            "timestamp": datetime.utcnow().isoformat()
+        })
+
         while True:
             data = await websocket.receive_text()
             await websocket.send_json({
@@ -146,4 +212,4 @@ async def websocket_endpoint(websocket: WebSocket):
                 "timestamp": datetime.utcnow().isoformat()
             })
     except WebSocketDisconnect:
-        print("WebSocket disconnected")
+        logger.info("Legacy WebSocket disconnected")

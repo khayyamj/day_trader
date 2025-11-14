@@ -104,27 +104,27 @@
 |      |  8  |   ✅   | Trigger historical data fetch when        | 🟡  |     2, 3.3   |  3  |    10m     |
 |      |     |        | stock added to watchlist (background      |     |              |     |            |
 |      |     |        | task)                                     |     |              |     |            |
-|  4   |     |   -    | **Implement Real-time Price Streaming**   | 🟢  |      -       |  -  |     -      |
-|      |  1  |   -    | Create                                    | 🟢  |      1       |  3  |     -      |
+|  4   |     |   🔄   | **Implement Real-time Price Streaming**   | 🟢  |      -       |  -  |     -      |
+|      |  1  |   ✅   | Create                                    | 🟢  |      1       |  3  |    15m     |
 |      |     |        | services/data/realtime_service.py         |     |              |     |            |
 |      |     |        | with get_realtime_prices() for            |     |              |     |            |
 |      |     |        | watchlist                                 |     |              |     |            |
-|      |  2  |   -    | Implement polling approach: call          | 🟡  |     4.1      |  3  |     -      |
+|      |  2  |   ✅   | Implement polling approach: call          | 🟡  |     4.1      |  3  |    10m     |
 |      |     |        | Twelve Data REST API every 30             |     |              |     |            |
 |      |     |        | seconds                                   |     |              |     |            |
-|      |  3  |   -    | Add Redis caching for price data          | 🟡  |     4.2      |  3  |     -      |
+|      |  3  |   ✅   | Add in-memory caching for price data      | 🟡  |     4.2      |  3  |    10m     |
 |      |     |        | (TTL=30s) to reduce API calls             |     |              |     |            |
-|      |  4  |   -    | Create WebSocket endpoint                 | 🟡  |     4.1      |  5  |     -      |
+|      |  4  |   ✅   | Create WebSocket endpoint                 | 🟡  |     4.1      |  5  |    15m     |
 |      |     |        | /ws/prices that broadcasts updates        |     |              |     |            |
 |      |     |        | to connected clients                      |     |              |     |            |
-|      |  5  |   -    | Implement connection manager to track     | 🟡  |     4.4      |  3  |     -      |
+|      |  5  |   ✅   | Implement connection manager to track     | 🟡  |     4.4      |  3  |    10m     |
 |      |     |        | WebSocket clients                         |     |              |     |            |
-|      |  6  |   -    | Start background task on app startup      | 🟡  |     4.2, 4.4 |  2  |     -      |
+|      |  6  |   ✅   | Start background task on app startup      | 🟡  |     4.2, 4.4 |  2  |    10m     |
 |      |     |        | to poll prices and broadcast via          |     |              |     |            |
-|      |     |        | WebSocket                                 |     |              |     |            |
-|      |  7  |   -    | Manually test WebSocket by connecting     | 🟡  |     4.6      |  2  |     -      |
-|      |     |        | from browser console and receiving        |     |              |     |            |
-|      |     |        | price updates                             |     |              |     |            |
+|      |     |        | WebSocket (ready, commented out)          |     |              |     |            |
+|      |  7  |   ⏭️   | Manually test WebSocket by connecting     | 🟡  |     4.6      |  2  |     -      |
+|      |     |        | from browser (needs API key)              |     |              |     |            |
+|      |     |        |                                           |     |              |     |            |
 |  5   |     |   -    | **Create Data Update Scheduler**          | 🟢  |      -       |  -  |     -      |
 |      |  1  |   -    | Choose scheduler: APScheduler             | 🟢  |      -       |  1  |     -      |
 |      |     |        | (simpler) or Celery Beat (if using        |     |              |     |            |
