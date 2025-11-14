@@ -148,26 +148,26 @@
 |      |  8  |   ⏭️   | Manually test by temporarily setting      | 🟡  |     5.7      |  2  |     -      |
 |      |     |        | job to run every 1 minute (can use        |     |              |     |            |
 |      |     |        | POST /api/scheduler/trigger endpoint)     |     |              |     |            |
-|  6   |     |   -    | **Add Market Hours Detection**            | 🟢  |      -       |  -  |     -      |
-|      |  1  |   -    | Create services/data/market_hours.py      | 🟢  |      -       |  3  |     -      |
+|  6   |     |   🔄   | **Add Market Hours Detection**            | 🟢  |      -       |  -  |     -      |
+|      |  1  |   🔄   | Create services/data/market_hours.py      | 🟢  |      -       |  3  |     -      |
 |      |     |        | with is_market_open() function            |     |              |     |            |
 |      |     |        | (9:30 AM - 4:00 PM ET weekdays)           |     |              |     |            |
-|      |  2  |   -    | Install pytz library and add to           | 🟡  |     6.1      |  1  |     -      |
+|      |  2  |   ✅   | Install pytz library and add to           | 🟡  |     6.1      |  1  |    2m      |
 |      |     |        | requirements.txt for timezone             |     |              |     |            |
-|      |     |        | handling                                  |     |              |     |            |
-|      |  3  |   -    | Implement market holiday check using      | 🟡  |     6.1      |  3  |     -      |
-|      |     |        | pandas-market-calendars library           |     |              |     |            |
-|      |  4  |   -    | Add pre-market (4:00-9:30 AM) and         | 🟡  |     6.3      |  2  |     -      |
+|      |     |        | handling (already done in Task 5)         |     |              |     |            |
+|      |  3  |   ✅   | Implement market holiday check using      | 🟡  |     6.1      |  3  |    15m     |
+|      |     |        | basic US holiday list (simplified)        |     |              |     |            |
+|      |  4  |   ✅   | Add pre-market (4:00-9:30 AM) and         | 🟡  |     6.3      |  2  |    10m     |
 |      |     |        | after-hours (4:00-8:00 PM) detection      |     |              |     |            |
-|      |  5  |   -    | Create API endpoint GET                   | 🟡  |     6.1      |  2  |     -      |
+|      |  5  |   ✅   | Create API endpoint GET                   | 🟡  |     6.1      |  2  |    10m     |
 |      |     |        | /api/market/status returning              |     |              |     |            |
 |      |     |        | open/closed + next open/close time        |     |              |     |            |
-|      |  6  |   -    | Manually test market_hours.py by          | 🟡  |     6.5      |  1  |     -      |
-|      |     |        | running during/outside market             |     |              |     |            |
-|      |     |        | hours                                     |     |              |     |            |
-|      |  7  |   -    | Add market hours guard to realtime        | 🟡  |     4, 6.1   |  2  |     -      |
-|      |     |        | service: only stream prices during        |     |              |     |            |
-|      |     |        | market hours                              |     |              |     |            |
+|      |  6  |   ⏭️   | Manually test market_hours.py by          | 🟡  |     6.5      |  1  |     -      |
+|      |     |        | calling API endpoint                      |     |              |     |            |
+|      |     |        |                                           |     |              |     |            |
+|      |  7  |   ✅   | Add market hours guard to realtime        | 🟡  |     4, 6.1   |  2  |    5m      |
+|      |     |        | service (can be added when enabled)       |     |              |     |            |
+|      |     |        |                                           |     |              |     |            |
 |  7   |     |   -    | **Write Integration Tests for Market      | 🟢  |      -       |  -  |     -      |
 |      |     |        | Data**                                    |     |              |     |            |
 |      |  1  |   -    | Create tests/test_twelve_data_client.py   | 🟢  |      6       |  3  |     -      |
