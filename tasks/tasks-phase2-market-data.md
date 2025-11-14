@@ -84,24 +84,24 @@
 |      |  8  |   ⏭️   | Manually test by fetching AAPL 1 year     | 🟡  |     2.7      |  2  |     -      |
 |      |     |        | data via Postman (needs API key + stock)  |     |              |     |            |
 |      |     |        |                                           |     |              |     |            |
-|  3   |     |   -    | **Build Stock Watchlist Management**      | 🟢  |      -       |  -  |     -      |
-|      |  1  |   -    | Create schemas/stock.py with              | 🟢  |      -       |  2  |     -      |
+|  3   |     |   🔄   | **Build Stock Watchlist Management**      | 🟢  |      -       |  -  |     -      |
+|      |  1  |   ✅   | Create schemas/stock.py with              | 🟢  |      -       |  2  |    5m      |
 |      |     |        | StockCreate, StockResponse schemas        |     |              |     |            |
-|      |  2  |   -    | Create api/endpoints/stocks.py with       | 🟡  |     3.1      |  3  |     -      |
+|      |  2  |   ✅   | Create api/endpoints/stocks.py with       | 🟡  |     3.1      |  3  |    15m     |
 |      |     |        | CRUD endpoints: GET/POST/DELETE           |     |              |     |            |
 |      |     |        | /api/stocks                               |     |              |     |            |
-|      |  3  |   -    | Implement POST /api/stocks to add stock   | 🟡  |     3.2      |  3  |     -      |
+|      |  3  |   ✅   | Implement POST /api/stocks to add stock   | 🟡  |     3.2      |  3  |    10m     |
 |      |     |        | with validation (max 10 stocks limit)     |     |              |     |            |
-|      |  4  |   -    | Implement GET /api/stocks to list all     | 🟡  |     3.2      |  2  |     -      |
+|      |  4  |   ✅   | Implement GET /api/stocks to list all     | 🟡  |     3.2      |  2  |    5m      |
 |      |     |        | watchlist stocks                          |     |              |     |            |
-|      |  5  |   -    | Implement DELETE /api/stocks/{symbol}     | 🟡  |     3.2      |  2  |     -      |
+|      |  5  |   ✅   | Implement DELETE /api/stocks/{symbol}     | 🟡  |     3.2      |  2  |    5m      |
 |      |     |        | to remove stock                           |     |              |     |            |
-|      |  6  |   -    | Add symbol validation (check if exists    | 🟡  |     3.3      |  2  |     -      |
+|      |  6  |   ✅   | Add symbol validation (check if exists    | 🟡  |     3.3      |  2  |    10m     |
 |      |     |        | on exchange via Twelve Data API)          |     |              |     |            |
-|      |  7  |   -    | Manually test watchlist CRUD via          | 🟡  |     3.3-3.5  |  2  |     -      |
-|      |     |        | Postman: add AAPL, MSFT, GOOGL,           |     |              |     |            |
-|      |     |        | list, delete                              |     |              |     |            |
-|      |  8  |   -    | Trigger historical data fetch when        | 🟡  |     2, 3.3   |  3  |     -      |
+|      |  7  |   ⏭️   | Manually test watchlist CRUD via          | 🟡  |     3.3-3.5  |  2  |     -      |
+|      |     |        | Postman (needs API key)                   |     |              |     |            |
+|      |     |        |                                           |     |              |     |            |
+|      |  8  |   ✅   | Trigger historical data fetch when        | 🟡  |     2, 3.3   |  3  |    10m     |
 |      |     |        | stock added to watchlist (background      |     |              |     |            |
 |      |     |        | task)                                     |     |              |     |            |
 |  4   |     |   -    | **Implement Real-time Price Streaming**   | 🟢  |      -       |  -  |     -      |
