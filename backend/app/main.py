@@ -8,6 +8,7 @@ from datetime import datetime
 
 from app.core.config import settings
 from app.core.logging import logger, get_logger
+from app.api.endpoints import market_data
 
 # Module logger
 app_logger = get_logger("main")
@@ -90,6 +91,10 @@ async def log_requests(request: Request, call_next):
             }
         )
         raise
+
+
+# Include API routers
+app.include_router(market_data.router, prefix="/api")
 
 
 @app.get("/health")

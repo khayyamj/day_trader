@@ -62,28 +62,28 @@
 |      |     |        | methods in Python shell with AAPL         |     |              |     |            |
 |      |  6  |   ✅   | Implement response validation using       | 🟡  |     1.2-1.3  |  2  |    10m     |
 |      |     |        | Pydantic schemas                          |     |              |     |            |
-|  2   |     |   -    | **Create Historical Data Fetching         | 🟢  |      -       |  -  |     -      |
+|  2   |     |   🔄   | **Create Historical Data Fetching         | 🟢  |      -       |  -  |     -      |
 |      |     |        | Service**                                 |     |              |     |            |
-|      |  1  |   -    | Create core/rate_limiter.py with token    | 🟢  |      -       |  3  |     -      |
+|      |  1  |   ✅   | Create core/rate_limiter.py with token    | 🟢  |      -       |  3  |    20m     |
 |      |     |        | bucket algorithm (8 calls/min, 800/day)   |     |              |     |            |
-|      |  2  |   -    | Create services/data/data_service.py      | 🟢  |      1       |  5  |     -      |
+|      |  2  |   ✅   | Create services/data/data_service.py      | 🟢  |      1       |  5  |    20m     |
 |      |     |        | with fetch_historical_data() method       |     |              |     |            |
 |      |     |        | that fetches 1 year daily bars            |     |              |     |            |
-|      |  3  |   -    | Implement data storage logic: insert      | 🟡  |     2.2      |  3  |     -      |
+|      |  3  |   ✅   | Implement data storage logic: insert      | 🟡  |     2.2      |  3  |    10m     |
 |      |     |        | OHLCV records into stock_data table       |     |              |     |            |
 |      |     |        | with conflict handling                    |     |              |     |            |
-|      |  4  |   -    | Add rate limiter to data_service          | 🟡  |     2.1-2.2  |  2  |     -      |
+|      |  4  |   ✅   | Add rate limiter to data_service          | 🟡  |     2.1-2.2  |  2  |    5m      |
 |      |     |        | before API calls                          |     |              |     |            |
-|      |  5  |   -    | Implement retry logic with exponential    | 🟡  |     2.2      |  3  |     -      |
+|      |  5  |   ✅   | Implement retry logic with exponential    | 🟡  |     2.2      |  3  |    10m     |
 |      |     |        | backoff (3 attempts, 1s/2s/4s delays)     |     |              |     |            |
-|      |  6  |   -    | Add logging for successful fetches,       | 🟡  |     2.2      |  2  |     -      |
+|      |  6  |   ✅   | Add logging for successful fetches,       | 🟡  |     2.2      |  2  |    5m      |
 |      |     |        | errors, rate limit hits                   |     |              |     |            |
-|      |  7  |   -    | Create API endpoint POST                  | 🟡  |     2.3      |  3  |     -      |
+|      |  7  |   ✅   | Create API endpoint POST                  | 🟡  |     2.3      |  3  |    15m     |
 |      |     |        | /api/market-data/fetch-historical         |     |              |     |            |
 |      |     |        | with params: symbol, start_date           |     |              |     |            |
-|      |  8  |   -    | Manually test by fetching AAPL 1 year     | 🟡  |     2.7      |  2  |     -      |
-|      |     |        | data via Postman and verify DB            |     |              |     |            |
-|      |     |        | records                                   |     |              |     |            |
+|      |  8  |   ⏭️   | Manually test by fetching AAPL 1 year     | 🟡  |     2.7      |  2  |     -      |
+|      |     |        | data via Postman (needs API key + stock)  |     |              |     |            |
+|      |     |        |                                           |     |              |     |            |
 |  3   |     |   -    | **Build Stock Watchlist Management**      | 🟢  |      -       |  -  |     -      |
 |      |  1  |   -    | Create schemas/stock.py with              | 🟢  |      -       |  2  |     -      |
 |      |     |        | StockCreate, StockResponse schemas        |     |              |     |            |
