@@ -125,29 +125,29 @@
 |      |  7  |   ⏭️   | Manually test WebSocket by connecting     | 🟡  |     4.6      |  2  |     -      |
 |      |     |        | from browser (needs API key)              |     |              |     |            |
 |      |     |        |                                           |     |              |     |            |
-|  5   |     |   -    | **Create Data Update Scheduler**          | 🟢  |      -       |  -  |     -      |
-|      |  1  |   -    | Choose scheduler: APScheduler             | 🟢  |      -       |  1  |     -      |
+|  5   |     |   🔄   | **Create Data Update Scheduler**          | 🟢  |      -       |  -  |     -      |
+|      |  1  |   ✅   | Choose scheduler: APScheduler             | 🟢  |      -       |  1  |    2m      |
 |      |     |        | (simpler) or Celery Beat (if using        |     |              |     |            |
 |      |     |        | Celery)                                   |     |              |     |            |
-|      |  2  |   -    | Install APScheduler and add to            | 🟡  |     5.1      |  1  |     -      |
+|      |  2  |   ✅   | Install APScheduler and add to            | 🟡  |     5.1      |  1  |    5m      |
 |      |     |        | requirements.txt                          |     |              |     |            |
-|      |  3  |   -    | Create services/data/scheduler.py with    | 🟡  |     5.2      |  5  |     -      |
+|      |  3  |   ✅   | Create services/data/scheduler.py with    | 🟡  |     5.2      |  5  |    20m     |
 |      |     |        | APScheduler instance and job              |     |              |     |            |
 |      |     |        | definitions                               |     |              |     |            |
-|      |  4  |   -    | Implement daily_bar_update_job() that     | 🟡  |     2, 5.3   |  3  |     -      |
+|      |  4  |   ✅   | Implement daily_bar_update_job() that     | 🟡  |     2, 5.3   |  3  |    15m     |
 |      |     |        | triggers at 4:05 PM ET: fetch latest      |     |              |     |            |
 |      |     |        | daily bar for all watchlist stocks        |     |              |     |            |
-|      |  5  |   -    | Add scheduler lifecycle management:       | 🟡  |     5.3      |  2  |     -      |
+|      |  5  |   ✅   | Add scheduler lifecycle management:       | 🟡  |     5.3      |  2  |    10m     |
 |      |     |        | start on app startup, shutdown on         |     |              |     |            |
 |      |     |        | app stop                                  |     |              |     |            |
-|      |  6  |   -    | Add logging for scheduled jobs:           | 🟡  |     5.4      |  1  |     -      |
+|      |  6  |   ✅   | Add logging for scheduled jobs:           | 🟡  |     5.4      |  1  |    5m      |
 |      |     |        | start, completion, errors                 |     |              |     |            |
-|      |  7  |   -    | Create API endpoint GET                   | 🟡  |     5.5      |  2  |     -      |
+|      |  7  |   ✅   | Create API endpoint GET                   | 🟡  |     5.5      |  2  |    10m     |
 |      |     |        | /api/scheduler/status to check            |     |              |     |            |
 |      |     |        | scheduler health                          |     |              |     |            |
-|      |  8  |   -    | Manually test by temporarily setting      | 🟡  |     5.7      |  2  |     -      |
-|      |     |        | job to run every 1 minute and             |     |              |     |            |
-|      |     |        | verifying logs                            |     |              |     |            |
+|      |  8  |   ⏭️   | Manually test by temporarily setting      | 🟡  |     5.7      |  2  |     -      |
+|      |     |        | job to run every 1 minute (can use        |     |              |     |            |
+|      |     |        | POST /api/scheduler/trigger endpoint)     |     |              |     |            |
 |  6   |     |   -    | **Add Market Hours Detection**            | 🟢  |      -       |  -  |     -      |
 |      |  1  |   -    | Create services/data/market_hours.py      | 🟢  |      -       |  3  |     -      |
 |      |     |        | with is_market_open() function            |     |              |     |            |

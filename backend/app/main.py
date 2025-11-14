@@ -8,8 +8,9 @@ from datetime import datetime
 
 from app.core.config import settings
 from app.core.logging import logger, get_logger
-from app.api.endpoints import market_data, stocks
+from app.api.endpoints import market_data, stocks, scheduler
 from app.services.data.realtime_service import connection_manager
+from app.services.data.scheduler import data_scheduler
 from app.db.session import SessionLocal
 
 # Module logger
@@ -29,6 +30,10 @@ async def lifespan(app: FastAPI):
     logger.info(f"Environment: {settings.ENVIRONMENT}")
     logger.info(f"Debug mode: {settings.DEBUG}")
 
+    # Start scheduler
+    data_scheduler.start()
+    logger.info("Data scheduler started")
+
     # Start price streaming in background
     # Commented out for now - will be enabled when API key is configured
     # from app.services.data.realtime_service import RealtimeService
@@ -41,6 +46,10 @@ async def lifespan(app: FastAPI):
 
     # Shutdown
     logger.info("Shutting down Trading Application...")
+
+    # Stop scheduler
+    data_scheduler.shutdown()
+    logger.info("Data scheduler stopped")
 
     # Stop price streaming
     # if price_streaming_task:
@@ -118,6 +127,7 @@ async def log_requests(request: Request, call_next):
 # Include API routers
 app.include_router(stocks.router, prefix="/api")
 app.include_router(market_data.router, prefix="/api")
+app.include_router(scheduler.router, prefix="/api")
 
 
 @app.get("/health")
