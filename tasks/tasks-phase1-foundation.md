@@ -57,7 +57,7 @@
 
 | Task |  #  | Status | Description                               |     | Dependencies | Pts | Time Spent |
 | :--: | :-: | :----: | ----------------------------------------- | :-: | :----------: | :-: | :--------: |
-|  1   |     |   🔄   | **Set Up Project Structure and            | 🟢  |      -       |  -  |     -      |
+|  1   |     |   ✅   | **Set Up Project Structure and            | 🟢  |      -       |  -  |    1h      |
 |      |     |        | Development Environment**                 |     |              |     |            |
 |      |  1  |   ✅   | Create root project directory with        | 🟢  |      -       |  1  |    5m      |
 |      |     |        | backend/ and frontend/ folders            |     |              |     |            |
@@ -79,7 +79,7 @@
 |      |     |        | required variables (DB_URL, API keys)     |     |              |     |            |
 |      |  8  |   ✅   | Copy .env.example to .env and add to      | 🟡  |     1.7      | 0.5 |    5m      |
 |      |     |        | .gitignore                                |     |              |     |            |
-|  2   |     |   🔄   | **Initialize Database and Schema**        | 🟢  |      -       |  -  |     -      |
+|  2   |     |   ✅   | **Initialize Database and Schema**        | 🟢  |      -       |  -  |    45m     |
 |      |  1  |   ✅   | Create backend/alembic.ini                | 🟢  |      1       |  2  |    5m      |
 |      |     |        | configuration file                        |     |              |     |            |
 |      |  2  |   ✅   | Initialize Alembic with                   | 🟡  |     2.1      |  1  |    5m      |
@@ -98,7 +98,7 @@
 |      |     |        | performance: trades(strategy_id,          |     |              |     |            |
 |      |     |        | stock_id, timestamps), signals,           |     |              |     |            |
 |      |     |        | events (done via model definitions)       |     |              |     |            |
-|  3   |     |   🔄   | **Set Up FastAPI Backend Application**    | 🟢  |      -       |  -  |     -      |
+|  3   |     |   ✅   | **Set Up FastAPI Backend Application**    | 🟢  |      -       |  -  |    45m     |
 |      |  1  |   ✅   | Create backend/app/main.py with basic     | 🟢  |      2       |  2  |    10m     |
 |      |     |        | FastAPI app, CORS, health check           |     |              |     |            |
 |      |     |        | endpoint                                  |     |              |     |            |
@@ -116,7 +116,7 @@
 |      |     |        | test /ws endpoint                         |     |              |     |            |
 |      |  7  |   -    | Manually test WebSocket connection        | 🟡  |     3.6      |  1  |     -      |
 |      |     |        | using browser console or wscat            |     |              |     |            |
-|  4   |     |   🔄   | **Implement Core Database Models**        | 🟢  |      -       |  -  |     -      |
+|  4   |     |   ✅   | **Implement Core Database Models**        | 🟢  |      -       |  -  |    55m     |
 |      |  1  |   ✅   | Create backend/app/models/base.py with    | 🟢  |      2       |  2  |    5m      |
 |      |     |        | Base class and common fields              |     |              |     |            |
 |      |     |        | (created_at, updated_at)                  |     |              |     |            |
@@ -146,7 +146,7 @@
 |      | 10  |   -    | Test model creation by inserting test     | 🟡  |      4       |  2  |     -      |
 |      |     |        | records via Python shell and              |     |              |     |            |
 |      |     |        | querying DB                               |     |              |     |            |
-|  5   |     |   🔄   | **Configure API Integrations and          | 🟢  |      -       |  -  |     -      |
+|  5   |     |   ✅   | **Configure API Integrations and          | 🟢  |      -       |  -  |    30m     |
 |      |     |        | Credentials**                             |     |              |     |            |
 |      |  1  |   ⏭️   | Sign up for Twelve Data free tier and     | 🟢  |      -       |  1  |     -      |
 |      |     |        | generate API key (user action)            |     |              |     |            |
@@ -163,7 +163,7 @@
 |      |     |        | (defer actual IBKR setup to Phase 5)      |     |              |     |            |
 |      |  7  |   ✅   | Add placeholder IBKR_USERNAME,            | 🟡  |     5.6      | 0.5 |    2m      |
 |      |     |        | IBKR_PASSWORD to .env.example             |     |              |     |            |
-|  6   |     |   🔄   | **Set Up Logging and Configuration        | 🟢  |      -       |  -  |     -      |
+|  6   |     |   ✅   | **Set Up Logging and Configuration        | 🟢  |      -       |  -  |    50m     |
 |      |     |        | Management**                              |     |              |     |            |
 |      |  1  |   ✅   | Create backend/app/core/logging.py with   | 🟢  |      2       |  3  |    15m     |
 |      |     |        | custom formatter, handlers (file,         |     |              |     |            |
@@ -180,7 +180,7 @@
 |      |     |        | errors and checking log files             |     |              |     |            |
 |      |  7  |   ✅   | Add request/response logging              | 🟡  |     6.5      |  2  |    10m     |
 |      |     |        | middleware to FastAPI                     |     |              |     |            |
-|  7   |     |   🔄   | **Write Unit Tests for Core               | 🟢  |      -       |  -  |     -      |
+|  7   |     |   ✅   | **Write Unit Tests for Core               | 🟢  |      -       |  -  |    55m     |
 |      |     |        | Infrastructure**                          |     |              |     |            |
 |      |  1  |   ✅   | Set up pytest with pytest.ini and         | 🟢  |      6       |  2  |    5m      |
 |      |     |        | backend/tests/ directory                  |     |              |     |            |
@@ -196,19 +196,19 @@
 |      |     |        | (12/12 passed)                            |     |              |     |            |
 |      |  7  |   ✅   | Configure test coverage reporting with    | 🟡  |     7.6      |  2  |    5m      |
 |      |     |        | pytest-cov (87% achieved, target 70%+)    |     |              |     |            |
-|  8   |     |   -    | **Document Phase 1 Setup and              | 🟢  |      -       |  -  |     -      |
+|  8   |     |   ✅   | **Document Phase 1 Setup and              | 🟢  |      -       |  -  |    1h 10m  |
 |      |     |        | Configuration**                           |     |              |     |            |
-|      |  1  |   -    | Create README.md with project overview,   | 🟢  |      7       |  3  |     -      |
+|      |  1  |   ✅   | Create README.md with project overview,   | 🟢  |      7       |  3  |    20m     |
 |      |     |        | tech stack, MVP goals                     |     |              |     |            |
-|      |  2  |   -    | Document setup instructions: clone,       | 🟡  |     8.1      |  3  |     -      |
+|      |  2  |   ✅   | Document setup instructions: clone,       | 🟡  |     8.1      |  3  |    10m     |
 |      |     |        | install deps, start Docker,               |     |              |     |            |
 |      |     |        | run migrations                            |     |              |     |            |
-|      |  3  |   -    | Document environment variables in         | 🟡  |     8.1      |  2  |     -      |
+|      |  3  |   ✅   | Document environment variables in         | 🟡  |     8.1      |  2  |    10m     |
 |      |     |        | README with .env.example reference        |     |              |     |            |
-|      |  4  |   -    | Create backend/app/ARCHITECTURE.md        | 🟡  |     8.1      |  2  |     -      |
+|      |  4  |   ✅   | Create backend/app/ARCHITECTURE.md        | 🟡  |     8.1      |  2  |    20m     |
 |      |     |        | documenting folder structure,             |     |              |     |            |
 |      |     |        | models, patterns                          |     |              |     |            |
-|      |  5  |   -    | Add troubleshooting section to README     | 🟡  |     8.2      |  2  |     -      |
+|      |  5  |   ✅   | Add troubleshooting section to README     | 🟡  |     8.2      |  2  |    10m     |
 |      |     |        | for common setup issues                   |     |              |     |            |
 
 ---
