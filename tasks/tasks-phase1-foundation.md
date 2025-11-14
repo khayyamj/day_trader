@@ -180,21 +180,22 @@
 |      |     |        | errors and checking log files             |     |              |     |            |
 |      |  7  |   ✅   | Add request/response logging              | 🟡  |     6.5      |  2  |    10m     |
 |      |     |        | middleware to FastAPI                     |     |              |     |            |
-|  7   |     |   -    | **Write Unit Tests for Core               | 🟢  |      -       |  -  |     -      |
+|  7   |     |   🔄   | **Write Unit Tests for Core               | 🟢  |      -       |  -  |     -      |
 |      |     |        | Infrastructure**                          |     |              |     |            |
-|      |  1  |   -    | Set up pytest with pytest.ini and         | 🟢  |      6       |  2  |     -      |
+|      |  1  |   ✅   | Set up pytest with pytest.ini and         | 🟢  |      6       |  2  |    5m      |
 |      |     |        | backend/tests/ directory                  |     |              |     |            |
-|      |  2  |   -    | Create tests/conftest.py with test DB     | 🟡  |     7.1      |  3  |     -      |
+|      |  2  |   ✅   | Create tests/conftest.py with test DB     | 🟡  |     7.1      |  3  |    10m     |
 |      |     |        | session, fixtures                         |     |              |     |            |
-|      |  3  |   -    | Write tests/test_models.py for all        | 🟡  |     7.2      |  5  |     -      |
+|      |  3  |   ✅   | Write tests/test_models.py for all        | 🟡  |     7.2      |  5  |    15m     |
 |      |     |        | model CRUD operations                     |     |              |     |            |
-|      |  4  |   -    | Write tests/test_config.py for config     | 🟡  |     7.2      |  2  |     -      |
+|      |  4  |   ✅   | Write tests/test_config.py for config     | 🟡  |     7.2      |  2  |    10m     |
 |      |     |        | loading and validation                    |     |              |     |            |
-|      |  5  |   -    | Write tests/test_health.py for health     | 🟡  |     7.2      |  1  |     -      |
+|      |  5  |   ✅   | Write tests/test_health.py for health     | 🟡  |     7.2      |  1  |    5m      |
 |      |     |        | endpoint                                  |     |              |     |            |
-|      |  6  |   -    | Run pytest and ensure all tests pass      | 🟡  |     7.3-7.5  |  1  |     -      |
-|      |  7  |   -    | Configure test coverage reporting with    | 🟡  |     7.6      |  2  |     -      |
-|      |     |        | pytest-cov (target 70%+)                  |     |              |     |            |
+|      |  6  |   ✅   | Run pytest and ensure all tests pass      | 🟡  |     7.3-7.5  |  1  |    5m      |
+|      |     |        | (12/12 passed)                            |     |              |     |            |
+|      |  7  |   ✅   | Configure test coverage reporting with    | 🟡  |     7.6      |  2  |    5m      |
+|      |     |        | pytest-cov (87% achieved, target 70%+)    |     |              |     |            |
 |  8   |     |   -    | **Document Phase 1 Setup and              | 🟢  |      -       |  -  |     -      |
 |      |     |        | Configuration**                           |     |              |     |            |
 |      |  1  |   -    | Create README.md with project overview,   | 🟢  |      7       |  3  |     -      |
