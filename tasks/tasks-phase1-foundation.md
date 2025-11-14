@@ -72,19 +72,19 @@
 |      |  5  |   ✅   | Create docker-compose.yml for             | 🟢  |     1.1      |  2  |    10m     |
 |      |     |        | PostgreSQL (port 5432) and Redis          |     |              |     |            |
 |      |     |        | (port 6379)                               |     |              |     |            |
-|      |  6  |   ❌   | Start Docker services and manually        | 🔴  |     1.5      |  1  |    5m      |
+|      |  6  |   ✅   | Start Docker services and manually        | 🟢  |     1.5      |  1  |    15m     |
 |      |     |        | verify PostgreSQL connection with         |     |              |     |            |
-|      |     |        | psql (BLOCKED: Docker not installed)      |     |              |     |            |
+|      |     |        | psql                                      |     |              |     |            |
 |      |  7  |   ✅   | Create .env.example template with all     | 🟢  |     1.1      |  1  |    5m      |
 |      |     |        | required variables (DB_URL, API keys)     |     |              |     |            |
 |      |  8  |   ✅   | Copy .env.example to .env and add to      | 🟡  |     1.7      | 0.5 |    5m      |
 |      |     |        | .gitignore                                |     |              |     |            |
-|  2   |     |   -    | **Initialize Database and Schema**        | 🟢  |      -       |  -  |     -      |
-|      |  1  |   -    | Create backend/alembic.ini                | 🟢  |      1       |  2  |     -      |
+|  2   |     |   🔄   | **Initialize Database and Schema**        | 🟢  |      -       |  -  |     -      |
+|      |  1  |   ✅   | Create backend/alembic.ini                | 🟢  |      1       |  2  |    5m      |
 |      |     |        | configuration file                        |     |              |     |            |
-|      |  2  |   -    | Initialize Alembic with                   | 🟡  |     2.1      |  1  |     -      |
+|      |  2  |   ✅   | Initialize Alembic with                   | 🟡  |     2.1      |  1  |    5m      |
 |      |     |        | `alembic init alembic` command            |     |              |     |            |
-|      |  3  |   -    | Configure alembic/env.py to use           | 🟡  |     2.2      |  2  |     -      |
+|      |  3  |   ✅   | Configure alembic/env.py to use           | 🟡  |     2.2      |  2  |    15m     |
 |      |     |        | SQLAlchemy models and connection          |     |              |     |            |
 |      |     |        | string from .env                          |     |              |     |            |
 |      |  4  |   -    | Create initial migration with all core    | 🟡  |     2.3      |  5  |     -      |
@@ -116,8 +116,8 @@
 |      |     |        | test /ws endpoint                         |     |              |     |            |
 |      |  7  |   -    | Manually test WebSocket connection        | 🟡  |     3.6      |  1  |     -      |
 |      |     |        | using browser console or wscat            |     |              |     |            |
-|  4   |     |   -    | **Implement Core Database Models**        | 🟢  |      -       |  -  |     -      |
-|      |  1  |   -    | Create backend/app/models/base.py with    | 🟢  |      2       |  2  |     -      |
+|  4   |     |   🔄   | **Implement Core Database Models**        | 🟢  |      -       |  -  |     -      |
+|      |  1  |   ✅   | Create backend/app/models/base.py with    | 🟢  |      2       |  2  |    5m      |
 |      |     |        | Base class and common fields              |     |              |     |            |
 |      |     |        | (created_at, updated_at)                  |     |              |     |            |
 |      |  2  |   -    | Implement models/strategy.py with id,     | 🟡  |     4.1      |  3  |     -      |
