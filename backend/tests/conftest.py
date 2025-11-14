@@ -1,9 +1,13 @@
 """Pytest configuration and fixtures."""
 import pytest
+import os
 from fastapi.testclient import TestClient
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.pool import StaticPool
+
+# Set test environment before imports
+os.environ["ENVIRONMENT"] = "test"
 
 from app.main import app
 from app.db.base import Base

@@ -1,7 +1,10 @@
 """Base model with common fields."""
 from sqlalchemy import Column, Integer, DateTime
 from sqlalchemy.sql import func
-from app.db.base import Base
+from sqlalchemy.ext.declarative import declarative_base
+
+# Create base class for all models
+Base = declarative_base()
 
 
 class BaseModel(Base):

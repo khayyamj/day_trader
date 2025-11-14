@@ -1,8 +1,6 @@
 """Import all models here for Alembic to detect them."""
-from sqlalchemy.ext.declarative import declarative_base
-
-# Create base class for models
-Base = declarative_base()
+# Import Base from models.base to avoid circular imports
+from app.models.base import Base  # noqa
 
 # Import all models here so Alembic can detect them
 from app.models.strategy import Strategy  # noqa

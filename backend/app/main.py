@@ -30,9 +30,12 @@ async def lifespan(app: FastAPI):
     logger.info(f"Environment: {settings.ENVIRONMENT}")
     logger.info(f"Debug mode: {settings.DEBUG}")
 
-    # Start scheduler
-    data_scheduler.start()
-    logger.info("Data scheduler started")
+    # Start scheduler (skip in test environment)
+    if settings.ENVIRONMENT.lower() != "test":
+        data_scheduler.start()
+        logger.info("Data scheduler started")
+    else:
+        logger.info("Test mode: Scheduler disabled")
 
     # Start price streaming in background
     # Commented out for now - will be enabled when API key is configured
