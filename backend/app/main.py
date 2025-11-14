@@ -1,22 +1,28 @@
 """Main FastAPI application entry point."""
-from fastapi import FastAPI, WebSocket, WebSocketDisconnect
+from fastapi import FastAPI, WebSocket, WebSocketDisconnect, Request
 from fastapi.middleware.cors import CORSMiddleware
 from contextlib import asynccontextmanager
 import json
+import time
 from datetime import datetime
 
-# Will be imported once config is set up
-# from app.core.config import settings
+from app.core.config import settings
+from app.core.logging import logger, get_logger
+
+# Module logger
+app_logger = get_logger("main")
 
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     """Application lifespan manager."""
     # Startup
-    print("Starting up Trading Application...")
+    logger.info("Starting up Trading Application...")
+    logger.info(f"Environment: {settings.ENVIRONMENT}")
+    logger.info(f"Debug mode: {settings.DEBUG}")
     yield
     # Shutdown
-    print("Shutting down Trading Application...")
+    logger.info("Shutting down Trading Application...")
 
 
 app = FastAPI(
@@ -27,18 +33,63 @@ app = FastAPI(
 )
 
 # Configure CORS
-origins = [
-    "http://localhost:3000",  # React default
-    "http://localhost:8000",  # FastAPI default
-]
-
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=origins,
+    allow_origins=settings.BACKEND_CORS_ORIGINS,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+
+# Request/Response logging middleware
+@app.middleware("http")
+async def log_requests(request: Request, call_next):
+    """Log all HTTP requests and responses."""
+    start_time = time.time()
+
+    # Log request
+    app_logger.info(
+        f"Request started: {request.method} {request.url.path}",
+        extra={
+            "method": request.method,
+            "path": request.url.path,
+            "client": request.client.host if request.client else "unknown"
+        }
+    )
+
+    # Process request
+    try:
+        response = await call_next(request)
+        process_time = time.time() - start_time
+
+        # Log response
+        app_logger.info(
+            f"Request completed: {request.method} {request.url.path} - {response.status_code}",
+            extra={
+                "method": request.method,
+                "path": request.url.path,
+                "status_code": response.status_code,
+                "process_time": f"{process_time:.3f}s"
+            }
+        )
+
+        # Add custom header
+        response.headers["X-Process-Time"] = str(process_time)
+        return response
+
+    except Exception as e:
+        process_time = time.time() - start_time
+        app_logger.error(
+            f"Request failed: {request.method} {request.url.path} - {str(e)}",
+            extra={
+                "method": request.method,
+                "path": request.url.path,
+                "error": str(e),
+                "process_time": f"{process_time:.3f}s"
+            }
+        )
+        raise
 
 
 @app.get("/health")

@@ -146,39 +146,39 @@
 |      | 10  |   -    | Test model creation by inserting test     | 🟡  |      4       |  2  |     -      |
 |      |     |        | records via Python shell and              |     |              |     |            |
 |      |     |        | querying DB                               |     |              |     |            |
-|  5   |     |   -    | **Configure API Integrations and          | 🟢  |      -       |  -  |     -      |
+|  5   |     |   🔄   | **Configure API Integrations and          | 🟢  |      -       |  -  |     -      |
 |      |     |        | Credentials**                             |     |              |     |            |
-|      |  1  |   -    | Sign up for Twelve Data free tier and     | 🟢  |      -       |  1  |     -      |
-|      |     |        | generate API key                          |     |              |     |            |
-|      |  2  |   -    | Add TWELVE_DATA_API_KEY to .env file      | 🟡  |     5.1      | 0.5 |     -      |
-|      |  3  |   -    | Create backend/app/core/config.py with    | 🟢  |      2       |  3  |     -      |
+|      |  1  |   ⏭️   | Sign up for Twelve Data free tier and     | 🟢  |      -       |  1  |     -      |
+|      |     |        | generate API key (user action)            |     |              |     |            |
+|      |  2  |   ✅   | Add TWELVE_DATA_API_KEY to .env file      | 🟡  |     5.1      | 0.5 |    2m      |
+|      |  3  |   ✅   | Create backend/app/core/config.py with    | 🟢  |      2       |  3  |    15m     |
 |      |     |        | Pydantic Settings class loading all       |     |              |     |            |
 |      |     |        | env vars                                  |     |              |     |            |
-|      |  4  |   -    | Add validation to config.py that          | 🟡  |     5.3      |  2  |     -      |
+|      |  4  |   ✅   | Add validation to config.py that          | 🟡  |     5.3      |  2  |    5m      |
 |      |     |        | raises error if required API keys         |     |              |     |            |
 |      |     |        | missing                                   |     |              |     |            |
-|      |  5  |   -    | Manually test config loading by           | 🟡  |     5.4      |  1  |     -      |
+|      |  5  |   ✅   | Manually test config loading by           | 🟡  |     5.4      |  1  |    5m      |
 |      |     |        | importing settings in Python shell        |     |              |     |            |
-|      |  6  |   -    | Document IBKR setup steps in README       | 🟡  |     5.3      |  1  |     -      |
+|      |  6  |   ✅   | Document IBKR setup steps in README       | 🟡  |     5.3      |  1  |    2m      |
 |      |     |        | (defer actual IBKR setup to Phase 5)      |     |              |     |            |
-|      |  7  |   -    | Add placeholder IBKR_USERNAME,            | 🟡  |     5.6      | 0.5 |     -      |
+|      |  7  |   ✅   | Add placeholder IBKR_USERNAME,            | 🟡  |     5.6      | 0.5 |    2m      |
 |      |     |        | IBKR_PASSWORD to .env.example             |     |              |     |            |
-|  6   |     |   -    | **Set Up Logging and Configuration        | 🟢  |      -       |  -  |     -      |
+|  6   |     |   🔄   | **Set Up Logging and Configuration        | 🟢  |      -       |  -  |     -      |
 |      |     |        | Management**                              |     |              |     |            |
-|      |  1  |   -    | Create backend/app/core/logging.py with   | 🟢  |      2       |  3  |     -      |
+|      |  1  |   ✅   | Create backend/app/core/logging.py with   | 🟢  |      2       |  3  |    15m     |
 |      |     |        | custom formatter, handlers (file,         |     |              |     |            |
 |      |     |        | console)                                  |     |              |     |            |
-|      |  2  |   -    | Configure log levels (DEBUG for dev,      | 🟡  |     6.1      |  1  |     -      |
+|      |  2  |   ✅   | Configure log levels (DEBUG for dev,      | 🟡  |     6.1      |  1  |    5m      |
 |      |     |        | INFO for prod) from environment           |     |              |     |            |
-|      |  3  |   -    | Create logs/ directory and add to         | 🟡  |     6.2      | 0.5 |     -      |
+|      |  3  |   ✅   | Create logs/ directory and add to         | 🟡  |     6.2      | 0.5 |    2m      |
 |      |     |        | .gitignore                                |     |              |     |            |
-|      |  4  |   -    | Implement log rotation (daily, keep 30    | 🟡  |     6.1      |  2  |     -      |
+|      |  4  |   ✅   | Implement log rotation (daily, keep 30    | 🟡  |     6.1      |  2  |    5m      |
 |      |     |        | days) using TimedRotatingFileHandler      |     |              |     |            |
-|      |  5  |   -    | Add logging to main.py for startup,       | 🟡  |     6.4      |  2  |     -      |
+|      |  5  |   ✅   | Add logging to main.py for startup,       | 🟡  |     6.4      |  2  |    10m     |
 |      |     |        | shutdown, errors                          |     |              |     |            |
-|      |  6  |   -    | Manually test logging by triggering       | 🟡  |     6.5      |  1  |     -      |
+|      |  6  |   ✅   | Manually test logging by triggering       | 🟡  |     6.5      |  1  |    5m      |
 |      |     |        | errors and checking log files             |     |              |     |            |
-|      |  7  |   -    | Add request/response logging              | 🟡  |     6.5      |  2  |     -      |
+|      |  7  |   ✅   | Add request/response logging              | 🟡  |     6.5      |  2  |    10m     |
 |      |     |        | middleware to FastAPI                     |     |              |     |            |
 |  7   |     |   -    | **Write Unit Tests for Core               | 🟢  |      -       |  -  |     -      |
 |      |     |        | Infrastructure**                          |     |              |     |            |
