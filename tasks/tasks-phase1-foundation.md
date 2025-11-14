@@ -87,17 +87,17 @@
 |      |  3  |   ✅   | Configure alembic/env.py to use           | 🟡  |     2.2      |  2  |    15m     |
 |      |     |        | SQLAlchemy models and connection          |     |              |     |            |
 |      |     |        | string from .env                          |     |              |     |            |
-|      |  4  |   -    | Create initial migration with all core    | 🟡  |     2.3      |  5  |     -      |
+|      |  4  |   ✅   | Create initial migration with all core    | 🟡  |     2.3      |  5  |    10m     |
 |      |     |        | tables: strategies, stocks, trades,       |     |              |     |            |
 |      |     |        | trade_signals, orders, stock_data,        |     |              |     |            |
 |      |     |        | indicators, strategy_events               |     |              |     |            |
-|      |  5  |   -    | Run migration and manually verify         | 🟡  |     2.4      |  1  |     -      |
+|      |  5  |   ✅   | Run migration and manually verify         | 🟡  |     2.4      |  1  |    5m      |
 |      |     |        | tables created in PostgreSQL using        |     |              |     |            |
 |      |     |        | psql or pgAdmin                           |     |              |     |            |
-|      |  6  |   -    | Create database indexes for               | 🟡  |     2.5      |  2  |     -      |
+|      |  6  |   ✅   | Create database indexes for               | 🟡  |     2.5      |  2  |    5m      |
 |      |     |        | performance: trades(strategy_id,          |     |              |     |            |
 |      |     |        | stock_id, timestamps), signals,           |     |              |     |            |
-|      |     |        | events                                    |     |              |     |            |
+|      |     |        | events (done via model definitions)       |     |              |     |            |
 |  3   |     |   🔄   | **Set Up FastAPI Backend Application**    | 🟢  |      -       |  -  |     -      |
 |      |  1  |   ✅   | Create backend/app/main.py with basic     | 🟢  |      2       |  2  |    10m     |
 |      |     |        | FastAPI app, CORS, health check           |     |              |     |            |
@@ -120,27 +120,27 @@
 |      |  1  |   ✅   | Create backend/app/models/base.py with    | 🟢  |      2       |  2  |    5m      |
 |      |     |        | Base class and common fields              |     |              |     |            |
 |      |     |        | (created_at, updated_at)                  |     |              |     |            |
-|      |  2  |   -    | Implement models/strategy.py with id,     | 🟡  |     4.1      |  3  |     -      |
+|      |  2  |   ✅   | Implement models/strategy.py with id,     | 🟡  |     4.1      |  3  |    5m      |
 |      |     |        | name, description, parameters             |     |              |     |            |
 |      |     |        | (JSONB), active, timestamps               |     |              |     |            |
-|      |  3  |   -    | Implement models/stock.py with id,        | 🟡  |     4.1      |  2  |     -      |
+|      |  3  |   ✅   | Implement models/stock.py with id,        | 🟡  |     4.1      |  2  |    5m      |
 |      |     |        | symbol, name, exchange                    |     |              |     |            |
-|      |  4  |   -    | Implement models/trade.py with all        | 🟡  |     4.1      |  5  |     -      |
+|      |  4  |   ✅   | Implement models/trade.py with all        | 🟡  |     4.1      |  5  |    10m     |
 |      |     |        | fields from PRD schema: entry/exit        |     |              |     |            |
 |      |     |        | details, P&L, risk mgmt,                  |     |              |     |            |
 |      |     |        | market_context (JSONB)                    |     |              |     |            |
-|      |  5  |   -    | Implement models/signal.py with           | 🟡  |     4.1      |  3  |     -      |
+|      |  5  |   ✅   | Implement models/signal.py with           | 🟡  |     4.1      |  3  |    5m      |
 |      |     |        | signal_type, executed, reasons,           |     |              |     |            |
 |      |     |        | indicator_values (JSONB)                  |     |              |     |            |
-|      |  6  |   -    | Implement models/order.py with type,      | 🟡  |     4.1      |  3  |     -      |
+|      |  6  |   ✅   | Implement models/order.py with type,      | 🟡  |     4.1      |  3  |    5m      |
 |      |     |        | quantity, prices, status,                 |     |              |     |            |
 |      |     |        | broker_order_id                           |     |              |     |            |
-|      |  7  |   -    | Implement models/stock_data.py for        | 🟡  |     4.1      |  2  |     -      |
+|      |  7  |   ✅   | Implement models/stock_data.py for        | 🟡  |     4.1      |  2  |    5m      |
 |      |     |        | OHLCV time-series with stock_id FK        |     |              |     |            |
-|      |  8  |   -    | Implement models/indicator.py for         | 🟡  |     4.1      |  2  |     -      |
+|      |  8  |   ✅   | Implement models/indicator.py for         | 🟡  |     4.1      |  2  |    5m      |
 |      |     |        | calculated indicators with metadata       |     |              |     |            |
 |      |     |        | (JSONB)                                   |     |              |     |            |
-|      |  9  |   -    | Implement models/strategy_event.py for    | 🟡  |     4.1      |  3  |     -      |
+|      |  9  |   ✅   | Implement models/strategy_event.py for    | 🟡  |     4.1      |  3  |    5m      |
 |      |     |        | event logging with event_type,            |     |              |     |            |
 |      |     |        | severity, metadata                        |     |              |     |            |
 |      | 10  |   -    | Test model creation by inserting test     | 🟡  |      4       |  2  |     -      |

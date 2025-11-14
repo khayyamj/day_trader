@@ -18,15 +18,14 @@ sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 # Import Base and all models for autogenerate support
 from app.db.base import Base
 # Import all models here so Alembic can detect them
-# These will be uncommented once models are created
-# from app.models.strategy import Strategy
-# from app.models.stock import Stock
-# from app.models.trade import Trade
-# from app.models.signal import Signal
-# from app.models.order import Order
-# from app.models.stock_data import StockData
-# from app.models.indicator import Indicator
-# from app.models.strategy_event import StrategyEvent
+from app.models.strategy import Strategy  # noqa
+from app.models.stock import Stock  # noqa
+from app.models.trade import Trade  # noqa
+from app.models.signal import Signal  # noqa
+from app.models.order import Order  # noqa
+from app.models.stock_data import StockData  # noqa
+from app.models.indicator import Indicator  # noqa
+from app.models.strategy_event import StrategyEvent  # noqa
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
