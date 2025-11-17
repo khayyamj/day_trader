@@ -21,6 +21,7 @@ class Signal(BaseModel):
     # Signal reasons and context
     reasons = Column(JSON, nullable=True, default=list)  # List of reasons for signal
     indicator_values = Column(JSON, nullable=True, default=dict)  # Indicator values at signal time
+    market_context = Column(JSON, nullable=True, default=dict)  # Market context (volatility, volume, trend)
 
     # Relationships
     strategy = relationship("Strategy", backref="signals")
