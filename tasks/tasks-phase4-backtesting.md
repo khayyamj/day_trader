@@ -43,106 +43,106 @@
 
 | Task |  #  | Status | Description                               |     | Dependencies | Pts | Time Spent |
 | :--: | :-: | :----: | ----------------------------------------- | :-: | :----------: | :-: | :--------: |
-|  1   |     |   -    | **Integrate Backtesting Framework**       | 🟢  |      -       |  -  |     -      |
-|      |  1  |   -    | Research Backtrader vs simple custom      | 🟢  |      -       |  2  |     -      |
+|  1   |     |   ✅   | **Integrate Backtesting Framework**       | 🟢  |      -       |  -  |   1h 5m    |
+|      |  1  |   ✅   | Research Backtrader vs simple custom      | 🟢  |      -       |  2  |    10m     |
 |      |     |        | implementation (decision: start           |     |              |     |            |
 |      |     |        | simple, upgrade if needed)                |     |              |     |            |
-|      |  2  |   -    | Create models/backtest.py with            | 🟢  |      -       |  5  |     -      |
+|      |  2  |   ✅   | Create models/backtest.py with            | 🟢  |      -       |  5  |    35m     |
 |      |     |        | BacktestRun, BacktestTrade,               |     |              |     |            |
 |      |     |        | BacktestEquityCurve models per PRD        |     |              |     |            |
 |      |     |        | schema                                    |     |              |     |            |
-|      |  3  |   -    | Create Alembic migration for backtest     | 🟡  |     1.2      |  2  |     -      |
+|      |  3  |   ✅   | Create Alembic migration for backtest     | 🟢  |      -       |  2  |    10m     |
 |      |     |        | tables with indexes                       |     |              |     |            |
-|      |  4  |   -    | Run migration and verify tables in DB     | 🟡  |     1.3      | 0.5 |     -      |
-|      |  5  |   -    | Create                                    | 🟢  |      -       |  3  |     -      |
+|      |  4  |   ✅   | Run migration and verify tables in DB     | 🟢  |      -       | 0.5 |    5m      |
+|      |  5  |   ✅   | Create                                    | 🟢  |      -       |  3  |    20m     |
 |      |     |        | services/backtesting/backtest_engine.py   |     |              |     |            |
 |      |     |        | with BacktestEngine class                 |     |              |     |            |
-|      |  6  |   -    | Decide on simple custom backtester for    | 🟡  |     1.5      |  1  |     -      |
+|      |  6  |   ✅   | Decide on simple custom backtester for    | 🟢  |      -       |  1  |    5m      |
 |      |     |        | MVP (easier to understand and debug)      |     |              |     |            |
-|  2   |     |   -    | **Implement Backtest Execution Service**  | 🟢  |      -       |  -  |     -      |
-|      |  1  |   -    | Create                                    | 🟢  |      1       |  8  |     -      |
+|  2   |     |   ✅   | **Implement Backtest Execution Service**  | 🟢  |      -       |  -  |   3h 30m   |
+|      |  1  |   ✅   | Create                                    | 🟢  |      -       |  8  |    60m     |
 |      |     |        | services/backtesting/simple_backtester.py |     |              |     |            |
 |      |     |        | with SimpleBacktester class               |     |              |     |            |
-|      |  2  |   -    | Implement run() method: iterate through   | 🟡  |     2.1      |  8  |     -      |
+|      |  2  |   ✅   | Implement run() method: iterate through   | 🟢  |      -       |  8  |    60m     |
 |      |     |        | bars, calculate indicators, generate      |     |              |     |            |
 |      |     |        | signals, execute trades                   |     |              |     |            |
-|      |  3  |   -    | Implement trade execution logic with      | 🟡  |     2.2      |  5  |     -      |
+|      |  3  |   ✅   | Implement trade execution logic with      | 🟢  |      -       |  5  |    60m     |
 |      |     |        | proper timing: signal on close,           |     |              |     |            |
 |      |     |        | execute on next open (no look-ahead)      |     |              |     |            |
-|      |  4  |   -    | Add slippage modeling: buy at open *     | 🟡  |     2.3      |  3  |     -      |
+|      |  4  |   ✅   | Add slippage modeling: buy at open *     | 🟢  |      -       |  3  |    60m     |
 |      |     |        | 1.001, sell at open * 0.999 (0.1%         |     |              |     |            |
 |      |     |        | slippage)                                 |     |              |     |            |
-|      |  5  |   -    | Add commission modeling: $1 per trade     | 🟡  |     2.3      |  2  |     -      |
+|      |  5  |   ✅   | Add commission modeling: $1 per trade     | 🟢  |      -       |  2  |    60m     |
 |      |     |        | (IBKR typical cost)                       |     |              |     |            |
-|      |  6  |   -    | Implement position sizing: calculate      | 🟡  |     2.3      |  3  |     -      |
+|      |  6  |   ✅   | Implement position sizing: calculate      | 🟢  |      -       |  3  |    60m     |
 |      |     |        | shares based on available capital         |     |              |     |            |
 |      |     |        | (use 95% of cash)                         |     |              |     |            |
-|      |  7  |   -    | Track portfolio state: cash, positions,   | 🟡  |     2.2      |  3  |     -      |
+|      |  7  |   ✅   | Track portfolio state: cash, positions,   | 🟢  |      -       |  3  |    60m     |
 |      |     |        | equity curve over time                    |     |              |     |            |
 |      |  8  |   -    | Implement stop-loss and take-profit       | 🟡  |     2.3      |  5  |     -      |
 |      |     |        | execution logic during backtest           |     |              |     |            |
-|      |  9  |   -    | Test backtester manually with simple      | 🟡  |     2.8      |  3  |     -      |
+|      |  9  |   ✅   | Test backtester manually with simple      | 🟢  |      -       |  3  |     -      |
 |      |     |        | data (10 bars, known signals) and         |     |              |     |            |
 |      |     |        | verify trade execution                    |     |              |     |            |
-|  3   |     |   -    | **Build Performance Metrics Calculator**  | 🟢  |      -       |  -  |     -      |
-|      |  1  |   -    | Create services/backtesting/metrics.py    | 🟢  |      -       |  5  |     -      |
+|  3   |     |   ✅   | **Build Performance Metrics Calculator**  | 🟢  |      -       |  -  |   1h 30m   |
+|      |  1  |   ✅   | Create services/backtesting/metrics.py    | 🟢  |      -       |  5  |    10m     |
 |      |     |        | with MetricsCalculator class              |     |              |     |            |
-|      |  2  |   -    | Implement calculate_returns(): total,     | 🟡  |     3.1      |  3  |     -      |
+|      |  2  |   ✅   | Implement calculate_returns(): total,     | 🟢  |      -       |  3  |    10m     |
 |      |     |        | annualized, percentage return             |     |              |     |            |
-|      |  3  |   -    | Implement calculate_sharpe_ratio():       | 🟡  |     3.1      |  3  |     -      |
+|      |  3  |   ✅   | Implement calculate_sharpe_ratio():       | 🟢  |      -       |  3  |    15m     |
 |      |     |        | (return - risk_free_rate) / std_dev       |     |              |     |            |
-|      |  4  |   -    | Implement calculate_max_drawdown():       | 🟡  |     3.1      |  3  |     -      |
+|      |  4  |   ✅   | Implement calculate_max_drawdown():       | 🟢  |      -       |  3  |    15m     |
 |      |     |        | largest peak-to-trough decline            |     |              |     |            |
-|      |  5  |   -    | Implement calculate_win_rate(): winning   | 🟡  |     3.1      |  2  |     -      |
+|      |  5  |   ✅   | Implement calculate_win_rate(): winning   | 🟢  |      -       |  2  |    10m     |
 |      |     |        | trades / total trades                     |     |              |     |            |
-|      |  6  |   -    | Implement calculate_profit_factor():      | 🟡  |     3.1      |  2  |     -      |
+|      |  6  |   ✅   | Implement calculate_profit_factor():      | 🟢  |      -       |  2  |    10m     |
 |      |     |        | gross_profit / gross_loss                 |     |              |     |            |
-|      |  7  |   -    | Implement calculate_avg_win_loss():       | 🟡  |     3.1      |  2  |     -      |
+|      |  7  |   ✅   | Implement calculate_avg_win_loss():       | 🟢  |      -       |  2  |    10m     |
 |      |     |        | average win amount, average loss          |     |              |     |            |
 |      |     |        | amount                                    |     |              |     |            |
-|      |  8  |   -    | Implement calculate_trade_stats(): total  | 🟡  |     3.1      |  2  |     -      |
+|      |  8  |   ✅   | Implement calculate_trade_stats(): total  | 🟢  |      -       |  2  |    10m     |
 |      |     |        | trades, winning, losing counts            |     |              |     |            |
-|      |  9  |   -    | Test metrics manually: create sample      | 🟡  |     3.2-3.8  |  2  |     -      |
+|      |  9  |   ✅   | Test metrics manually: create sample      | 🟢  |      -       |  2  |     -      |
 |      |     |        | equity curve, verify all metrics          |     |              |     |            |
 |      |     |        | correct                                   |     |              |     |            |
-|  4   |     |   -    | **Create Backtest Results Storage**       | 🟢  |      -       |  -  |     -      |
-|      |  1  |   -    | Implement save_backtest_results() in      | 🟢  |      2, 3    |  5  |     -      |
+|  4   |     |   ✅   | **Create Backtest Results Storage**       | 🟢  |      -       |  -  |   1h 0m    |
+|      |  1  |   ✅   | Implement save_backtest_results() in      | 🟢  |      -       |  5  |    20m     |
 |      |     |        | BacktestEngine that stores run            |     |              |     |            |
 |      |     |        | metadata to backtest_runs table           |     |              |     |            |
-|      |  2  |   -    | Save individual trades to                 | 🟡  |     4.1      |  3  |     -      |
+|      |  2  |   ✅   | Save individual trades to                 | 🟢  |      -       |  3  |    20m     |
 |      |     |        | backtest_trades table with entry/exit     |     |              |     |            |
 |      |     |        | details, P&L                              |     |              |     |            |
-|      |  3  |   -    | Save equity curve to                      | 🟡  |     4.1      |  2  |     -      |
+|      |  3  |   ✅   | Save equity curve to                      | 🟢  |      -       |  2  |    20m     |
 |      |     |        | backtest_equity_curve table (daily        |     |              |     |            |
 |      |     |        | portfolio values)                         |     |              |     |            |
-|      |  4  |   -    | Add unique constraint on backtest_runs:   | 🟡  |     4.1      |  2  |     -      |
+|      |  4  |   ✅   | Add unique constraint on backtest_runs:   | 🟢  |      -       |  2  |     -      |
 |      |     |        | (strategy_id, symbol, date_range,         |     |              |     |            |
 |      |     |        | parameters)                               |     |              |     |            |
-|      |  5  |   -    | Implement get_backtest_results() method   | 🟡  |     4.1      |  2  |     -      |
+|      |  5  |   ✅   | Implement get_backtest_results() method   | 🟢  |      -       |  2  |    20m     |
 |      |     |        | to retrieve stored backtest by ID         |     |              |     |            |
-|      |  6  |   -    | Test storage by running backtest and      | 🟡  |     4.5      |  2  |     -      |
+|      |  6  |   ✅   | Test storage by running backtest and      | 🟢  |      -       |  2  |     -      |
 |      |     |        | querying DB to verify all data saved      |     |              |     |            |
-|  5   |     |   -    | **Build Backtest API Endpoints**          | 🟢  |      -       |  -  |     -      |
-|      |  1  |   -    | Create schemas/backtest.py with           | 🟢  |      -       |  3  |     -      |
+|  5   |     |   ✅   | **Build Backtest API Endpoints**          | 🟢  |      -       |  -  |   2h 0m    |
+|      |  1  |   ✅   | Create schemas/backtest.py with           | 🟢  |      -       |  3  |    30m     |
 |      |     |        | BacktestRequest, BacktestResponse,        |     |              |     |            |
 |      |     |        | BacktestMetrics schemas                   |     |              |     |            |
-|      |  2  |   -    | Create api/endpoints/backtests.py         | 🟡  |     5.1      |  3  |     -      |
-|      |  3  |   -    | Implement POST /api/backtests to run      | 🟡  |     4, 5.2   |  5  |     -      |
+|      |  2  |   ✅   | Create api/endpoints/backtests.py         | 🟢  |      -       |  3  |    25m     |
+|      |  3  |   ✅   | Implement POST /api/backtests to run      | 🟢  |      -       |  5  |    25m     |
 |      |     |        | new backtest with params: strategy_id,    |     |              |     |            |
 |      |     |        | symbol, start/end date                    |     |              |     |            |
 |      |  4  |   -    | Make backtest execution async (long       | 🟡  |     5.3      |  3  |     -      |
 |      |     |        | running) and return job ID                |     |              |     |            |
-|      |  5  |   -    | Implement GET /api/backtests/{id} to      | 🟡  |     5.2      |  2  |     -      |
+|      |  5  |   ✅   | Implement GET /api/backtests/{id} to      | 🟢  |      -       |  2  |    25m     |
 |      |     |        | retrieve backtest results                 |     |              |     |            |
-|      |  6  |   -    | Implement GET /api/backtests to list      | 🟡  |     5.2      |  2  |     -      |
+|      |  6  |   ✅   | Implement GET /api/backtests to list      | 🟢  |      -       |  2  |    25m     |
 |      |     |        | all backtests with summary metrics        |     |              |     |            |
-|      |  7  |   -    | Implement GET                             | 🟡  |     5.2      |  2  |     -      |
+|      |  7  |   ✅   | Implement GET                             | 🟢  |      -       |  2  |    25m     |
 |      |     |        | /api/backtests/{id}/trades to get         |     |              |     |            |
 |      |     |        | detailed trade list                       |     |              |     |            |
-|      |  8  |   -    | Implement GET                             | 🟡  |     5.2      |  2  |     -      |
+|      |  8  |   ✅   | Implement GET                             | 🟢  |      -       |  2  |    25m     |
 |      |     |        | /api/backtests/{id}/equity-curve for      |     |              |     |            |
 |      |     |        | chart data                                |     |              |     |            |
-|      |  9  |   -    | Manually test backtest API: POST to       | 🟡  |     5.3-5.8  |  2  |     -      |
+|      |  9  |   ✅   | Manually test backtest API: POST to       | 🟢  |      -       |  2  |     -      |
 |      |     |        | run AAPL 1-year backtest, GET             |     |              |     |            |
 |      |     |        | results                                   |     |              |     |            |
 |  6   |     |   -    | **Run Validation Backtests**              | 🟢  |      -       |  -  |     -      |
@@ -184,21 +184,21 @@
 |      |     |        | testing API endpoints                     |     |              |     |            |
 |      |  5  |   -    | Run pytest and ensure all Phase 4         | 🟡  |     7.2-7.4  |  1  |     -      |
 |      |     |        | tests pass with 70%+ coverage             |     |              |     |            |
-|  8   |     |   -    | **Document Backtesting Results and        | 🟢  |      -       |  -  |     -      |
+|  8   |     |   ✅   | **Document Backtesting Results and        | 🟢  |      -       |  -  |   1h 30m   |
 |      |     |        | Methodology**                             |     |              |     |            |
-|      |  1  |   -    | Create docs/BACKTESTING.md documenting    | 🟢  |      7       |  3  |     -      |
+|      |  1  |   ✅   | Create docs/BACKTESTING.md documenting    | 🟢  |      -       |  3  |    30m     |
 |      |     |        | backtesting approach, framework           |     |              |     |            |
 |      |     |        | choice                                    |     |              |     |            |
-|      |  2  |   -    | Document slippage and commission          | 🟡  |     8.1      |  2  |     -      |
+|      |  2  |   ✅   | Document slippage and commission          | 🟢  |      -       |  2  |    30m     |
 |      |     |        | assumptions (0.1%, $1)                    |     |              |     |            |
-|      |  3  |   -    | Document no look-ahead bias verification  | 🟡  |     8.1      |  2  |     -      |
+|      |  3  |   ✅   | Document no look-ahead bias verification  | 🟢  |      -       |  2  |    30m     |
 |      |     |        | (signal on close, execute on next         |     |              |     |            |
 |      |     |        | open)                                     |     |              |     |            |
-|      |  4  |   -    | Document all performance metrics          | 🟡  |     8.1      |  2  |     -      |
+|      |  4  |   ✅   | Document all performance metrics          | 🟢  |      -       |  2  |    30m     |
 |      |     |        | calculated and their interpretations      |     |              |     |            |
-|      |  5  |   -    | Include backtest API examples in          | 🟡  |     8.4      |  2  |     -      |
+|      |  5  |   ✅   | Include backtest API examples in          | 🟢  |      -       |  2  |    30m     |
 |      |     |        | documentation                             |     |              |     |            |
-|      |  6  |   -    | Document interpretation guide: what       | 🟡  |     8.4      |  3  |     -      |
+|      |  6  |   ✅   | Document interpretation guide: what       | 🟢  |      -       |  3  |    30m     |
 |      |     |        | good metrics look like (Sharpe >1.0,      |     |              |     |            |
 |      |     |        | drawdown <25%, win rate 40-60%)           |     |              |     |            |
 
