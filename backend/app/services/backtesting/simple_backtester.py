@@ -137,7 +137,9 @@ class SimpleBacktester:
         initial_capital: float = 100000.0,
         slippage_pct: float = 0.001,  # 0.1%
         commission_per_trade: float = 1.0,
-        position_size_pct: float = 0.95  # Use 95% of available cash
+        position_size_pct: float = 0.95,  # Use 95% of available cash
+        stop_loss_pct: Optional[float] = None,  # Stop loss percentage (e.g., 0.05 for 5%)
+        take_profit_pct: Optional[float] = None  # Take profit percentage (e.g., 0.10 for 10%)
     ):
         """
         Initialize backtester.
@@ -147,11 +149,15 @@ class SimpleBacktester:
             slippage_pct: Slippage percentage (0.001 = 0.1%)
             commission_per_trade: Commission per trade in dollars
             position_size_pct: Percentage of cash to use per trade
+            stop_loss_pct: Stop loss percentage (None to disable)
+            take_profit_pct: Take profit percentage (None to disable)
         """
         self.initial_capital = initial_capital
         self.slippage_pct = slippage_pct
         self.commission_per_trade = commission_per_trade
         self.position_size_pct = position_size_pct
+        self.stop_loss_pct = stop_loss_pct
+        self.take_profit_pct = take_profit_pct
 
         self.portfolio = PortfolioState(initial_capital)
         self.trades: List[BacktestTrade] = []
@@ -209,8 +215,22 @@ class SimpleBacktester:
             current_price = float(current_bar['close'])
             current_open = float(current_bar['open'])
 
-            # 1. Execute pending signal from previous bar (at current open)
-            if self.pending_signal:
+            # 1. Check stop-loss/take-profit for existing position
+            if self.portfolio.has_position() and self.current_trade:
+                sl_tp_triggered = self._check_stop_loss_take_profit(
+                    current_open=current_open,
+                    current_high=float(current_bar['high']),
+                    current_low=float(current_bar['low']),
+                    current_date=current_date
+                )
+
+                # If stop-loss or take-profit triggered, skip pending signal
+                if sl_tp_triggered:
+                    self.pending_signal = None
+                    self.pending_signal_metadata = None
+
+            # 2. Execute pending signal from previous bar (at current open)
+            if self.pending_signal and not self.portfolio.has_position():
                 self._execute_signal(
                     signal_type=self.pending_signal,
                     execution_price=current_open,
@@ -517,3 +537,65 @@ class SimpleBacktester:
         max_dd = drawdown.min()
 
         return abs(max_dd) if max_dd < 0 else 0.0
+
+    def _check_stop_loss_take_profit(
+        self,
+        current_open: float,
+        current_high: float,
+        current_low: float,
+        current_date: date
+    ) -> bool:
+        """
+        Check if stop-loss or take-profit should trigger.
+
+        Args:
+            current_open: Open price of current bar
+            current_high: High price of current bar
+            current_low: Low price of current bar
+            current_date: Current date
+
+        Returns:
+            True if position was closed, False otherwise
+        """
+        if not self.current_trade or not self.portfolio.has_position():
+            return False
+
+        entry_price = self.current_trade.entry_price
+
+        # Check stop-loss
+        if self.stop_loss_pct:
+            stop_price = entry_price * (1 - self.stop_loss_pct)
+
+            # If low touches or crosses stop price
+            if current_low <= stop_price:
+                logger.debug(
+                    f"STOP-LOSS triggered: entry=${entry_price:.2f}, "
+                    f"stop=${stop_price:.2f}, low=${current_low:.2f}"
+                )
+
+                self._close_position(
+                    exit_price=stop_price,
+                    exit_date=current_date,
+                    exit_signal="STOP_LOSS"
+                )
+                return True
+
+        # Check take-profit
+        if self.take_profit_pct:
+            target_price = entry_price * (1 + self.take_profit_pct)
+
+            # If high touches or crosses target price
+            if current_high >= target_price:
+                logger.debug(
+                    f"TAKE-PROFIT triggered: entry=${entry_price:.2f}, "
+                    f"target=${target_price:.2f}, high=${current_high:.2f}"
+                )
+
+                self._close_position(
+                    exit_price=target_price,
+                    exit_date=current_date,
+                    exit_signal="TAKE_PROFIT"
+                )
+                return True
+
+        return False
