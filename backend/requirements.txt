@@ -21,7 +21,8 @@ python-dotenv==1.0.0
 # Technical analysis
 pandas==2.1.4
 ta==0.11.0
-numpy==1.26.3
+git+https://github.com/0xAVX/pandas-ta.git  # pandas-ta 0.3.14b0 (Python 3.9 compatible)
+numpy==1.26.4
 
 # Interactive Brokers
 ib_insync==0.9.86
