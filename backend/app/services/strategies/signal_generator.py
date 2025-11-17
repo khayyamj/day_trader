@@ -52,8 +52,15 @@ class SignalGenerator:
         if not strategy:
             raise ValueError(f"Strategy {strategy_id} not found")
 
+        # Check if strategy is active and not in error/warming state
         if not strategy.active:
             raise ValueError(f"Strategy {strategy_id} is not active")
+
+        if strategy.status != "active":
+            raise ValueError(
+                f"Strategy {strategy_id} cannot generate signals in '{strategy.status}' state. "
+                "Only 'active' strategies can generate signals."
+            )
 
         # Get all stocks (watchlist)
         stocks = self.db.query(Stock).all()
