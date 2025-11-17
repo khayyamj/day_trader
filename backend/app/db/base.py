@@ -11,3 +11,4 @@ from app.models.order import Order  # noqa
 from app.models.stock_data import StockData  # noqa
 from app.models.indicator import Indicator  # noqa
 from app.models.strategy_event import StrategyEvent  # noqa
+from app.models.backtest import BacktestRun, BacktestTrade, BacktestEquityCurve  # noqa
