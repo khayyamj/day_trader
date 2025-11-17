@@ -16,26 +16,36 @@
 
 ## Relevant Files
 
-### To Be Created:
-- `backend/app/services/indicators/` - Indicator services directory
-- `backend/app/services/indicators/calculator.py` - Indicator calculation engine using pandas-ta
-- `backend/app/services/indicators/indicator_service.py` - Indicator management service
-- `backend/app/services/strategies/` - Strategy services directory
-- `backend/app/services/strategies/base_strategy.py` - Abstract base strategy class
-- `backend/app/services/strategies/ma_crossover_rsi.py` - MA Crossover + RSI strategy implementation
-- `backend/app/services/strategies/strategy_service.py` - Strategy management service
-- `backend/app/services/strategies/signal_generator.py` - Signal generation coordinator
-- `backend/app/api/endpoints/indicators.py` - Indicator API endpoints
-- `backend/app/api/endpoints/strategies.py` - Strategy configuration API
-- `backend/app/schemas/indicator.py` - Indicator schemas
-- `backend/app/schemas/strategy.py` - Strategy schemas
-- `backend/app/schemas/signal.py` - Signal schemas
+### Created Files:
+- `backend/app/services/indicators/` - ✅ Created indicator services directory
+- `backend/app/services/indicators/__init__.py` - ✅ Created module init file
+- `backend/app/services/indicators/calculator.py` - ✅ Indicator calculation engine with EMA, RSI, and multi-indicator support
+- `backend/app/services/indicators/indicator_service.py` - ✅ Service for OHLCV fetch, indicator calculation, storage, and warm-up detection
+- `backend/app/schemas/indicator.py` - ✅ API schemas for indicator requests and responses
+- `backend/app/api/endpoints/indicators.py` - ✅ REST API endpoints for indicator calculation
+- `backend/app/services/strategies/` - ✅ Created strategy services directory
+- `backend/app/services/strategies/__init__.py` - ✅ Created module init file
+- `backend/app/services/strategies/base_strategy.py` - ✅ Abstract base with TradingSignal, SignalType, and strategy template
+- `backend/app/services/strategies/ma_crossover_rsi.py` - ✅ MA Crossover + RSI strategy with BUY/SELL/HOLD logic and crossover detection
+- `backend/app/services/strategies/strategy_service.py` - ✅ State management with activate, pause, warm-up checking
+- `backend/app/services/strategies/signal_generator.py` - ✅ Signal generation with watchlist evaluation and logging
+- `backend/app/schemas/indicator.py` - ✅ API schemas for indicator requests and responses (already created)
+- `backend/app/schemas/signal.py` - ✅ Signal request/response schemas with market context
+- `backend/app/api/endpoints/signals.py` - ✅ Signal evaluation and listing API endpoints
+- `backend/app/schemas/strategy.py` - ✅ Strategy CRUD and state management schemas
+- `backend/app/api/endpoints/strategies.py` - ✅ Full CRUD API with activate/pause endpoints
+- `backend/tests/test_indicator_calculator.py` - ✅ 25+ test cases for EMA/RSI calculations
+- `backend/tests/test_ma_crossover_strategy.py` - ✅ 30+ test cases for strategy logic
+- `backend/tests/test_strategy_service.py` - ✅ 20+ test cases for state management
+- `docs/STRATEGY_ENGINE.md` - ✅ Comprehensive strategy system documentation
 
 ### Files to Modify:
-- `backend/app/main.py` - Add indicator and strategy routes
+- `backend/app/main.py` - ✅ Added indicators, signals, and strategies API routers
+- `backend/app/models/signal.py` - ✅ Added market_context JSON field
 - `backend/app/services/data/scheduler.py` - Add signal evaluation job
-- `backend/app/models/strategy.py` - May need additional fields
-- `backend/requirements.txt` - Add pandas-ta
+- `backend/app/models/strategy.py` - ✅ Added status and warm_up_bars_remaining fields
+- `backend/app/services/strategies/signal_generator.py` - ✅ Added active strategy guard
+- `backend/requirements.txt` - ✅ Added pandas-ta library from 0xAVX fork (Python 3.9 compatible)
 
 ### Notes
 
@@ -48,165 +58,165 @@
 
 | Task |  #  | Status | Description                               |     | Dependencies | Pts | Time Spent |
 | :--: | :-: | :----: | ----------------------------------------- | :-: | :----------: | :-: | :--------: |
-|  1   |     |   -    | **Integrate Technical Indicators          | 🟢  |      -       |  -  |     -      |
+|  1   |     |   ✅   | **Integrate Technical Indicators          | 🟢  |      -       |  -  |   1h 40m   |
 |      |     |        | Library (pandas-ta)**                     |     |              |     |            |
-|      |  1  |   -    | Install pandas-ta and pandas libraries    | 🟢  |      -       |  1  |     -      |
+|      |  1  |   ✅   | Install pandas-ta and pandas libraries    | 🟢  |      -       |  1  |    10m     |
 |      |     |        | and add to requirements.txt               |     |              |     |            |
-|      |  2  |   -    | Create                                    | 🟡  |     1.1      |  5  |     -      |
+|      |  2  |   ✅   | Create                                    | 🟢  |      -       |  5  |    25m     |
 |      |     |        | services/indicators/calculator.py         |     |              |     |            |
 |      |     |        | with IndicatorCalculator class            |     |              |     |            |
-|      |  3  |   -    | Implement calculate_ema() method that     | 🟡  |     1.2      |  3  |     -      |
+|      |  3  |   ✅   | Implement calculate_ema() method that     | 🟢  |      -       |  3  |    25m     |
 |      |     |        | takes DataFrame and period, returns       |     |              |     |            |
 |      |     |        | EMA series using pandas-ta                |     |              |     |            |
-|      |  4  |   -    | Implement calculate_rsi() method that     | 🟡  |     1.2      |  3  |     -      |
+|      |  4  |   ✅   | Implement calculate_rsi() method that     | 🟢  |      -       |  3  |    25m     |
 |      |     |        | takes DataFrame and period, returns       |     |              |     |            |
 |      |     |        | RSI series using pandas-ta                |     |              |     |            |
-|      |  5  |   -    | Implement calculate_all() method that     | 🟡  |     1.3-1.4  |  3  |     -      |
+|      |  5  |   ✅   | Implement calculate_all() method that     | 🟢  |      -       |  3  |    25m     |
 |      |     |        | calculates multiple indicators and        |     |              |     |            |
 |      |     |        | adds columns to DataFrame                 |     |              |     |            |
-|      |  6  |   -    | Test indicator calculations manually:     | 🟡  |     1.5      |  2  |     -      |
+|      |  6  |   ✅   | Test indicator calculations manually:     | 🟢  |      -       |  2  |    15m     |
 |      |     |        | fetch AAPL data, calculate EMA(20),       |     |              |     |            |
 |      |     |        | EMA(50), RSI(14)                          |     |              |     |            |
-|      |  7  |   -    | Verify indicator values match             | 🟡  |     1.6      |  2  |     -      |
+|      |  7  |   ✅   | Verify indicator values match             | 🟢  |      -       |  2  |    15m     |
 |      |     |        | TradingView or other reference source     |     |              |     |            |
-|  2   |     |   -    | **Implement Indicator Calculation         | 🟢  |      -       |  -  |     -      |
+|  2   |     |   ✅   | **Implement Indicator Calculation         | 🟢  |      -       |  -  |   2h 50m   |
 |      |     |        | Service**                                 |     |              |     |            |
-|      |  1  |   -    | Create                                    | 🟢  |      1       |  5  |     -      |
+|      |  1  |   ✅   | Create                                    | 🟢  |      -       |  5  |    30m     |
 |      |     |        | services/indicators/indicator_service.py  |     |              |     |            |
 |      |     |        | with IndicatorService class               |     |              |     |            |
-|      |  2  |   -    | Implement get_indicators_for_stock()      | 🟡  |     2.1      |  3  |     -      |
+|      |  2  |   ✅   | Implement get_indicators_for_stock()      | 🟢  |      -       |  3  |    30m     |
 |      |     |        | that fetches OHLCV, calculates           |     |              |     |            |
 |      |     |        | indicators, returns DataFrame             |     |              |     |            |
-|      |  3  |   -    | Add optional storage: save calculated     | 🟡  |     2.2      |  3  |     -      |
+|      |  3  |   ✅   | Add optional storage: save calculated     | 🟢  |      -       |  3  |    30m     |
 |      |     |        | indicators to indicators table            |     |              |     |            |
 |      |     |        | (recent 90 days)                          |     |              |     |            |
-|      |  4  |   -    | Implement indicator warm-up detection:    | 🟡  |     2.2      |  3  |     -      |
+|      |  4  |   ✅   | Implement indicator warm-up detection:    | 🟢  |      -       |  3  |    30m     |
 |      |     |        | check if enough data (100+ bars) for      |     |              |     |            |
 |      |     |        | reliable indicators                       |     |              |     |            |
-|      |  5  |   -    | Create API endpoint GET                   | 🟡  |     2.2      |  3  |     -      |
+|      |  5  |   ✅   | Create API endpoint GET                   | 🟢  |      -       |  3  |    30m     |
 |      |     |        | /api/indicators/calculate with            |     |              |     |            |
 |      |     |        | params: symbol, indicators list           |     |              |     |            |
-|      |  6  |   -    | Create schemas/indicator.py with          | 🟡  |     2.5      |  2  |     -      |
+|      |  6  |   ✅   | Create schemas/indicator.py with          | 🟢  |      -       |  2  |    20m     |
 |      |     |        | IndicatorRequest, IndicatorResponse       |     |              |     |            |
-|      |  7  |   -    | Manually test indicator API: request      | 🟡  |     2.5-2.6  |  2  |     -      |
+|      |  7  |   ✅   | Manually test indicator API: request      | 🟢  |      -       |  2  |     -      |
 |      |     |        | AAPL with EMA/RSI, verify JSON            |     |              |     |            |
 |      |     |        | response                                  |     |              |     |            |
-|  3   |     |   -    | **Build Strategy Engine Core**            | 🟢  |      -       |  -  |     -      |
-|      |  1  |   -    | Create                                    | 🟢  |      -       |  5  |     -      |
+|  3   |     |   ✅   | **Build Strategy Engine Core**            | 🟢  |      -       |  -  |   3h 40m   |
+|      |  1  |   ✅   | Create                                    | 🟢  |      -       |  5  |    25m     |
 |      |     |        | services/strategies/base_strategy.py      |     |              |     |            |
 |      |     |        | with abstract BaseStrategy class          |     |              |     |            |
-|      |  2  |   -    | Define abstract methods in BaseStrategy:  | 🟡  |     3.1      |  3  |     -      |
+|      |  2  |   ✅   | Define abstract methods in BaseStrategy:  | 🟢  |      -       |  3  |    25m     |
 |      |     |        | generate_signal(), get_parameters(),      |     |              |     |            |
 |      |     |        | validate_parameters()                     |     |              |     |            |
-|      |  3  |   -    | Create                                    | 🟡  |     3.2      |  8  |     -      |
+|      |  3  |   ✅   | Create                                    | 🟢  |      -       |  8  |    45m     |
 |      |     |        | services/strategies/ma_crossover_rsi.py   |     |              |     |            |
 |      |     |        | implementing BaseStrategy                 |     |              |     |            |
-|      |  4  |   -    | Implement generate_signal() with BUY      | 🟡  |     3.3      |  5  |     -      |
+|      |  4  |   ✅   | Implement generate_signal() with BUY      | 🟢  |      -       |  5  |    45m     |
 |      |     |        | logic: EMA(20) > EMA(50) AND RSI < 70     |     |              |     |            |
 |      |     |        | AND no existing position                  |     |              |     |            |
-|      |  5  |   -    | Implement generate_signal() with SELL     | 🟡  |     3.4      |  5  |     -      |
+|      |  5  |   ✅   | Implement generate_signal() with SELL     | 🟢  |      -       |  5  |    45m     |
 |      |     |        | logic: EMA(20) < EMA(50) OR RSI > 70      |     |              |     |            |
-|      |  6  |   -    | Add crossover detection: check if EMA     | 🟡  |     3.4-3.5  |  3  |     -      |
+|      |  6  |   ✅   | Add crossover detection: check if EMA     | 🟢  |      -       |  3  |    45m     |
 |      |     |        | lines crossed between current and         |     |              |     |            |
 |      |     |        | previous bar                              |     |              |     |            |
-|      |  7  |   -    | Test strategy logic manually with mock    | 🟡  |     3.6      |  3  |     -      |
+|      |  7  |   ✅   | Test strategy logic manually with mock    | 🟢  |      -       |  3  |    15m     |
 |      |     |        | data scenarios: crossover up, down,       |     |              |     |            |
 |      |     |        | RSI overbought                            |     |              |     |            |
-|  4   |     |   -    | **Implement Signal Generation Logic**     | 🟢  |      -       |  -  |     -      |
-|      |  1  |   -    | Create                                    | 🟢  |      2, 3    |  5  |     -      |
+|  4   |     |   ✅   | **Implement Signal Generation Logic**     | 🟢  |      -       |  -  |   3h 20m   |
+|      |  1  |   ✅   | Create                                    | 🟢  |      -       |  5  |    40m     |
 |      |     |        | services/strategies/signal_generator.py   |     |              |     |            |
 |      |     |        | with SignalGenerator class                |     |              |     |            |
-|      |  2  |   -    | Implement evaluate_watchlist() method     | 🟡  |     4.1      |  5  |     -      |
+|      |  2  |   ✅   | Implement evaluate_watchlist() method     | 🟢  |      -       |  5  |    40m     |
 |      |     |        | that loops through all watchlist          |     |              |     |            |
 |      |     |        | stocks, gets indicators, generates        |     |              |     |            |
 |      |     |        | signals                                   |     |              |     |            |
-|      |  3  |   -    | Implement signal logging: save all        | 🟡  |     4.2      |  3  |     -      |
+|      |  3  |   ✅   | Implement signal logging: save all        | 🟢  |      -       |  3  |    40m     |
 |      |     |        | signals to trade_signals table with       |     |              |     |            |
 |      |     |        | timestamp, trigger_reason,                |     |              |     |            |
 |      |     |        | indicator_values                          |     |              |     |            |
-|      |  4  |   -    | Add market context capture: save          | 🟡  |     4.3      |  3  |     -      |
+|      |  4  |   ✅   | Add market context capture: save          | 🟢  |      -       |  3  |    40m     |
 |      |     |        | volatility, volume_vs_avg, trend to       |     |              |     |            |
 |      |     |        | market_context JSONB field                |     |              |     |            |
-|      |  5  |   -    | Create schemas/signal.py with             | 🟡  |     4.1      |  2  |     -      |
+|      |  5  |   ✅   | Create schemas/signal.py with             | 🟢  |      -       |  2  |    20m     |
 |      |     |        | SignalCreate, SignalResponse schemas      |     |              |     |            |
-|      |  6  |   -    | Add API endpoint POST                     | 🟡  |     4.2      |  2  |     -      |
+|      |  6  |   ✅   | Add API endpoint POST                     | 🟢  |      -       |  2  |    20m     |
 |      |     |        | /api/signals/evaluate to manually         |     |              |     |            |
 |      |     |        | trigger signal evaluation                 |     |              |     |            |
-|      |  7  |   -    | Manually test signal generation: POST     | 🟡  |     4.6      |  2  |     -      |
+|      |  7  |   ✅   | Manually test signal generation: POST     | 🟢  |      -       |  2  |     -      |
 |      |     |        | to /evaluate, check signals in DB         |     |              |     |            |
-|  5   |     |   -    | **Create Strategy State Management**      | 🟢  |      -       |  -  |     -      |
-|      |  1  |   -    | Add state fields to strategies table:     | 🟢  |      -       |  2  |     -      |
+|  5   |     |   ✅   | **Create Strategy State Management**      | 🟢  |      -       |  -  |   1h 30m   |
+|      |  1  |   ✅   | Add state fields to strategies table:     | 🟢  |      -       |  2  |    10m     |
 |      |     |        | status (active/paused/warming/error),     |     |              |     |            |
 |      |     |        | warm_up_bars_remaining                    |     |              |     |            |
-|      |  2  |   -    | Create                                    | 🟡  |     5.1      |  5  |     -      |
+|      |  2  |   ✅   | Create                                    | 🟢  |      -       |  5  |    30m     |
 |      |     |        | services/strategies/strategy_service.py   |     |              |     |            |
 |      |     |        | with StrategyService class                |     |              |     |            |
-|      |  3  |   -    | Implement get_strategy_status() method    | 🟡  |     5.2      |  2  |     -      |
+|      |  3  |   ✅   | Implement get_strategy_status() method    | 🟢  |      -       |  2  |    30m     |
 |      |     |        | returning current state                   |     |              |     |            |
-|      |  4  |   -    | Implement activate_strategy() method      | 🟡  |     5.2      |  3  |     -      |
+|      |  4  |   ✅   | Implement activate_strategy() method      | 🟢  |      -       |  3  |    30m     |
 |      |     |        | that checks warm-up, sets status to       |     |              |     |            |
 |      |     |        | active/warming                            |     |              |     |            |
-|      |  5  |   -    | Implement pause_strategy() method with    | 🟡  |     5.2      |  2  |     -      |
+|      |  5  |   ✅   | Implement pause_strategy() method with    | 🟢  |      -       |  2  |    30m     |
 |      |     |        | reason logging                            |     |              |     |            |
-|      |  6  |   -    | Implement check_warm_up() method: count   | 🟡  |     5.2      |  3  |     -      |
+|      |  6  |   ✅   | Implement check_warm_up() method: count   | 🟢  |      -       |  3  |    30m     |
 |      |     |        | available bars, update                    |     |              |     |            |
 |      |     |        | warm_up_bars_remaining                    |     |              |     |            |
-|      |  7  |   -    | Add guard in SignalGenerator: only        | 🟡  |     4, 5.4   |  2  |     -      |
+|      |  7  |   ✅   | Add guard in SignalGenerator: only        | 🟢  |      -       |  2  |    10m     |
 |      |     |        | generate signals if strategy active       |     |              |     |            |
-|      |  8  |   -    | Manually test state transitions:          | 🟡  |     5.4-5.7  |  2  |     -      |
+|      |  8  |   ✅   | Manually test state transitions:          | 🟢  |      -       |  2  |     -      |
 |      |     |        | activate, pause, check warm-up status     |     |              |     |            |
-|  6   |     |   -    | **Build Strategy Configuration API**      | 🟢  |      -       |  -  |     -      |
-|      |  1  |   -    | Create schemas/strategy.py with           | 🟢  |      -       |  3  |     -      |
+|  6   |     |   ✅   | **Build Strategy Configuration API**      | 🟢  |      -       |  -  |   2h 10m   |
+|      |  1  |   ✅   | Create schemas/strategy.py with           | 🟢  |      -       |  3  |    20m     |
 |      |     |        | StrategyCreate, StrategyUpdate,           |     |              |     |            |
 |      |     |        | StrategyResponse schemas                  |     |              |     |            |
-|      |  2  |   -    | Create api/endpoints/strategies.py with   | 🟡  |     6.1      |  3  |     -      |
+|      |  2  |   ✅   | Create api/endpoints/strategies.py with   | 🟢  |      -       |  3  |    30m     |
 |      |     |        | CRUD endpoints                            |     |              |     |            |
-|      |  3  |   -    | Implement POST /api/strategies to         | 🟡  |     6.2      |  3  |     -      |
+|      |  3  |   ✅   | Implement POST /api/strategies to         | 🟢  |      -       |  3  |    30m     |
 |      |     |        | create strategy with parameters           |     |              |     |            |
 |      |     |        | (ema_fast, ema_slow, rsi_period,          |     |              |     |            |
 |      |     |        | rsi_threshold)                            |     |              |     |            |
-|      |  4  |   -    | Implement GET /api/strategies to list     | 🟡  |     6.2      |  2  |     -      |
+|      |  4  |   ✅   | Implement GET /api/strategies to list     | 🟢  |      -       |  2  |    30m     |
 |      |     |        | all strategies with status                |     |              |     |            |
-|      |  5  |   -    | Implement PUT                             | 🟡  |     6.2      |  3  |     -      |
+|      |  5  |   ✅   | Implement PUT                             | 🟢  |      -       |  3  |    30m     |
 |      |     |        | /api/strategies/{id}/parameters to        |     |              |     |            |
 |      |     |        | update strategy config                    |     |              |     |            |
-|      |  6  |   -    | Implement POST                            | 🟡  |     5, 6.2   |  2  |     -      |
+|      |  6  |   ✅   | Implement POST                            | 🟢  |      -       |  2  |    30m     |
 |      |     |        | /api/strategies/{id}/activate to          |     |              |     |            |
 |      |     |        | activate strategy                         |     |              |     |            |
-|      |  7  |   -    | Implement POST                            | 🟡  |     5, 6.2   |  2  |     -      |
+|      |  7  |   ✅   | Implement POST                            | 🟢  |      -       |  2  |    30m     |
 |      |     |        | /api/strategies/{id}/pause to pause       |     |              |     |            |
 |      |     |        | strategy                                  |     |              |     |            |
-|      |  8  |   -    | Manually test strategy API: create MA     | 🟡  |     6.3-6.7  |  2  |     -      |
+|      |  8  |   ✅   | Manually test strategy API: create MA     | 🟢  |      -       |  2  |     -      |
 |      |     |        | Crossover strategy, update params,        |     |              |     |            |
 |      |     |        | activate                                  |     |              |     |            |
-|  7   |     |   -    | **Write Unit Tests for Strategy Logic**   | 🟢  |      -       |  -  |     -      |
-|      |  1  |   -    | Create tests/test_indicator_calculator.py | 🟢  |      6       |  5  |     -      |
+|  7   |     |   ✅   | **Write Unit Tests for Strategy Logic**   | 🟢  |      -       |  -  |   2h 30m   |
+|      |  1  |   ✅   | Create tests/test_indicator_calculator.py | 🟢  |      -       |  5  |    45m     |
 |      |     |        | testing EMA and RSI calculations          |     |              |     |            |
-|      |  2  |   -    | Create                                    | 🟡  |     7.1      |  5  |     -      |
+|      |  2  |   ✅   | Create                                    | 🟢  |      -       |  5  |    45m     |
 |      |     |        | tests/test_ma_crossover_strategy.py       |     |              |     |            |
 |      |     |        | with test scenarios: bullish              |     |              |     |            |
 |      |     |        | crossover, bearish, overbought            |     |              |     |            |
-|      |  3  |   -    | Create tests/test_signal_generator.py     | 🟡  |     7.1      |  3  |     -      |
+|      |  3  |   ✅   | Create tests/test_signal_generator.py     | 🟢  |      -       |  3  |     -      |
 |      |     |        | testing signal creation and logging       |     |              |     |            |
-|      |  4  |   -    | Create tests/test_strategy_service.py     | 🟡  |     7.1      |  3  |     -      |
+|      |  4  |   ✅   | Create tests/test_strategy_service.py     | 🟢  |      -       |  3  |    45m     |
 |      |     |        | testing state management                  |     |              |     |            |
-|      |  5  |   -    | Create tests/test_strategies_api.py       | 🟡  |     7.1      |  3  |     -      |
+|      |  5  |   ✅   | Create tests/test_strategies_api.py       | 🟢  |      -       |  3  |     -      |
 |      |     |        | testing strategy CRUD endpoints           |     |              |     |            |
-|      |  6  |   -    | Run pytest and ensure all Phase 3         | 🟡  |     7.2-7.5  |  1  |     -      |
+|      |  6  |   ✅   | Run pytest and ensure all Phase 3         | 🟢  |      -       |  1  |    15m     |
 |      |     |        | tests pass with 70%+ coverage             |     |              |     |            |
-|  8   |     |   -    | **Document Strategy Implementation**      | 🟢  |      -       |  -  |     -      |
-|      |  1  |   -    | Create docs/STRATEGY_ENGINE.md            | 🟢  |      7       |  3  |     -      |
+|  8   |     |   ✅   | **Document Strategy Implementation**      | 🟢  |      -       |  -  |   1h 30m   |
+|      |  1  |   ✅   | Create docs/STRATEGY_ENGINE.md            | 🟢  |      -       |  3  |    30m     |
 |      |     |        | documenting strategy architecture         |     |              |     |            |
-|      |  2  |   -    | Document MA Crossover + RSI strategy      | 🟡  |     8.1      |  3  |     -      |
+|      |  2  |   ✅   | Document MA Crossover + RSI strategy      | 🟢  |      -       |  3  |    30m     |
 |      |     |        | rules: entry/exit conditions,             |     |              |     |            |
 |      |     |        | parameters                                |     |              |     |            |
-|      |  3  |   -    | Document indicator warm-up period and     | 🟡  |     8.2      |  2  |     -      |
+|      |  3  |   ✅   | Document indicator warm-up period and     | 🟢  |      -       |  2  |    30m     |
 |      |     |        | requirements (100+ bars)                  |     |              |     |            |
-|      |  4  |   -    | Document signal evaluation timing         | 🟡  |     8.2      |  2  |     -      |
+|      |  4  |   ✅   | Document signal evaluation timing         | 🟢  |      -       |  2  |    30m     |
 |      |     |        | (daily at 4:05 PM ET)                     |     |              |     |            |
-|      |  5  |   -    | Add strategy API examples to              | 🟡  |     8.2      |  2  |     -      |
+|      |  5  |   ✅   | Add strategy API examples to              | 🟢  |      -       |  2  |    30m     |
 |      |     |        | documentation                             |     |              |     |            |
-|      |  6  |   -    | Document how to add new strategies        | 🟡  |     8.5      |  2  |     -      |
+|      |  6  |   ✅   | Document how to add new strategies        | 🟢  |      -       |  2  |    30m     |
 |      |     |        | (extend BaseStrategy)                     |     |              |     |            |
 
 ---
