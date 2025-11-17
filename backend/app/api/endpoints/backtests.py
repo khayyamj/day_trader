@@ -16,12 +16,183 @@ from app.schemas.backtest import (
     EquityCurvePoint
 )
 from app.services.backtesting.backtest_engine import BacktestEngine
+from app.services.backtesting.job_manager import backtest_job_manager
 from app.models.backtest import BacktestRun, BacktestTrade, BacktestEquityCurve
 from app.core.logging import get_logger
+from app.db.session import SessionLocal
 
 logger = get_logger("backtests_api")
 
 router = APIRouter(prefix="/backtests", tags=["backtests"])
+
+
+def execute_backtest_job(job_id: str, request_dict: dict):
+    """
+    Background task to execute backtest.
+
+    Args:
+        job_id: Job ID for tracking
+        request_dict: Backtest request parameters
+    """
+    db = SessionLocal()
+
+    try:
+        # Mark job as running
+        backtest_job_manager.start_job(job_id)
+
+        # Parse request
+        start_date = date_type.fromisoformat(request_dict['start_date'])
+        end_date = date_type.fromisoformat(request_dict['end_date'])
+
+        # Run backtest
+        engine = BacktestEngine(db)
+
+        results = engine.run_backtest(
+            strategy_id=request_dict['strategy_id'],
+            symbol=request_dict['symbol'],
+            start_date=start_date,
+            end_date=end_date,
+            initial_capital=request_dict.get('initial_capital', 100000.0),
+            slippage_pct=request_dict.get('slippage_pct', 0.001),
+            commission_per_trade=request_dict.get('commission_per_trade', 1.0)
+        )
+
+        # Mark job as complete
+        backtest_job_manager.complete_job(job_id, results['backtest_id'])
+
+        logger.info(f"Job {job_id} completed successfully: backtest_id={results['backtest_id']}")
+
+    except Exception as e:
+        # Mark job as failed
+        error_msg = str(e)
+        backtest_job_manager.fail_job(job_id, error_msg)
+
+        logger.error(f"Job {job_id} failed: {error_msg}")
+
+    finally:
+        db.close()
+
+
+@router.post("/async", status_code=202)
+async def run_backtest_async(
+    request: BacktestRequest,
+    background_tasks: BackgroundTasks
+):
+    """
+    Run a backtest asynchronously (non-blocking).
+
+    This endpoint queues the backtest for background execution and returns
+    immediately with a job ID. Use the job ID to check status and retrieve
+    results when complete.
+
+    Args:
+        request: Backtest parameters
+        background_tasks: FastAPI background tasks
+
+    Returns:
+        Job information with job_id for tracking
+
+    Example:
+    ```json
+    {
+        "strategy_id": 1,
+        "symbol": "AAPL",
+        "start_date": "2024-01-01",
+        "end_date": "2024-12-31"
+    }
+    ```
+
+    Response:
+    ```json
+    {
+        "job_id": "550e8400-e29b-41d4-a716-446655440000",
+        "status": "pending",
+        "message": "Backtest queued for execution"
+    }
+    ```
+
+    Then check status:
+    ```
+    GET /api/backtests/jobs/{job_id}
+    ```
+    """
+    logger.info(f"Async backtest request: {request.symbol}")
+
+    try:
+        # Create job
+        request_dict = request.model_dump()
+        job_id = backtest_job_manager.create_job(request_dict)
+
+        # Queue backtest execution
+        background_tasks.add_task(execute_backtest_job, job_id, request_dict)
+
+        logger.info(f"Backtest job {job_id} queued")
+
+        return {
+            "job_id": job_id,
+            "status": "pending",
+            "message": "Backtest queued for execution",
+            "check_status_url": f"/api/backtests/jobs/{job_id}"
+        }
+
+    except Exception as e:
+        logger.error(f"Error creating backtest job: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Failed to queue backtest: {str(e)}")
+
+
+@router.get("/jobs/{job_id}")
+async def get_job_status(job_id: str):
+    """
+    Get status of an async backtest job.
+
+    Args:
+        job_id: Job ID from async backtest request
+
+    Returns:
+        Job status and progress information
+
+    Status values:
+    - pending: Job queued, not started
+    - running: Job executing
+    - completed: Job finished successfully
+    - failed: Job failed with error
+    """
+    logger.info(f"Job status request: {job_id}")
+
+    job = backtest_job_manager.get_job(job_id)
+
+    if not job:
+        raise HTTPException(status_code=404, detail=f"Job {job_id} not found")
+
+    response = job.to_dict()
+
+    # Add result URL if completed
+    if job.status.value == "completed" and job.backtest_run_id:
+        response['result_url'] = f"/api/backtests/{job.backtest_run_id}"
+
+    return response
+
+
+@router.get("/jobs")
+async def list_jobs(limit: int = 50):
+    """
+    List recent backtest jobs.
+
+    Args:
+        limit: Maximum number of jobs to return
+
+    Returns:
+        List of job statuses
+    """
+    logger.info("List jobs request")
+
+    jobs = backtest_job_manager.list_jobs(limit=limit)
+
+    return {
+        "jobs": jobs,
+        "total": len(jobs),
+        "status": "ok"
+    }
 
 
 @router.post("/", response_model=BacktestResponse, status_code=201)
@@ -30,7 +201,12 @@ async def run_backtest(
     db: Session = Depends(get_db)
 ):
     """
-    Run a new backtest.
+    Run a new backtest (synchronous).
+
+    This executes a strategy backtest on historical data and stores the results.
+    The request will block until the backtest completes.
+
+    For long-running backtests (>1 year), consider using POST /api/backtests/async instead.
 
     This executes a strategy backtest on historical data and stores the results.
 
