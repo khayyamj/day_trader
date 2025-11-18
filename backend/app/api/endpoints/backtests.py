@@ -2,8 +2,10 @@
 from fastapi import APIRouter, Depends, HTTPException, BackgroundTasks
 from sqlalchemy.orm import Session
 from datetime import date as date_type
+from typing import Optional
 
 from app.api.deps import get_db
+from app.models.stock import Stock
 from app.schemas.backtest import (
     BacktestRequest,
     BacktestResponse,
@@ -486,7 +488,3 @@ async def get_equity_curve(
     except Exception as e:
         logger.error(f"Error getting equity curve: {str(e)}")
         raise HTTPException(status_code=500, detail=str(e))
-
-
-from app.models.stock import Stock
-from typing import Optional
