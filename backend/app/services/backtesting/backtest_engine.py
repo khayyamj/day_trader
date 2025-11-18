@@ -109,8 +109,10 @@ class BacktestEngine:
             logger.error(f"Error fetching data: {str(e)}")
             raise ValueError(f"Failed to fetch data for {symbol}: {str(e)}")
 
-        # Filter to backtest period
-        df_backtest = df[(df.index >= pd.Timestamp(start_date)) & (df.index <= pd.Timestamp(end_date))]
+        # Filter to backtest period (handle timezone-aware timestamps)
+        start_ts = pd.Timestamp(start_date, tz='UTC')
+        end_ts = pd.Timestamp(end_date, tz='UTC')
+        df_backtest = df[(df.index >= start_ts) & (df.index <= end_ts)]
 
         if len(df_backtest) < 2:
             raise ValueError(

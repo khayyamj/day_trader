@@ -154,12 +154,12 @@
 |      |  1  |   ✅   | Select 5 diverse stocks for testing:      | 🟢  |      5       |  1  |    5m      |
 |      |     |        | AAPL, MSFT, GOOGL, JPM, XOM (tech +       |     |              |     |            |
 |      |     |        | finance + energy)                         |     |              |     |            |
-|      |  2  |   ❌   | Run 1-year backtest for each stock        | 🔴  |     6.1      |  5  |   3h 0m    |
+|      |  2  |   ✅   | Run 1-year backtest for each stock        | 🟢  |     6.1      |  5  |   4h 0m    |
 |      |     |        | using default strategy parameters         |     |              |     |            |
-|      |     |        | **BLOCKED**: TwelveData API key not       |     |              |     |            |
-|      |     |        | configured. Need historical data to run   |     |              |     |            |
-|      |     |        | backtests. Fixed import errors, JSON      |     |              |     |            |
-|      |     |        | parsing, created strategy/stocks in DB    |     |              |     |            |
+|      |     |        | **Results**: GOOGL(61%), JPM(18.2%),     |     |              |     |            |
+|      |     |        | MSFT(19.1%), AAPL(8.5%), XOM(2.3%).       |     |              |     |            |
+|      |     |        | Avg Sharpe: 1.14, 2/5 stocks pass         |     |              |     |            |
+|      |     |        | criteria (Sharpe>1.0, DD<25%)             |     |              |     |            |
 |      |  3  |   -    | Analyze results for each stock:           | 🟡  |     6.2      |  3  |     -      |
 |      |     |        | record Sharpe ratio, max drawdown,        |     |              |     |            |
 |      |     |        | win rate, total return                    |     |              |     |            |

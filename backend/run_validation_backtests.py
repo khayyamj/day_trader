@@ -130,7 +130,9 @@ def run_validation_backtests():
             avg_win_rate = sum(r['win_rate_pct'] for r in valid_results if r['win_rate_pct']) / len([r for r in valid_results if r['win_rate_pct']]) if any(r['win_rate_pct'] for r in valid_results) else None
 
             print(f"{'-'*80}")
-            print(f"{'AVERAGE':<10} {avg_return:.2f}{'':<8} {avg_sharpe:.2f if avg_sharpe else 'N/A':<10} {'':<12} {avg_win_rate:.2f if avg_win_rate else 'N/A':<12}")
+            sharpe_str = f"{avg_sharpe:.2f}" if avg_sharpe else "N/A"
+            wr_str = f"{avg_win_rate:.2f}" if avg_win_rate else "N/A"
+            print(f"{'AVERAGE':<10} {avg_return:.2f}{'':<8} {sharpe_str:<10} {'':<12} {wr_str:<12}")
 
         print(f"{'='*80}\n")
 
