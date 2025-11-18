@@ -1,6 +1,6 @@
 """Signal schemas for API requests and responses."""
 from pydantic import BaseModel, Field
-from typing import Optional, Dict, List
+from typing import Optional, Dict, List, Any
 from datetime import datetime
 
 
@@ -30,7 +30,7 @@ class SignalResponse(BaseModel):
     signal_time: str
     trigger_reason: str
     indicator_values: Dict[str, float]
-    market_context: Dict[str, any]
+    market_context: Dict[str, Any]
     executed: bool
 
     class Config:

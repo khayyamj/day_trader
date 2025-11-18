@@ -1,11 +1,12 @@
 """Backtest engine for coordinating backtest execution and storage."""
-from typing import Dict, Optional
+from typing import Dict, Optional, List
 from datetime import date, datetime, timedelta
 from sqlalchemy.orm import Session
 import time
 
 from app.services.backtesting.simple_backtester import SimpleBacktester
 from app.services.indicators.indicator_service import IndicatorService
+from app.services.strategies.base_strategy import BaseStrategy
 from app.services.strategies.ma_crossover_rsi import MACrossoverRSIStrategy
 from app.models.strategy import Strategy
 from app.models.stock import Stock
@@ -328,6 +329,3 @@ class BacktestEngine:
     def _get_backtest_param(self, data: Dict, key: str, default: any) -> any:
         """Safely get backtest parameter with default."""
         return data.get(key, default)
-
-
-import pd

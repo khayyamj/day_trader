@@ -46,7 +46,7 @@ class BacktestMetrics(BaseModel):
     largest_loss: Optional[float] = Field(None, description="Largest losing trade")
 
 
-class BacktestTrade Schema(BaseModel):
+class BacktestTradeSchema(BaseModel):
     """Individual trade from a backtest."""
     trade_number: int
     entry_date: date
