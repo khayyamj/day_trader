@@ -2,6 +2,7 @@
 from fastapi import APIRouter, Depends, HTTPException, Body
 from sqlalchemy.orm import Session
 from typing import Optional
+import json
 
 from app.api.deps import get_db
 from app.schemas.strategy import (
@@ -81,11 +82,16 @@ async def create_strategy(
 
         logger.info(f"Strategy created: {new_strategy.id}")
 
+        # Parse parameters if JSON string
+        params = new_strategy.parameters
+        if isinstance(params, str):
+            params = json.loads(params)
+
         return StrategyResponse(
             strategy_id=new_strategy.id,
             name=new_strategy.name,
             description=new_strategy.description,
-            parameters=new_strategy.parameters,
+            parameters=params,
             status=new_strategy.status,
             active=new_strategy.active,
             warm_up_bars_remaining=new_strategy.warm_up_bars_remaining
@@ -122,18 +128,24 @@ async def list_strategies(
         service = StrategyService(db)
         strategies_data = service.list_strategies()
 
-        strategy_responses = [
-            StrategyResponse(
-                strategy_id=s['strategy_id'],
-                name=s['name'],
-                description=s['description'],
-                parameters=s['parameters'],
-                status=s['status'],
-                active=s['active'],
-                warm_up_bars_remaining=s['warm_up_bars_remaining']
+        strategy_responses = []
+        for s in strategies_data:
+            # Parse parameters if JSON string
+            params = s['parameters']
+            if isinstance(params, str):
+                params = json.loads(params)
+
+            strategy_responses.append(
+                StrategyResponse(
+                    strategy_id=s['strategy_id'],
+                    name=s['name'],
+                    description=s['description'],
+                    parameters=params,
+                    status=s['status'],
+                    active=s['active'],
+                    warm_up_bars_remaining=s['warm_up_bars_remaining']
+                )
             )
-            for s in strategies_data
-        ]
 
         logger.info(f"Returning {len(strategy_responses)} strategies")
 
@@ -177,11 +189,16 @@ async def get_strategy(
                 detail=f"Strategy {strategy_id} not found"
             )
 
+        # Parse parameters if JSON string
+        params = strategy.parameters
+        if isinstance(params, str):
+            params = json.loads(params)
+
         return StrategyResponse(
             strategy_id=strategy.id,
             name=strategy.name,
             description=strategy.description,
-            parameters=strategy.parameters,
+            parameters=params,
             status=strategy.status,
             active=strategy.active,
             warm_up_bars_remaining=strategy.warm_up_bars_remaining

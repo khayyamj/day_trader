@@ -6,7 +6,8 @@
       "Bash(pip install:*)",
       "Bash(pytest:*)",
       "WebSearch",
-      "Bash(python3:*)"
+      "Bash(python3:*)",
+      "Bash(curl -s -v http://localhost:8000/api/stocks)"
     ],
     "deny": [],
     "ask": []
