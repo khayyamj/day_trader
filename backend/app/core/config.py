@@ -45,7 +45,9 @@ class Settings(BaseSettings):
     IBKR_USERNAME: Optional[str] = Field(default=None)
     IBKR_PASSWORD: Optional[str] = Field(default=None)
     IBKR_TRADING_MODE: str = Field(default="paper")
+    IBKR_HOST: str = Field(default="127.0.0.1")
     IBKR_PORT: int = Field(default=7497)
+    IBKR_CLIENT_ID: int = Field(default=1)
 
     # CORS
     BACKEND_CORS_ORIGINS: List[str] = Field(
