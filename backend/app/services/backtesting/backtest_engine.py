@@ -3,6 +3,8 @@ from typing import Dict, Optional, List
 from datetime import date, datetime, timedelta
 from sqlalchemy.orm import Session
 import time
+import json
+import pandas as pd
 
 from app.services.backtesting.simple_backtester import SimpleBacktester
 from app.services.indicators.indicator_service import IndicatorService
@@ -321,8 +323,13 @@ class BacktestEngine:
 
     def _create_strategy_instance(self, strategy: Strategy) -> BaseStrategy:
         """Create strategy instance from database model."""
+        # Parse parameters if they're stored as JSON string
+        params = strategy.parameters
+        if isinstance(params, str):
+            params = json.loads(params)
+
         if strategy.name == "MA Crossover + RSI":
-            return MACrossoverRSIStrategy(parameters=strategy.parameters)
+            return MACrossoverRSIStrategy(parameters=params)
 
         raise ValueError(f"Unsupported strategy type: {strategy.name}")
 

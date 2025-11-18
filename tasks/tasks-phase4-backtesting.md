@@ -154,12 +154,12 @@
 |      |  1  |   ✅   | Select 5 diverse stocks for testing:      | 🟢  |      5       |  1  |    5m      |
 |      |     |        | AAPL, MSFT, GOOGL, JPM, XOM (tech +       |     |              |     |            |
 |      |     |        | finance + energy)                         |     |              |     |            |
-|      |  2  |   ❌   | Run 1-year backtest for each stock        | 🔴  |     6.1      |  5  |   2h 0m    |
+|      |  2  |   ❌   | Run 1-year backtest for each stock        | 🔴  |     6.1      |  5  |   3h 0m    |
 |      |     |        | using default strategy parameters         |     |              |     |            |
-|      |     |        | **BLOCKED**: Data fetching error in       |     |              |     |            |
-|      |     |        | backtest engine - indicator formatting    |     |              |     |            |
-|      |     |        | issue. Fixed multiple import errors,      |     |              |     |            |
-|      |     |        | created strategy and stocks in DB         |     |              |     |            |
+|      |     |        | **BLOCKED**: TwelveData API key not       |     |              |     |            |
+|      |     |        | configured. Need historical data to run   |     |              |     |            |
+|      |     |        | backtests. Fixed import errors, JSON      |     |              |     |            |
+|      |     |        | parsing, created strategy/stocks in DB    |     |              |     |            |
 |      |  3  |   -    | Analyze results for each stock:           | 🟡  |     6.2      |  3  |     -      |
 |      |     |        | record Sharpe ratio, max drawdown,        |     |              |     |            |
 |      |     |        | win rate, total return                    |     |              |     |            |
