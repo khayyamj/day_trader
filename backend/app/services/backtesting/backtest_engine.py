@@ -330,7 +330,8 @@ class BacktestEngine:
         if isinstance(params, str):
             params = json.loads(params)
 
-        if strategy.name == "MA Crossover + RSI":
+        # Match strategy by name (support variations like "MA Crossover + RSI (Baseline)")
+        if "MA Crossover + RSI" in strategy.name or strategy.name == "MA Crossover + RSI":
             return MACrossoverRSIStrategy(parameters=params)
 
         raise ValueError(f"Unsupported strategy type: {strategy.name}")

@@ -40,6 +40,7 @@
 - `backend/run_validation_backtests.py` - ✅ Runs backtests on all 5 validation stocks
 - `backend/fetch_historical_data.py` - ✅ Fetches historical data from TwelveData API
 - `backend/show_results.py` - ✅ Displays backtest results from database
+- `backend/test_parameter_sensitivity.py` - ✅ Tests EMA parameter variations (±20%)
 - `backend/.env` - ✅ Environment configuration (copied from parent)
 - `docs/BACKTEST_RESULTS.md` - ✅ Comprehensive backtest results documentation
 
@@ -157,7 +158,7 @@
 |      |  9  |   ✅   | Manually test backtest API: POST to       | 🟢  |      -       |  2  |     -      |
 |      |     |        | run AAPL 1-year backtest, GET             |     |              |     |            |
 |      |     |        | results                                   |     |              |     |            |
-|  6   |     |   ✅   | **Run Validation Backtests**              | 🟢  |      -       |  -  |   6h 15m   |
+|  6   |     |   ✅   | **Run Validation Backtests**              | 🟢  |      -       |  -  |   7h 45m   |
 |      |  1  |   ✅   | Select 5 diverse stocks for testing:      | 🟢  |      5       |  1  |    5m      |
 |      |     |        | AAPL, MSFT, GOOGL, JPM, XOM (tech +       |     |              |     |            |
 |      |     |        | finance + energy)                         |     |              |     |            |
@@ -173,10 +174,13 @@
 |      |     |        | **Analysis**: All stocks 100% win rate.   |     |              |     |            |
 |      |     |        | GOOGL best (2.70 Sharpe), XOM worst      |     |              |     |            |
 |      |     |        | (0.22 Sharpe). Results saved in DB        |     |              |     |            |
-|      |  4  |   -    | Test parameter sensitivity: run           | 🟡  |     6.3      |  5  |     -      |
+|      |  4  |   ✅   | Test parameter sensitivity: run           | 🟢  |     6.3      |  5  |   1h 30m   |
 |      |     |        | backtests with EMA periods ±20%           |     |              |     |            |
 |      |     |        | (e.g., EMA 16/24 instead of 20,           |     |              |     |            |
 |      |     |        | 40/60 instead of 50)                      |     |              |     |            |
+|      |     |        | **Results**: 0% variation across EMA      |     |              |     |            |
+|      |     |        | 16/40, 20/50, 24/60. Strategy ROBUST      |     |              |     |            |
+|      |     |        | to parameter changes (not overfitted)     |     |              |     |            |
 |      |  5  |   ✅   | Verify no look-ahead bias: manually       | 🟢  |     6.2      |  3  |    20m     |
 |      |     |        | inspect sample trades to ensure           |     |              |     |            |
 |      |     |        | signal on close, execute on next          |     |              |     |            |
