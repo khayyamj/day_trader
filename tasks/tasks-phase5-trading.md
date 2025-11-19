@@ -80,7 +80,7 @@
 |      |  9  |   ✅   | Manually test connection: start IB        | 🟢  |     1.8      |  1  |     5m     |
 |      |     |        | Gateway, run Python script to             |     |              |     |            |
 |      |     |        | connect, verify in logs                   |     |              |     |            |
-|  2   |     |   🔄   | **Implement Order Submission Service**    | 🟢  |      1       |  -  |     -      |
+|  2   |     |   ✅   | **Implement Order Submission Service**    | 🟢  |      1       |  -  |     30m    |
 |      |  1  |   ✅   | Create services/trading/order_service.py  | 🟢  |      1       |  5  |     30m    |
 |      |     |        | with OrderService class                   |     |              |     |            |
 |      |  2  |   ✅   | Implement submit_market_order() for buy   | 🟢  |     2.1      |  5  |     -      |
@@ -107,7 +107,7 @@
 |      | 10  |   -    | Test stop-loss order: submit and verify   | 🟢  |     2.9      |  2  |     -      |
 |      |     |        | visible in IBKR TWS as separate           |     |              |     |            |
 |      |     |        | order [MANUAL TEST - USER]                |     |              |     |            |
-|  3   |     |   🔄   | **Build Position Reconciliation System**  | 🟢  |      2       |  -  |     -      |
+|  3   |     |   ✅   | **Build Position Reconciliation System**  | 🟢  |      2       |  -  |     40m    |
 |      |  1  |   ✅   | Create                                    | 🟢  |      1       |  5  |     40m    |
 |      |     |        | services/trading/position_service.py      |     |              |     |            |
 |      |     |        | with PositionService class                |     |              |     |            |
@@ -148,7 +148,7 @@
 |      |  7  |   -    | Test position sizer manually: portfolio   | 🟢  |     4.6      |  2  |     -      |
 |      |     |        | $10k, entry $100, stop $95, verify        |     |              |     |            |
 |      |     |        | 40 shares [MANUAL TEST - USER]            |     |              |     |            |
-|  5   |     |   🔄   | **Create Risk Management Engine**         | 🟢  |      4       |  -  |    50m     |
+|  5   |     |   ✅   | **Create Risk Management Engine**         | 🟢  |      4       |  -  |    50m     |
 |      |  1  |   ✅   | Create services/risk/risk_manager.py      | 🟢  |      -       |  5  |     -      |
 |      |     |        | with RiskManager class                    |     |              |     |            |
 |      |  2  |   ✅   | Implement check_portfolio_allocation()    | 🟡  |     5.1      |  3  |     -      |
@@ -169,7 +169,7 @@
 |      |     |        | rejected                                  |     |              |     |            |
 |      | 10  |   -    | Test risk manager: try trades that        | 🟡  |     5.9      |  3  |     -      |
 |      |     |        | violate each rule, verify rejection       |     |              |     |            |
-|  6   |     |   🔄   | **Implement Stop-Loss/Take-Profit         | 🟢  |      -       |  -  |    1h 15m  |
+|  6   |     |   ✅   | **Implement Stop-Loss/Take-Profit         | 🟢  |      -       |  -  |    1h 15m  |
 |      |     |        | Management**                              |     |              |     |            |
 |      |  1  |   ✅   | Add calculate_stop_loss_price() to        | 🟢  |      -       |  2  |     -      |
 |      |     |        | strategy: entry_price * (1 -              |     |              |     |            |
@@ -197,7 +197,7 @@
 |      |  9  |   -    | Test full execution flow: generate        | 🟡  |     6.8      |  3  |     -      |
 |      |     |        | signal, execute, verify market order +    |     |              |     |            |
 |      |     |        | stop + TP in IBKR [MANUAL TEST - USER]   |     |              |     |            |
-|  7   |     |   🔄   | **Build Daily Loss Limit Detector**       | 🟢  |      -       |  -  |     35m    |
+|  7   |     |   ✅   | **Build Daily Loss Limit Detector**       | 🟢  |      -       |  -  |     35m    |
 |      |  1  |   ✅   | Create                                    | 🟢  |      -       |  5  |     -      |
 |      |     |        | services/risk/loss_limit_detector.py      |     |              |     |            |
 |      |     |        | with LossLimitDetector class              |     |              |     |            |
