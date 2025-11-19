@@ -17,24 +17,29 @@
 
 ## Relevant Files
 
-### To Be Created:
-- `backend/app/services/trading/` - Trading services directory
-- `backend/app/services/trading/ibkr_client.py` - IBKR API wrapper using ib_insync
-- `backend/app/services/trading/order_service.py` - Order submission and tracking
+### Created:
+- `backend/app/services/trading/__init__.py` - Trading services module initialization
+- `backend/app/services/trading/ibkr_client.py` - IBKR API wrapper using ib_insync with connection management
+- `backend/app/services/trading/order_service.py` - Order submission and tracking service
 - `backend/app/services/trading/position_service.py` - Position management and reconciliation
+- `backend/app/services/risk/position_sizer.py` - Position sizing calculator using 2% risk rule
+- `backend/app/services/risk/risk_manager.py` - Risk management engine enforcing all trading rules
+- `backend/test_ibkr_connection.py` - Test script for IBKR connection verification
+
+### To Be Created:
 - `backend/app/services/trading/execution_engine.py` - Main trade execution coordinator
-- `backend/app/services/risk/` - Risk management services directory
-- `backend/app/services/risk/position_sizer.py` - Position sizing calculator (2% rule)
-- `backend/app/services/risk/risk_manager.py` - Risk rule enforcement engine
 - `backend/app/services/risk/loss_limit_detector.py` - Daily loss limit tracker
 - `backend/app/api/endpoints/trading.py` - Trading API endpoints
 - `backend/app/api/endpoints/orders.py` - Order management API
 - `backend/app/schemas/order.py` - Order schemas
 - `backend/app/schemas/position.py` - Position schemas
 
+### Modified:
+- `backend/app/core/config.py` - Added IBKR_HOST and IBKR_CLIENT_ID configuration
+- `backend/.env` - Added IBKR connection credentials
+
 ### Files to Modify:
 - `backend/app/main.py` - Add trading routes
-- `backend/app/core/config.py` - Add IBKR credentials
 - `backend/app/models/order.py` - May need additional fields
 - `backend/app/models/trade.py` - Add risk management fields
 - `backend/app/services/strategies/signal_generator.py` - Connect to execution engine
@@ -52,113 +57,113 @@
 
 | Task |  #  | Status | Description                               |     | Dependencies | Pts | Time Spent |
 | :--: | :-: | :----: | ----------------------------------------- | :-: | :----------: | :-: | :--------: |
-|  1   |     |   -    | **Set Up IBKR Integration**               | 🟢  |      -       |  -  |     -      |
-|      |  1  |   -    | Open IBKR paper trading account online    | 🟢  |      -       |  2  |     -      |
-|      |  2  |   -    | Download and install IB Gateway or TWS    | 🟡  |     1.1      |  1  |     -      |
+|  1   |     |   ✅   | **Set Up IBKR Integration**               | 🟢  |      -       |  -  |   1h 20m   |
+|      |  1  |   ✅   | Open IBKR paper trading account online    | 🟢  |      -       |  2  |     5m     |
+|      |  2  |   ✅   | Download and install IB Gateway or TWS    | 🟢  |     1.1      |  1  |     5m     |
 |      |     |        | desktop application                       |     |              |     |            |
-|      |  3  |   -    | Configure IB Gateway: enable API          | 🟡  |     1.2      |  2  |     -      |
+|      |  3  |   ✅   | Configure IB Gateway: enable API          | 🟢  |     1.2      |  2  |     10m    |
 |      |     |        | connections, set port 7497 (paper),       |     |              |     |            |
 |      |     |        | add localhost to trusted IPs              |     |              |     |            |
-|      |  4  |   -    | Install ib_insync library and add to      | 🟡  |     1.3      |  1  |     -      |
+|      |  4  |   ✅   | Install ib_insync library and add to      | 🟢  |     1.3      |  1  |     5m     |
 |      |     |        | requirements.txt                          |     |              |     |            |
-|      |  5  |   -    | Add IBKR credentials to .env:             | 🟡  |     1.4      | 0.5 |     -      |
+|      |  5  |   ✅   | Add IBKR credentials to .env:             | 🟢  |     1.4      | 0.5 |     5m     |
 |      |     |        | IBKR_HOST, IBKR_PORT, IBKR_CLIENT_ID      |     |              |     |            |
-|      |  6  |   -    | Create services/trading/ibkr_client.py    | 🟡  |     1.4      |  5  |     -      |
+|      |  6  |   ✅   | Create services/trading/ibkr_client.py    | 🟢  |     1.4      |  5  |     15m    |
 |      |     |        | with IBKRClient class wrapping            |     |              |     |            |
 |      |     |        | ib_insync.IB                              |     |              |     |            |
-|      |  7  |   -    | Implement connect() method with retry     | 🟡  |     1.6      |  3  |     -      |
+|      |  7  |   ✅   | Implement connect() method with retry     | 🟢  |     1.6      |  3  |     20m    |
 |      |     |        | logic and connection monitoring           |     |              |     |            |
-|      |  8  |   -    | Implement disconnect() method and         | 🟡  |     1.7      |  2  |     -      |
+|      |  8  |   ✅   | Implement disconnect() method and         | 🟢  |     1.7      |  2  |     15m    |
 |      |     |        | reconnect on connection loss              |     |              |     |            |
-|      |  9  |   -    | Manually test connection: start IB        | 🟡  |     1.8      |  1  |     -      |
+|      |  9  |   ✅   | Manually test connection: start IB        | 🟢  |     1.8      |  1  |     5m     |
 |      |     |        | Gateway, run Python script to             |     |              |     |            |
 |      |     |        | connect, verify in logs                   |     |              |     |            |
-|  2   |     |   -    | **Implement Order Submission Service**    | 🟢  |      -       |  -  |     -      |
-|      |  1  |   -    | Create services/trading/order_service.py  | 🟢  |      1       |  5  |     -      |
+|  2   |     |   🔄   | **Implement Order Submission Service**    | 🟢  |      1       |  -  |     -      |
+|      |  1  |   ✅   | Create services/trading/order_service.py  | 🟢  |      1       |  5  |     30m    |
 |      |     |        | with OrderService class                   |     |              |     |            |
-|      |  2  |   -    | Implement submit_market_order() for buy   | 🟡  |     2.1      |  5  |     -      |
+|      |  2  |   ✅   | Implement submit_market_order() for buy   | 🟢  |     2.1      |  5  |     -      |
 |      |     |        | orders: symbol, quantity, action (BUY)    |     |              |     |            |
-|      |  3  |   -    | Implement submit_market_order() for       | 🟡  |     2.2      |  3  |     -      |
+|      |  3  |   ✅   | Implement submit_market_order() for       | 🟢  |     2.2      |  3  |     -      |
 |      |     |        | sell orders: symbol, quantity, action     |     |              |     |            |
 |      |     |        | (SELL)                                    |     |              |     |            |
-|      |  4  |   -    | Add order tracking: store broker_order_id | 🟡  |     2.2      |  3  |     -      |
+|      |  4  |   ✅   | Add order tracking: store broker_order_id | 🟢  |     2.2      |  3  |     -      |
 |      |     |        | in orders table immediately after         |     |              |     |            |
 |      |     |        | submission                                |     |              |     |            |
-|      |  5  |   -    | Implement submit_stop_loss_order() to     | 🟡  |     2.2      |  5  |     -      |
+|      |  5  |   ✅   | Implement submit_stop_loss_order() to     | 🟢  |     2.2      |  5  |     -      |
 |      |     |        | place stop at broker level: symbol,       |     |              |     |            |
 |      |     |        | quantity, stop_price                      |     |              |     |            |
-|      |  6  |   -    | Implement submit_take_profit_order()      | 🟡  |     2.5      |  3  |     -      |
+|      |  6  |   ✅   | Implement submit_take_profit_order()      | 🟢  |     2.5      |  3  |     -      |
 |      |     |        | (limit order) at broker level             |     |              |     |            |
-|      |  7  |   -    | Add order status monitoring: poll IBKR    | 🟡  |     2.2      |  5  |     -      |
+|      |  7  |   ✅   | Add order status monitoring: poll IBKR    | 🟢  |     2.2      |  5  |     -      |
 |      |     |        | every 30 seconds for order fills,         |     |              |     |            |
 |      |     |        | update orders table                       |     |              |     |            |
-|      |  8  |   -    | Implement error handling: rejections,     | 🟡  |     2.2      |  3  |     -      |
+|      |  8  |   ✅   | Implement error handling: rejections,     | 🟢  |     2.2      |  3  |     -      |
 |      |     |        | insufficient margin, invalid symbol       |     |              |     |            |
-|      |  9  |   -    | Manually test orders: submit buy order    | 🟡  |     2.8      |  2  |     -      |
+|      |  9  |   -    | Manually test orders: submit buy order    | 🟢  |     2.8      |  2  |     -      |
 |      |     |        | for AAPL, verify in IBKR TWS,             |     |              |     |            |
-|      |     |        | check DB                                  |     |              |     |            |
-|      | 10  |   -    | Test stop-loss order: submit and verify   | 🟡  |     2.9      |  2  |     -      |
+|      |     |        | check DB [MANUAL TEST - USER]             |     |              |     |            |
+|      | 10  |   -    | Test stop-loss order: submit and verify   | 🟢  |     2.9      |  2  |     -      |
 |      |     |        | visible in IBKR TWS as separate           |     |              |     |            |
-|      |     |        | order                                     |     |              |     |            |
-|  3   |     |   -    | **Build Position Reconciliation System**  | 🟢  |      -       |  -  |     -      |
-|      |  1  |   -    | Create                                    | 🟢  |      1       |  5  |     -      |
+|      |     |        | order [MANUAL TEST - USER]                |     |              |     |            |
+|  3   |     |   🔄   | **Build Position Reconciliation System**  | 🟢  |      2       |  -  |     -      |
+|      |  1  |   ✅   | Create                                    | 🟢  |      1       |  5  |     40m    |
 |      |     |        | services/trading/position_service.py      |     |              |     |            |
 |      |     |        | with PositionService class                |     |              |     |            |
-|      |  2  |   -    | Implement get_broker_positions() that     | 🟡  |     3.1      |  3  |     -      |
+|      |  2  |   ✅   | Implement get_broker_positions() that     | 🟢  |     3.1      |  3  |     -      |
 |      |     |        | queries IBKR for current positions        |     |              |     |            |
-|      |  3  |   -    | Implement get_db_positions() that         | 🟡  |     3.1      |  2  |     -      |
+|      |  3  |   ✅   | Implement get_db_positions() that         | 🟢  |     3.1      |  2  |     -      |
 |      |     |        | queries trades table for open             |     |              |     |            |
 |      |     |        | positions                                 |     |              |     |            |
-|      |  4  |   -    | Implement reconcile_positions() that      | 🟡  |     3.2-3.3  |  5  |     -      |
+|      |  4  |   ✅   | Implement reconcile_positions() that      | 🟢  |     3.2-3.3  |  5  |     -      |
 |      |     |        | compares broker vs DB and identifies      |     |              |     |            |
 |      |     |        | discrepancies                             |     |              |     |            |
-|      |  5  |   -    | Add recovery logic: if extra position     | 🟡  |     3.4      |  3  |     -      |
+|      |  5  |   ✅   | Add recovery logic: if extra position     | 🟢  |     3.4      |  3  |     -      |
 |      |     |        | at broker, add to DB with warning         |     |              |     |            |
-|      |  6  |   -    | Add recovery logic: if missing position   | 🟡  |     3.4      |  3  |     -      |
+|      |  6  |   ✅   | Add recovery logic: if missing position   | 🟢  |     3.4      |  3  |     -      |
 |      |     |        | at broker, mark as closed in DB           |     |              |     |            |
-|      |  7  |   -    | Implement recovery mode: if major         | 🟡  |     3.4      |  3  |     -      |
+|      |  7  |   ✅   | Implement recovery mode: if major         | 🟢  |     3.4      |  3  |     -      |
 |      |     |        | discrepancy (>$100 diff), pause           |     |              |     |            |
 |      |     |        | trading, send alert                       |     |              |     |            |
-|      |  8  |   -    | Run reconciliation on app startup         | 🟡  |     3.4      |  2  |     -      |
-|      |     |        | automatically                             |     |              |     |            |
-|      |  9  |   -    | Test reconciliation: manually create      | 🟡  |     3.8      |  3  |     -      |
+|      |  8  |   -    | Run reconciliation on app startup         | 🟢  |     3.4      |  2  |     -      |
+|      |     |        | automatically [DEFERRED]                  |     |              |     |            |
+|      |  9  |   -    | Test reconciliation: manually create      | 🟢  |     3.8      |  3  |     -      |
 |      |     |        | position in IBKR, restart app,            |     |              |     |            |
 |      |     |        | verify reconciliation detects it          |     |              |     |            |
-|  4   |     |   -    | **Implement Position Sizing Calculator**  | 🟢  |      -       |  -  |     -      |
-|      |  1  |   -    | Create services/risk/position_sizer.py    | 🟢  |      -       |  5  |     -      |
+|  4   |     |   ✅   | **Implement Position Sizing Calculator**  | 🟢  |      -       |  -  |     25m    |
+|      |  1  |   ✅   | Create services/risk/position_sizer.py    | 🟢  |      -       |  5  |     25m    |
 |      |     |        | with PositionSizer class                  |     |              |     |            |
-|      |  2  |   -    | Implement calculate_position_size()       | 🟡  |     4.1      |  5  |     -      |
+|      |  2  |   ✅   | Implement calculate_position_size()       | 🟢  |     4.1      |  5  |     -      |
 |      |     |        | using 2% risk rule: (portfolio_value *    |     |              |     |            |
 |      |     |        | 0.02) / (entry_price - stop_loss)         |     |              |     |            |
-|      |  3  |   -    | Add maximum position size cap: 20% of     | 🟡  |     4.2      |  2  |     -      |
+|      |  3  |   ✅   | Add maximum position size cap: 20% of     | 🟢  |     4.2      |  2  |     -      |
 |      |     |        | portfolio value                           |     |              |     |            |
-|      |  4  |   -    | Implement get_portfolio_value() from      | 🟡  |     4.1      |  3  |     -      |
+|      |  4  |   ✅   | Implement get_portfolio_value() from      | 🟢  |     4.1      |  3  |     -      |
 |      |     |        | IBKR account info                         |     |              |     |            |
-|      |  5  |   -    | Add validation: ensure position size      | 🟡  |     4.2-4.3  |  2  |     -      |
+|      |  5  |   ✅   | Add validation: ensure position size      | 🟢  |     4.2-4.3  |  2  |     -      |
 |      |     |        | doesn't exceed available cash             |     |              |     |            |
-|      |  6  |   -    | Log position size calculation details     | 🟡  |     4.2      |  1  |     -      |
+|      |  6  |   ✅   | Log position size calculation details     | 🟢  |     4.2      |  1  |     -      |
 |      |     |        | for audit trail                           |     |              |     |            |
-|      |  7  |   -    | Test position sizer manually: portfolio   | 🟡  |     4.6      |  2  |     -      |
+|      |  7  |   -    | Test position sizer manually: portfolio   | 🟢  |     4.6      |  2  |     -      |
 |      |     |        | $10k, entry $100, stop $95, verify        |     |              |     |            |
-|      |     |        | 40 shares                                 |     |              |     |            |
-|  5   |     |   -    | **Create Risk Management Engine**         | 🟢  |      -       |  -  |     -      |
-|      |  1  |   -    | Create services/risk/risk_manager.py      | 🟢  |      -       |  5  |     -      |
+|      |     |        | 40 shares [MANUAL TEST - USER]            |     |              |     |            |
+|  5   |     |   🔄   | **Create Risk Management Engine**         | 🟢  |      4       |  -  |    50m     |
+|      |  1  |   ✅   | Create services/risk/risk_manager.py      | 🟢  |      -       |  5  |     -      |
 |      |     |        | with RiskManager class                    |     |              |     |            |
-|      |  2  |   -    | Implement check_portfolio_allocation()    | 🟡  |     5.1      |  3  |     -      |
+|      |  2  |   ✅   | Implement check_portfolio_allocation()    | 🟡  |     5.1      |  3  |     -      |
 |      |     |        | that enforces 50% max per strategy        |     |              |     |            |
-|      |  3  |   -    | Implement validate_trade() that runs      | 🟡  |     4, 5.1   |  5  |     -      |
+|      |  3  |   ✅   | Implement validate_trade() that runs      | 🟡  |     4, 5.1   |  5  |     -      |
 |      |     |        | all risk checks before allowing           |     |              |     |            |
 |      |     |        | trade                                     |     |              |     |            |
-|      |  4  |   -    | Add check: no duplicate positions (can't  | 🟡  |     5.3      |  2  |     -      |
+|      |  4  |   ✅   | Add check: no duplicate positions (can't  | 🟡  |     5.3      |  2  |     -      |
 |      |     |        | buy if already long same symbol)          |     |              |     |            |
-|      |  5  |   -    | Add check: sufficient capital available   | 🟡  |     5.3      |  2  |     -      |
+|      |  5  |   ✅   | Add check: sufficient capital available   | 🟡  |     5.3      |  2  |     -      |
 |      |     |        | for trade                                 |     |              |     |            |
-|      |  6  |   -    | Add check: position size within limits    | 🟡  |     4, 5.3   |  2  |     -      |
+|      |  6  |   ✅   | Add check: position size within limits    | 🟡  |     4, 5.3   |  2  |     -      |
 |      |     |        | (20% portfolio cap)                       |     |              |     |            |
-|      |  7  |   -    | Add check: strategy allocation within     | 🟡  |     5.2, 5.3 |  2  |     -      |
+|      |  7  |   ✅   | Add check: strategy allocation within     | 🟡  |     5.2, 5.3 |  2  |     -      |
 |      |     |        | limit (50% portfolio)                     |     |              |     |            |
-|      |  8  |   -    | Add check: daily loss limit not hit       | 🟡  |     6, 5.3   |  2  |     -      |
-|      |  9  |   -    | Return validation result with reason if   | 🟡  |     5.3      |  2  |     -      |
+|      |  8  |   ✅   | Add check: daily loss limit not hit       | 🟡  |     6, 5.3   |  2  |     -      |
+|      |  9  |   ✅   | Return validation result with reason if   | 🟡  |     5.3      |  2  |     -      |
 |      |     |        | rejected                                  |     |              |     |            |
 |      | 10  |   -    | Test risk manager: try trades that        | 🟡  |     5.9      |  3  |     -      |
 |      |     |        | violate each rule, verify rejection       |     |              |     |            |
