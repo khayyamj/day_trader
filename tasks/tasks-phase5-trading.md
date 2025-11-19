@@ -25,10 +25,10 @@
 - `backend/app/services/trading/execution_engine.py` - Main trade execution coordinator
 - `backend/app/services/risk/position_sizer.py` - Position sizing calculator using 2% risk rule
 - `backend/app/services/risk/risk_manager.py` - Risk management engine enforcing all trading rules
+- `backend/app/services/risk/loss_limit_detector.py` - Daily loss limit tracker with 3-loss pause
 - `backend/test_ibkr_connection.py` - Test script for IBKR connection verification
 
 ### To Be Created:
-- `backend/app/services/risk/loss_limit_detector.py` - Daily loss limit tracker
 - `backend/app/api/endpoints/trading.py` - Trading API endpoints
 - `backend/app/api/endpoints/orders.py` - Order management API
 - `backend/app/schemas/order.py` - Order schemas
@@ -38,6 +38,7 @@
 - `backend/app/core/config.py` - Added IBKR_HOST and IBKR_CLIENT_ID configuration
 - `backend/.env` - Added IBKR connection credentials
 - `backend/app/services/strategies/base_strategy.py` - Added calculate_stop_loss_price() and calculate_take_profit_price() methods
+- `backend/app/models/strategy.py` - Added consecutive_losses_today field for daily loss tracking
 
 ### Files to Modify:
 - `backend/app/main.py` - Add trading routes
@@ -196,28 +197,28 @@
 |      |  9  |   -    | Test full execution flow: generate        | 🟡  |     6.8      |  3  |     -      |
 |      |     |        | signal, execute, verify market order +    |     |              |     |            |
 |      |     |        | stop + TP in IBKR [MANUAL TEST - USER]   |     |              |     |            |
-|  7   |     |   -    | **Build Daily Loss Limit Detector**       | 🟢  |      -       |  -  |     -      |
-|      |  1  |   -    | Create                                    | 🟢  |      -       |  5  |     -      |
+|  7   |     |   🔄   | **Build Daily Loss Limit Detector**       | 🟢  |      -       |  -  |     35m    |
+|      |  1  |   ✅   | Create                                    | 🟢  |      -       |  5  |     -      |
 |      |     |        | services/risk/loss_limit_detector.py      |     |              |     |            |
 |      |     |        | with LossLimitDetector class              |     |              |     |            |
-|      |  2  |   -    | Add consecutive_losses_today field to     | 🟡  |     7.1      |  2  |     -      |
+|      |  2  |   ✅   | Add consecutive_losses_today field to     | 🟡  |     7.1      |  2  |     -      |
 |      |     |        | strategies table                          |     |              |     |            |
-|      |  3  |   -    | Implement track_trade_outcome() that      | 🟡  |     7.2      |  3  |     -      |
+|      |  3  |   ✅   | Implement track_trade_outcome() that      | 🟡  |     7.2      |  3  |     -      |
 |      |     |        | increments/resets consecutive loss        |     |              |     |            |
 |      |     |        | counter                                   |     |              |     |            |
-|      |  4  |   -    | Implement check_loss_limit() that         | 🟡  |     7.3      |  3  |     -      |
+|      |  4  |   ✅   | Implement check_loss_limit() that         | 🟡  |     7.3      |  3  |     -      |
 |      |     |        | returns true if >= 3 consecutive          |     |              |     |            |
 |      |     |        | losses                                    |     |              |     |            |
-|      |  5  |   -    | Add pause_strategy_on_limit() that sets   | 🟡  |     7.4      |  2  |     -      |
+|      |  5  |   ✅   | Add pause_strategy_on_limit() that sets   | 🟡  |     7.4      |  2  |     -      |
 |      |     |        | strategy status to paused, logs           |     |              |     |            |
 |      |     |        | event                                     |     |              |     |            |
-|      |  6  |   -    | Reset consecutive loss counter at start   | 🟡  |     7.3      |  2  |     -      |
+|      |  6  |   ✅   | Reset consecutive loss counter at start   | 🟡  |     7.3      |  2  |     -      |
 |      |     |        | of each trading day (9:30 AM ET)          |     |              |     |            |
-|      |  7  |   -    | Send alert email when daily loss limit    | 🟡  |     7.5      |  2  |     -      |
+|      |  7  |   ✅   | Send alert email when daily loss limit    | 🟡  |     7.5      |  2  |     -      |
 |      |     |        | hit                                       |     |              |     |            |
 |      |  8  |   -    | Test loss limit: simulate 3 losing        | 🟡  |     7.7      |  3  |     -      |
 |      |     |        | trades, verify strategy pauses on         |     |              |     |            |
-|      |     |        | 3rd                                       |     |              |     |            |
+|      |     |        | 3rd [MANUAL TEST - USER]                  |     |              |     |            |
 |  8   |     |   -    | **Write Integration Tests for Trading     | 🟢  |      -       |  -  |     -      |
 |      |     |        | System**                                  |     |              |     |            |
 |      |  1  |   -    | Create tests/test_order_service.py with   | 🟢  |      7       |  5  |     -      |

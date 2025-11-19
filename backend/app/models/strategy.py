@@ -17,5 +17,8 @@ class Strategy(BaseModel):
     status = Column(String(20), default="active", nullable=False)  # active, paused, warming, error
     warm_up_bars_remaining = Column(Integer, default=0, nullable=False)
 
+    # Daily loss tracking
+    consecutive_losses_today = Column(Integer, default=0, nullable=False)
+
     def __repr__(self):
         return f"<Strategy(id={self.id}, name='{self.name}', status='{self.status}')>"
