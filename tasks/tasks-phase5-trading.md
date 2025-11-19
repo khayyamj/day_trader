@@ -22,12 +22,12 @@
 - `backend/app/services/trading/ibkr_client.py` - IBKR API wrapper using ib_insync with connection management
 - `backend/app/services/trading/order_service.py` - Order submission and tracking service
 - `backend/app/services/trading/position_service.py` - Position management and reconciliation
+- `backend/app/services/trading/execution_engine.py` - Main trade execution coordinator
 - `backend/app/services/risk/position_sizer.py` - Position sizing calculator using 2% risk rule
 - `backend/app/services/risk/risk_manager.py` - Risk management engine enforcing all trading rules
 - `backend/test_ibkr_connection.py` - Test script for IBKR connection verification
 
 ### To Be Created:
-- `backend/app/services/trading/execution_engine.py` - Main trade execution coordinator
 - `backend/app/services/risk/loss_limit_detector.py` - Daily loss limit tracker
 - `backend/app/api/endpoints/trading.py` - Trading API endpoints
 - `backend/app/api/endpoints/orders.py` - Order management API
@@ -37,6 +37,7 @@
 ### Modified:
 - `backend/app/core/config.py` - Added IBKR_HOST and IBKR_CLIENT_ID configuration
 - `backend/.env` - Added IBKR connection credentials
+- `backend/app/services/strategies/base_strategy.py` - Added calculate_stop_loss_price() and calculate_take_profit_price() methods
 
 ### Files to Modify:
 - `backend/app/main.py` - Add trading routes
@@ -167,34 +168,34 @@
 |      |     |        | rejected                                  |     |              |     |            |
 |      | 10  |   -    | Test risk manager: try trades that        | 🟡  |     5.9      |  3  |     -      |
 |      |     |        | violate each rule, verify rejection       |     |              |     |            |
-|  6   |     |   -    | **Implement Stop-Loss/Take-Profit         | 🟢  |      -       |  -  |     -      |
+|  6   |     |   🔄   | **Implement Stop-Loss/Take-Profit         | 🟢  |      -       |  -  |    1h 15m  |
 |      |     |        | Management**                              |     |              |     |            |
-|      |  1  |   -    | Add calculate_stop_loss_price() to        | 🟢  |      -       |  2  |     -      |
+|      |  1  |   ✅   | Add calculate_stop_loss_price() to        | 🟢  |      -       |  2  |     -      |
 |      |     |        | strategy: entry_price * (1 -              |     |              |     |            |
 |      |     |        | stop_loss_pct)                            |     |              |     |            |
-|      |  2  |   -    | Add calculate_take_profit_price() to      | 🟡  |     6.1      |  2  |     -      |
+|      |  2  |   ✅   | Add calculate_take_profit_price() to      | 🟡  |     6.1      |  2  |     -      |
 |      |     |        | strategy: entry_price * (1 +              |     |              |     |            |
 |      |     |        | take_profit_pct)                          |     |              |     |            |
-|      |  3  |   -    | Create                                    | 🟡  |     2, 6.1   |  5  |     -      |
+|      |  3  |   ✅   | Create                                    | 🟡  |     2, 6.1   |  5  |     -      |
 |      |     |        | services/trading/execution_engine.py      |     |              |     |            |
 |      |     |        | with ExecutionEngine class                |     |              |     |            |
-|      |  4  |   -    | Implement execute_signal() method: take   | 🟡  |     5, 6.3   |  8  |     -      |
+|      |  4  |   ✅   | Implement execute_signal() method: take   | 🟡  |     5, 6.3   |  8  |     -      |
 |      |     |        | signal, validate with RiskManager,        |     |              |     |            |
 |      |     |        | calculate position size, submit           |     |              |     |            |
 |      |     |        | orders                                    |     |              |     |            |
-|      |  5  |   -    | After market order fills, immediately     | 🟡  |     6.4      |  3  |     -      |
+|      |  5  |   ✅   | After market order fills, immediately     | 🟡  |     6.4      |  3  |     -      |
 |      |     |        | submit stop-loss order at broker          |     |              |     |            |
 |      |     |        | level                                     |     |              |     |            |
-|      |  6  |   -    | After stop-loss, submit take-profit       | 🟡  |     6.5      |  3  |     -      |
+|      |  6  |   ✅   | After stop-loss, submit take-profit       | 🟡  |     6.5      |  3  |     -      |
 |      |     |        | order at broker level                     |     |              |     |            |
-|      |  7  |   -    | Log trade to trades table with all        | 🟡  |     6.4      |  3  |     -      |
+|      |  7  |   ✅   | Log trade to trades table with all        | 🟡  |     6.4      |  3  |     -      |
 |      |     |        | details: entry price, stop, TP,           |     |              |     |            |
 |      |     |        | indicator values, context                 |     |              |     |            |
-|      |  8  |   -    | Monitor stop-loss/TP orders: update       | 🟡  |     2, 6.5   |  3  |     -      |
+|      |  8  |   ✅   | Monitor stop-loss/TP orders: update       | 🟡  |     2, 6.5   |  3  |     -      |
 |      |     |        | trade record when filled                  |     |              |     |            |
 |      |  9  |   -    | Test full execution flow: generate        | 🟡  |     6.8      |  3  |     -      |
 |      |     |        | signal, execute, verify market order +    |     |              |     |            |
-|      |     |        | stop + TP in IBKR                         |     |              |     |            |
+|      |     |        | stop + TP in IBKR [MANUAL TEST - USER]   |     |              |     |            |
 |  7   |     |   -    | **Build Daily Loss Limit Detector**       | 🟢  |      -       |  -  |     -      |
 |      |  1  |   -    | Create                                    | 🟢  |      -       |  5  |     -      |
 |      |     |        | services/risk/loss_limit_detector.py      |     |              |     |            |

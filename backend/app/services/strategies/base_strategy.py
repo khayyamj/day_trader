@@ -176,5 +176,83 @@ class BaseStrategy(ABC):
 
         return True, "Data is sufficient"
 
+    def calculate_stop_loss_price(
+        self,
+        entry_price: float,
+        stop_loss_pct: Optional[float] = None
+    ) -> float:
+        """
+        Calculate stop-loss price based on entry price and percentage.
+
+        Formula: stop_loss = entry_price * (1 - stop_loss_pct)
+
+        Args:
+            entry_price: Entry price per share
+            stop_loss_pct: Stop loss percentage (e.g., 0.05 for 5%).
+                          If None, uses strategy parameter 'stop_loss_pct'
+
+        Returns:
+            float: Stop loss price
+
+        Raises:
+            ValueError: If stop_loss_pct is invalid or not provided
+        """
+        if stop_loss_pct is None:
+            stop_loss_pct = self.parameters.get('stop_loss_pct')
+
+        if stop_loss_pct is None:
+            raise ValueError("stop_loss_pct must be provided or in strategy parameters")
+
+        if stop_loss_pct <= 0 or stop_loss_pct >= 1:
+            raise ValueError(f"stop_loss_pct must be between 0 and 1, got {stop_loss_pct}")
+
+        stop_price = entry_price * (1 - stop_loss_pct)
+
+        logger.debug(
+            f"Calculated stop loss: entry=${entry_price:.2f}, "
+            f"pct={stop_loss_pct*100:.1f}%, stop=${stop_price:.2f}"
+        )
+
+        return stop_price
+
+    def calculate_take_profit_price(
+        self,
+        entry_price: float,
+        take_profit_pct: Optional[float] = None
+    ) -> float:
+        """
+        Calculate take-profit price based on entry price and percentage.
+
+        Formula: take_profit = entry_price * (1 + take_profit_pct)
+
+        Args:
+            entry_price: Entry price per share
+            take_profit_pct: Take profit percentage (e.g., 0.10 for 10%).
+                            If None, uses strategy parameter 'take_profit_pct'
+
+        Returns:
+            float: Take profit price
+
+        Raises:
+            ValueError: If take_profit_pct is invalid or not provided
+        """
+        if take_profit_pct is None:
+            take_profit_pct = self.parameters.get('take_profit_pct')
+
+        if take_profit_pct is None:
+            raise ValueError("take_profit_pct must be provided or in strategy parameters")
+
+        if take_profit_pct <= 0:
+            raise ValueError(f"take_profit_pct must be positive, got {take_profit_pct}")
+
+        take_profit = entry_price * (1 + take_profit_pct)
+
+        logger.debug(
+            f"Calculated take profit: entry=${entry_price:.2f}, "
+            f"pct={take_profit_pct*100:.1f}%, tp=${take_profit:.2f}"
+        )
+
+        return take_profit
+
     def __repr__(self):
         return f"<{self.__class__.__name__}(name='{self.name}', parameters={self.parameters})>"
