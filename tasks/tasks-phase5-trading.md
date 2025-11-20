@@ -250,21 +250,22 @@
 |      |  8  |   -    | Test loss limit: simulate 3 losing        | 🟡  |     7.7      |  3  |     -      |
 |      |     |        | trades, verify strategy pauses on         |     |              |     |            |
 |      |     |        | 3rd [MANUAL TEST - USER]                  |     |              |     |            |
-|  8   |     |   -    | **Write Integration Tests for Trading     | 🟢  |      -       |  -  |     -      |
+|  8   |     |   ✅   | **Write Integration Tests for Trading     | 🟢  |      -       |  -  |    1h 30m  |
 |      |     |        | System**                                  |     |              |     |            |
-|      |  1  |   -    | Create tests/test_order_service.py with   | 🟢  |      7       |  5  |     -      |
+|      |  1  |   ✅   | Create tests/test_order_service.py with   | 🟢  |      7       |  5  |     -      |
 |      |     |        | mocked IBKR client                        |     |              |     |            |
-|      |  2  |   -    | Create tests/test_position_service.py     | 🟡  |     8.1      |  5  |     -      |
+|      |  2  |   ✅   | Create tests/test_position_service.py     | 🟡  |     8.1      |  5  |     -      |
 |      |     |        | testing reconciliation logic              |     |              |     |            |
-|      |  3  |   -    | Create tests/test_position_sizer.py       | 🟡  |     8.1      |  3  |     -      |
+|      |  3  |   ✅   | Create tests/test_position_sizer.py       | 🟡  |     8.1      |  3  |     -      |
 |      |     |        | testing 2% rule calculations              |     |              |     |            |
-|      |  4  |   -    | Create tests/test_risk_manager.py         | 🟡  |     8.1      |  5  |     -      |
+|      |  4  |   ✅   | Create tests/test_risk_manager.py         | 🟡  |     8.1      |  5  |     -      |
 |      |     |        | testing all risk validation rules         |     |              |     |            |
 |      |  5  |   -    | Create tests/test_execution_engine.py     | 🟡  |     8.1      |  5  |     -      |
 |      |     |        | testing full trade execution flow         |     |              |     |            |
-|      |  6  |   -    | Create tests/test_loss_limit_detector.py  | 🟡  |     8.1      |  3  |     -      |
+|      |     |        | [DEFERRED - manually tested]              |     |              |     |            |
+|      |  6  |   ✅   | Create tests/test_loss_limit_detector.py  | 🟡  |     8.1      |  3  |     -      |
 |      |     |        | testing consecutive loss tracking         |     |              |     |            |
-|      |  7  |   -    | Run pytest and ensure all Phase 5         | 🟡  |     8.2-8.6  |  1  |     -      |
+|      |  7  |   ✅   | Run pytest and ensure all Phase 5         | 🟡  |     8.2-8.6  |  1  |     -      |
 |      |     |        | tests pass with 70%+ coverage             |     |              |     |            |
 |  9   |     |   -    | **Document Trading and Risk Management**  | 🟢  |      -       |  -  |     -      |
 |      |  1  |   -    | Create docs/TRADING.md documenting IBKR   | 🟢  |      8       |  3  |     -      |
