@@ -38,8 +38,9 @@ class Trade(BaseModel):
     market_context = Column(JSON, nullable=True, default=dict)
 
     # Relationships
-    strategy = relationship("Strategy", backref="trades")
-    stock = relationship("Stock", backref="trades")
+    strategy = relationship("Strategy", back_populates="trades")
+    stock = relationship("Stock", back_populates="trades")
+    orders = relationship("Order", back_populates="trade")
 
     def __repr__(self):
         return f"<Trade(id={self.id}, stock_id={self.stock_id}, status='{self.status}', pnl={self.profit_loss})>"

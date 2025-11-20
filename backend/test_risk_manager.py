@@ -9,7 +9,7 @@ from app.services.trading.ibkr_client import IBKRClient
 from app.services.risk.position_sizer import PositionSizer
 from app.services.risk.risk_manager import RiskManager
 from app.core.config import settings
-from app.database import SessionLocal
+from app.db.session import SessionLocal
 from app.models.stock import Stock
 from app.models.strategy import Strategy
 from app.models.trade import Trade

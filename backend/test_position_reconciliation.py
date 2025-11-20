@@ -8,7 +8,7 @@ sys.path.insert(0, str(Path(__file__).parent))
 from app.services.trading.ibkr_client import IBKRClient
 from app.services.trading.position_service import PositionService
 from app.core.config import settings
-from app.database import SessionLocal
+from app.db.session import SessionLocal
 
 def test_reconciliation():
     """

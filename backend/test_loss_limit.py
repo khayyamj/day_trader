@@ -6,7 +6,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).parent))
 
 from app.services.risk.loss_limit_detector import LossLimitDetector
-from app.database import SessionLocal
+from app.db.session import SessionLocal
 from app.models.strategy import Strategy
 from app.models.stock import Stock
 from app.models.trade import Trade

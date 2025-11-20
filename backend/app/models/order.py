@@ -32,8 +32,8 @@ class Order(BaseModel):
     filled_at = Column(DateTime(timezone=True), nullable=True)
 
     # Relationships
-    trade = relationship("Trade", backref="orders")
-    stock = relationship("Stock", backref="orders")
+    trade = relationship("Trade", back_populates="orders", lazy="select")
+    stock = relationship("Stock", back_populates="orders", lazy="select")
 
     def __repr__(self):
         return f"<Order(id={self.id}, type='{self.order_type}', status='{self.status}')>"

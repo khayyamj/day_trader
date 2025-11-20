@@ -8,7 +8,7 @@ sys.path.insert(0, str(Path(__file__).parent))
 from app.services.trading.ibkr_client import IBKRClient
 from app.services.trading.order_service import OrderService
 from app.core.config import settings
-from app.database import SessionLocal
+from app.db.session import SessionLocal
 from app.models.stock import Stock
 
 def test_market_order():

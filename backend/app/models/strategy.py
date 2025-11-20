@@ -1,5 +1,6 @@
 """Strategy model for trading strategies."""
 from sqlalchemy import Column, String, Text, Boolean, Integer, JSON
+from sqlalchemy.orm import relationship
 from app.models.base import BaseModel
 
 
@@ -19,6 +20,9 @@ class Strategy(BaseModel):
 
     # Daily loss tracking
     consecutive_losses_today = Column(Integer, default=0, nullable=False)
+
+    # Relationships
+    trades = relationship("Trade", back_populates="strategy")
 
     def __repr__(self):
         return f"<Strategy(id={self.id}, name='{self.name}', status='{self.status}')>"
