@@ -12,6 +12,8 @@ from app.api.endpoints import market_data, stocks, scheduler, market, indicators
 from app.services.data.realtime_service import connection_manager
 from app.services.data.scheduler import data_scheduler
 from app.db.session import SessionLocal
+from app.services.trading.ibkr_client import IBKRClient
+from app.services.trading.position_service import PositionService
 
 # Module logger
 app_logger = get_logger("main")
@@ -29,6 +31,55 @@ async def lifespan(app: FastAPI):
     logger.info("Starting up Trading Application...")
     logger.info(f"Environment: {settings.ENVIRONMENT}")
     logger.info(f"Debug mode: {settings.DEBUG}")
+
+    # Run position reconciliation on startup (skip in test environment)
+    if settings.ENVIRONMENT.lower() != "test":
+        try:
+            logger.info("Running position reconciliation on startup...")
+
+            # Connect to IBKR
+            ibkr_client = IBKRClient(
+                host=settings.IBKR_HOST,
+                port=settings.IBKR_PORT,
+                client_id=settings.IBKR_CLIENT_ID
+            )
+
+            try:
+                ibkr_client.connect()
+
+                # Run reconciliation
+                db = SessionLocal()
+                position_service = PositionService(ibkr_client, db)
+
+                discrepancies, total_diff = position_service.reconcile_positions()
+
+                if not discrepancies:
+                    logger.info("✓ Position reconciliation: All positions match")
+                else:
+                    logger.warning(
+                        f"⚠️  Position reconciliation: {len(discrepancies)} discrepancies found, "
+                        f"total value diff: ${total_diff:.2f}"
+                    )
+
+                    # Check for major discrepancy
+                    if position_service.check_major_discrepancy(total_diff):
+                        logger.critical(
+                            f"🚨 MAJOR DISCREPANCY DETECTED: ${total_diff:.2f}. "
+                            "Review positions before trading!"
+                        )
+
+                db.close()
+                ibkr_client.disconnect()
+
+            except Exception as e:
+                logger.error(f"Position reconciliation failed: {str(e)}")
+                logger.warning("Continuing startup without reconciliation")
+
+        except Exception as e:
+            logger.error(f"Failed to initialize reconciliation: {str(e)}")
+            logger.warning("Continuing startup without reconciliation")
+    else:
+        logger.info("Test mode: Position reconciliation disabled")
 
     # Start scheduler (skip in test environment)
     if settings.ENVIRONMENT.lower() != "test":
