@@ -26,6 +26,13 @@
 - `backend/app/services/risk/position_sizer.py` - Position sizing calculator using 2% risk rule
 - `backend/app/services/risk/risk_manager.py` - Risk management engine enforcing all trading rules
 - `backend/app/services/risk/loss_limit_detector.py` - Daily loss limit tracker with 3-loss pause
+- `backend/tests/test_order_service.py` - Pytest tests for order service (10 tests)
+- `backend/tests/test_position_sizer.py` - Pytest tests for position sizing (18 tests)
+- `backend/tests/test_risk_manager.py` - Pytest tests for risk validation (16 tests)
+- `backend/tests/test_loss_limit_detector.py` - Pytest tests for loss tracking (16 tests)
+- `backend/tests/test_position_service.py` - Pytest tests for reconciliation (18 tests)
+- `backend/test_*.py` - Manual test scripts for live IBKR validation (7 scripts)
+- `docs/TRADING.md` - Comprehensive trading system documentation
 - `backend/test_ibkr_connection.py` - Test script for IBKR connection verification
 
 ### To Be Created:
@@ -267,21 +274,21 @@
 |      |     |        | testing consecutive loss tracking         |     |              |     |            |
 |      |  7  |   ✅   | Run pytest and ensure all Phase 5         | 🟡  |     8.2-8.6  |  1  |     -      |
 |      |     |        | tests pass with 70%+ coverage             |     |              |     |            |
-|  9   |     |   -    | **Document Trading and Risk Management**  | 🟢  |      -       |  -  |     -      |
-|      |  1  |   -    | Create docs/TRADING.md documenting IBKR   | 🟢  |      8       |  3  |     -      |
+|  9   |     |   ✅   | **Document Trading and Risk Management**  | 🟢  |      -       |  -  |     45m    |
+|      |  1  |   ✅   | Create docs/TRADING.md documenting IBKR   | 🟢  |      8       |  3  |     -      |
 |      |     |        | setup, connection, order types            |     |              |     |            |
-|      |  2  |   -    | Document position sizing formula and      | 🟡  |     9.1      |  3  |     -      |
+|      |  2  |   ✅   | Document position sizing formula and      | 🟡  |     9.1      |  3  |     -      |
 |      |     |        | 2% risk rule with examples                |     |              |     |            |
-|      |  3  |   -    | Document all risk management rules:       | 🟡  |     9.2      |  3  |     -      |
+|      |  3  |   ✅   | Document all risk management rules:       | 🟡  |     9.2      |  3  |     -      |
 |      |     |        | position caps, allocation limits,         |     |              |     |            |
 |      |     |        | loss limits                               |     |              |     |            |
-|      |  4  |   -    | Document stop-loss placement at broker    | 🟡  |     9.3      |  2  |     -      |
+|      |  4  |   ✅   | Document stop-loss placement at broker    | 🟡  |     9.3      |  2  |     -      |
 |      |     |        | level (critical safety feature)           |     |              |     |            |
-|      |  5  |   -    | Document crash recovery and               | 🟡  |     9.3      |  3  |     -      |
+|      |  5  |   ✅   | Document crash recovery and               | 🟡  |     9.3      |  3  |     -      |
 |      |     |        | reconciliation process                    |     |              |     |            |
-|      |  6  |   -    | Document daily loss limit (3              | 🟡  |     9.3      |  2  |     -      |
+|      |  6  |   ✅   | Document daily loss limit (3              | 🟡  |     9.3      |  2  |     -      |
 |      |     |        | consecutive losses) and reset timing      |     |              |     |            |
-|      |  7  |   -    | Add troubleshooting guide: order          | 🟡  |     9.6      |  3  |     -      |
+|      |  7  |   ✅   | Add troubleshooting guide: order          | 🟡  |     9.6      |  3  |     -      |
 |      |     |        | rejections, connection failures,          |     |              |     |            |
 |      |     |        | reconciliation issues                     |     |              |     |            |
 
