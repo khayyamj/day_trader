@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { positionsAPI } from '@services/api'
+import { useRealTimeData } from '@hooks/useRealTimeData'
 import type { Position } from '@types/index'
 
 export default function PositionsTable() {
@@ -7,6 +8,7 @@ export default function PositionsTable() {
   const [expandedId, setExpandedId] = useState<number | null>(null)
   const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
+  const { getPrice } = useRealTimeData()
 
   useEffect(() => {
     fetchPositions()
@@ -27,9 +29,10 @@ export default function PositionsTable() {
   }
 
   const calculatePnL = (position: Position) => {
-    const pnl = (position.current_price - position.entry_price) * position.quantity
-    const pnlPercent = ((position.current_price - position.entry_price) / position.entry_price) * 100
-    return { pnl, pnlPercent }
+    const currentPrice = getPrice(position.symbol) ?? position.current_price
+    const pnl = (currentPrice - position.entry_price) * position.quantity
+    const pnlPercent = ((currentPrice - position.entry_price) / position.entry_price) * 100
+    return { pnl, pnlPercent, currentPrice }
   }
 
   const formatCurrency = (value: number) => {
@@ -98,7 +101,7 @@ export default function PositionsTable() {
         </thead>
         <tbody className="bg-white divide-y divide-gray-200">
           {positions.map((position) => {
-            const { pnl, pnlPercent } = calculatePnL(position)
+            const { pnl, pnlPercent, currentPrice } = calculatePnL(position)
             const isExpanded = expandedId === position.id
             const pnlColor = pnl >= 0 ? 'text-green-600' : 'text-red-600'
 
@@ -115,7 +118,7 @@ export default function PositionsTable() {
                     {formatCurrency(position.entry_price)}
                   </td>
                   <td className="px-3 py-2 whitespace-nowrap text-sm text-gray-900 text-right">
-                    {formatCurrency(position.current_price)}
+                    {formatCurrency(currentPrice)}
                   </td>
                   <td className={`px-3 py-2 whitespace-nowrap text-sm font-semibold text-right ${pnlColor}`}>
                     {formatCurrency(pnl)}

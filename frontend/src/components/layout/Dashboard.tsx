@@ -4,9 +4,11 @@ import SidePanel from './SidePanel'
 import BottomPanel from './BottomPanel'
 import CandlestickChart from '../charts/CandlestickChart'
 import StockSelector from '../charts/StockSelector'
+import { useWebSocket } from '@hooks/useWebSocket'
 
 export default function Dashboard() {
   const [selectedStock, setSelectedStock] = useState('AAPL')
+  const { isConnected } = useWebSocket()
 
   return (
     <div className="min-h-screen bg-gray-100">

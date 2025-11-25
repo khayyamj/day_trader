@@ -190,26 +190,26 @@
 |      |  9  |   ✅   | Test strategy controls: activate,         | 🟡  |     6.4-6.8  |  2  |  (manual)  |
 |      |     |        | pause, update config, verify changes      |     |              |     |            |
 |      |     |        | persist                                   |     |              |     |            |
-|  7   |     |   -    | **Add WebSocket Real-time Updates**       | 🟢  |      -       |  -  |     -      |
-|      |  1  |   -    | Create services/websocket.ts with         | 🟢  |      -       |  5  |     -      |
+|  7   |     |   ✅   | **Add WebSocket Real-time Updates**       | 🟢  |      -       |  -  |    80m     |
+|      |  1  |   ✅   | Create services/websocket.ts with         | 🟢  |      -       |  5  |    20m     |
 |      |     |        | WebSocketClient class                     |     |              |     |            |
-|      |  2  |   -    | Implement connect() to                    | 🟡  |     7.1      |  3  |     -      |
+|      |  2  |   ✅   | Implement connect() to                    | 🟡  |     7.1      |  3  |    10m     |
 |      |     |        | ws://localhost:8000/ws/prices             |     |              |     |            |
-|      |  3  |   -    | Implement message handler: parse JSON     | 🟡  |     7.2      |  3  |     -      |
+|      |  3  |   ✅   | Implement message handler: parse JSON     | 🟡  |     7.2      |  3  |    10m     |
 |      |     |        | messages, emit events for different       |     |              |     |            |
 |      |     |        | message types                             |     |              |     |            |
-|      |  4  |   -    | Add reconnection logic with exponential   | 🟡  |     7.2      |  3  |     -      |
+|      |  4  |   ✅   | Add reconnection logic with exponential   | 🟡  |     7.2      |  3  |    10m     |
 |      |     |        | backoff (1s, 2s, 4s, 8s)                  |     |              |     |            |
-|      |  5  |   -    | Create hooks/useWebSocket.ts custom hook  | 🟡  |     7.1      |  3  |     -      |
+|      |  5  |   ✅   | Create hooks/useWebSocket.ts custom hook  | 🟡  |     7.1      |  3  |    10m     |
 |      |     |        | for managing WebSocket connection         |     |              |     |            |
-|      |  6  |   -    | Create hooks/useRealTimeData.ts that      | 🟡  |     7.5      |  5  |     -      |
+|      |  6  |   ✅   | Create hooks/useRealTimeData.ts that      | 🟡  |     7.5      |  5  |    10m     |
 |      |     |        | subscribes to price updates and           |     |              |     |            |
 |      |     |        | manages state                             |     |              |     |            |
-|      |  7  |   -    | Update PositionsTable to use real-time    | 🟡  |     5, 7.6   |  3  |     -      |
+|      |  7  |   ✅   | Update PositionsTable to use real-time    | 🟡  |     5, 7.6   |  3  |    5m      |
 |      |     |        | prices for P&L calculations               |     |              |     |            |
-|      |  8  |   -    | Update CandlestickChart to receive live   | 🟡  |     3, 7.6   |  3  |     -      |
+|      |  8  |   ✅   | Update CandlestickChart to receive live   | 🟡  |     3, 7.6   |  3  |    5m      |
 |      |     |        | price updates and append to chart         |     |              |     |            |
-|      |  9  |   -    | Test WebSocket: connect, receive price    | 🟡  |     7.8      |  2  |     -      |
+|      |  9  |   ✅   | Test WebSocket: connect, receive price    | 🟡  |     7.8      |  2  |  (manual)  |
 |      |     |        | updates, verify tables/charts update      |     |              |     |            |
 |      |     |        | in real-time                              |     |              |     |            |
 |  8   |     |   -    | **Implement Alert/Notification UI**       | 🟢  |      -       |  -  |     -      |
