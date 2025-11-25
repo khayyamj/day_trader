@@ -60,26 +60,26 @@
 
 | Task |  #  | Status | Description                               |     | Dependencies | Pts | Time Spent |
 | :--: | :-: | :----: | ----------------------------------------- | :-: | :----------: | :-: | :--------: |
-|  1   |     |   -    | **Set Up React Application**              | 🟢  |      -       |  -  |     -      |
-|      |  1  |   -    | Initialize React app with Vite (faster)   | 🟢  |      -       |  2  |     -      |
+|  1   |     |   ✅   | **Set Up React Application**              | 🟢  |      -       |  -  |    52m     |
+|      |  1  |   ✅   | Initialize React app with Vite (faster)   | 🟢  |      -       |  2  |    5m      |
 |      |     |        | or Create React App: `npm create          |     |              |     |            |
 |      |     |        | vite@latest frontend --template           |     |              |     |            |
 |      |     |        | react-ts`                                 |     |              |     |            |
-|      |  2  |   -    | Install core dependencies: axios,         | 🟡  |     1.1      |  2  |     -      |
+|      |  2  |   ✅   | Install core dependencies: axios,         | 🟡  |     1.1      |  2  |    10m     |
 |      |     |        | lightweight-charts, recharts, date-fns    |     |              |     |            |
-|      |  3  |   -    | Configure TypeScript with strict mode     | 🟡  |     1.1      |  1  |     -      |
+|      |  3  |   ✅   | Configure TypeScript with strict mode     | 🟡  |     1.1      |  1  |    10m     |
 |      |     |        | and path aliases                          |     |              |     |            |
-|      |  4  |   -    | Set up Tailwind CSS for styling (or      | 🟡  |     1.1      |  2  |     -      |
+|      |  4  |   ✅   | Set up Tailwind CSS for styling (or      | 🟡  |     1.1      |  2  |    10m     |
 |      |     |        | CSS-in-JS solution like styled-           |     |              |     |            |
 |      |     |        | components)                               |     |              |     |            |
-|      |  5  |   -    | Create frontend/.env with                 | 🟡  |     1.1      | 0.5 |     -      |
+|      |  5  |   ✅   | Create frontend/.env with                 | 🟡  |     1.1      | 0.5 |    2m      |
 |      |     |        | VITE_API_URL=http://localhost:8000        |     |              |     |            |
-|      |  6  |   -    | Configure proxy for API calls to avoid    | 🟡  |     1.5      |  1  |     -      |
+|      |  6  |   ✅   | Configure proxy for API calls to avoid    | 🟡  |     1.5      |  1  |    5m      |
 |      |     |        | CORS issues in development                |     |              |     |            |
-|      |  7  |   -    | Create basic App.tsx with routing         | 🟡  |     1.4      |  2  |     -      |
+|      |  7  |   ✅   | Create basic App.tsx with routing         | 🟡  |     1.4      |  2  |    5m      |
 |      |     |        | (react-router-dom) - single route to      |     |              |     |            |
 |      |     |        | dashboard                                 |     |              |     |            |
-|      |  8  |   -    | Test app runs: npm run dev, verify        | 🟡  |     1.7      |  1  |     -      |
+|      |  8  |   ✅   | Test app runs: npm run dev, verify        | 🟡  |     1.7      |  1  |    5m      |
 |      |     |        | opens in browser at localhost:5173        |     |              |     |            |
 |  2   |     |   -    | **Build Dashboard Layout and              | 🟢  |      -       |  -  |     -      |
 |      |     |        | Navigation**                              |     |              |     |            |
