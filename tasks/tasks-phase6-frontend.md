@@ -144,26 +144,26 @@
 |      |     |        | (arrows or triangles)                     |     |              |     |            |
 |      | 10  |   ✅   | Test charts with indicators and signals,  | 🟡  |     4.9      |  2  |  (manual)  |
 |      |     |        | verify overlays display correctly         |     |              |     |            |
-|  5   |     |   -    | **Create Positions and Trades Tables**    | 🟢  |      -       |  -  |     -      |
-|      |  1  |   -    | Create                                    | 🟢  |      -       |  5  |     -      |
+|  5   |     |   ✅   | **Create Positions and Trades Tables**    | 🟢  |      -       |  -  |    90m     |
+|      |  1  |   ✅   | Create                                    | 🟢  |      -       |  5  |    30m     |
 |      |     |        | components/tables/PositionsTable.tsx      |     |              |     |            |
 |      |     |        | with columns: Symbol, Qty, Entry, Curr,   |     |              |     |            |
 |      |     |        | P&L, P&L%                                 |     |              |     |            |
-|      |  2  |   -    | Fetch positions data: GET /api/positions  | 🟡  |     5.1      |  2  |     -      |
-|      |  3  |   -    | Calculate live P&L: (current_price -      | 🟡  |     5.2      |  3  |     -      |
+|      |  2  |   ✅   | Fetch positions data: GET /api/positions  | 🟡  |     5.1      |  2  |    10m     |
+|      |  3  |   ✅   | Calculate live P&L: (current_price -      | 🟡  |     5.2      |  3  |    10m     |
 |      |     |        | entry_price) * quantity                   |     |              |     |            |
-|      |  4  |   -    | Color code P&L: green for profit, red     | 🟡  |     5.3      |  1  |     -      |
+|      |  4  |   ✅   | Color code P&L: green for profit, red     | 🟡  |     5.3      |  1  |    5m      |
 |      |     |        | for loss                                  |     |              |     |            |
-|      |  5  |   -    | Add expand/collapse for position details  | 🟡  |     5.1      |  3  |     -      |
+|      |  5  |   ✅   | Add expand/collapse for position details  | 🟡  |     5.1      |  3  |    10m     |
 |      |     |        | (stop-loss, take-profit, entry reason)    |     |              |     |            |
-|      |  6  |   -    | Create components/tables/TradesTable.tsx  | 🟡  |     5.1      |  5  |     -      |
+|      |  6  |   ✅   | Create components/tables/TradesTable.tsx  | 🟡  |     5.1      |  5  |    25m     |
 |      |     |        | with columns: Symbol, Type, Entry/Exit,   |     |              |     |            |
 |      |     |        | Time, P&L                                 |     |              |     |            |
-|      |  7  |   -    | Fetch trades data: GET /api/trades with   | 🟡  |     5.6      |  2  |     -      |
+|      |  7  |   ✅   | Fetch trades data: GET /api/trades with   | 🟡  |     5.6      |  2  |    10m     |
 |      |     |        | limit=20, sort by timestamp desc          |     |              |     |            |
-|      |  8  |   -    | Add pagination or infinite scroll for     | 🟡  |     5.6      |  3  |     -      |
+|      |  8  |   ✅   | Add pagination or infinite scroll for     | 🟡  |     5.6      |  3  |    10m     |
 |      |     |        | viewing older trades                      |     |              |     |            |
-|      |  9  |   -    | Test tables with real data from backend,  | 🟡  |     5.7-5.8  |  2  |     -      |
+|      |  9  |   ✅   | Test tables with real data from backend,  | 🟡  |     5.7-5.8  |  2  |  (manual)  |
 |      |     |        | verify displays correctly                 |     |              |     |            |
 |  6   |     |   -    | **Implement Strategy Control Panel**      | 🟢  |      -       |  -  |     -      |
 |      |  1  |   -    | Create                                    | 🟢  |      -       |  5  |     -      |
