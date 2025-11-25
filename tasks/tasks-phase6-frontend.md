@@ -81,24 +81,24 @@
 |      |     |        | dashboard                                 |     |              |     |            |
 |      |  8  |   ✅   | Test app runs: npm run dev, verify        | 🟡  |     1.7      |  1  |    5m      |
 |      |     |        | opens in browser at localhost:5173        |     |              |     |            |
-|  2   |     |   -    | **Build Dashboard Layout and              | 🟢  |      -       |  -  |     -      |
+|  2   |     |   ✅   | **Build Dashboard Layout and              | 🟢  |      -       |  -  |    80m     |
 |      |     |        | Navigation**                              |     |              |     |            |
-|      |  1  |   -    | Create types/index.ts with TypeScript     | 🟢  |      -       |  3  |     -      |
+|      |  1  |   ✅   | Create types/index.ts with TypeScript     | 🟢  |      -       |  3  |    15m     |
 |      |     |        | interfaces: Position, Trade, Strategy,    |     |              |     |            |
 |      |     |        | Signal, Alert                             |     |              |     |            |
-|      |  2  |   -    | Create components/layout/Dashboard.tsx    | 🟡  |     2.1      |  5  |     -      |
+|      |  2  |   ✅   | Create components/layout/Dashboard.tsx    | 🟡  |     2.1      |  5  |    20m     |
 |      |     |        | with grid layout: header, main chart      |     |              |     |            |
 |      |     |        | area, side panel, bottom panel            |     |              |     |            |
-|      |  3  |   -    | Create Header component with app title,   | 🟡  |     2.2      |  2  |     -      |
+|      |  3  |   ✅   | Create Header component with app title,   | 🟡  |     2.2      |  2  |    10m     |
 |      |     |        | portfolio value display, strategy         |     |              |     |            |
 |      |     |        | status                                    |     |              |     |            |
-|      |  4  |   -    | Create SidePanel component for strategy   | 🟡  |     2.2      |  3  |     -      |
+|      |  4  |   ✅   | Create SidePanel component for strategy   | 🟡  |     2.2      |  3  |    10m     |
 |      |     |        | controls and positions table              |     |              |     |            |
-|      |  5  |   -    | Create BottomPanel component for trades   | 🟡  |     2.2      |  3  |     -      |
+|      |  5  |   ✅   | Create BottomPanel component for trades   | 🟡  |     2.2      |  3  |    10m     |
 |      |     |        | table and alerts                          |     |              |     |            |
-|      |  6  |   -    | Implement responsive grid that adapts     | 🟡  |     2.2-2.5  |  3  |     -      |
+|      |  6  |   ✅   | Implement responsive grid that adapts     | 🟡  |     2.2-2.5  |  3  |    5m      |
 |      |     |        | to screen size (1920x1080, 1366x768)      |     |              |     |            |
-|      |  7  |   -    | Test layout in browser at different       | 🟡  |     2.6      |  1  |     -      |
+|      |  7  |   ✅   | Test layout in browser at different       | 🟡  |     2.6      |  1  |    5m      |
 |      |     |        | sizes, verify no overflow                 |     |              |     |            |
 |  3   |     |   -    | **Implement Candlestick Chart             | 🟢  |      -       |  -  |     -      |
 |      |     |        | Component**                               |     |              |     |            |
