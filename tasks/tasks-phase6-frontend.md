@@ -165,29 +165,29 @@
 |      |     |        | viewing older trades                      |     |              |     |            |
 |      |  9  |   ✅   | Test tables with real data from backend,  | 🟡  |     5.7-5.8  |  2  |  (manual)  |
 |      |     |        | verify displays correctly                 |     |              |     |            |
-|  6   |     |   -    | **Implement Strategy Control Panel**      | 🟢  |      -       |  -  |     -      |
-|      |  1  |   -    | Create                                    | 🟢  |      -       |  5  |     -      |
+|  6   |     |   ✅   | **Implement Strategy Control Panel**      | 🟢  |      -       |  -  |    90m     |
+|      |  1  |   ✅   | Create                                    | 🟢  |      -       |  5  |    25m     |
 |      |     |        | components/strategy/StrategyPanel.tsx     |     |              |     |            |
 |      |     |        | showing strategy status, consecutive      |     |              |     |            |
 |      |     |        | losses, warm-up status                    |     |              |     |            |
-|      |  2  |   -    | Fetch strategy data: GET /api/strategies  | 🟡  |     6.1      |  2  |     -      |
-|      |  3  |   -    | Display strategy status badge: Active     | 🟡  |     6.2      |  2  |     -      |
+|      |  2  |   ✅   | Fetch strategy data: GET /api/strategies  | 🟡  |     6.1      |  2  |    10m     |
+|      |  3  |   ✅   | Display strategy status badge: Active     | 🟡  |     6.2      |  2  |    10m     |
 |      |     |        | (green), Paused (yellow), Error (red),    |     |              |     |            |
 |      |     |        | Warming (blue)                            |     |              |     |            |
-|      |  4  |   -    | Add Activate/Pause buttons that call      | 🟡  |     6.2      |  3  |     -      |
+|      |  4  |   ✅   | Add Activate/Pause buttons that call      | 🟡  |     6.2      |  3  |    10m     |
 |      |     |        | POST /api/strategies/{id}/activate or     |     |              |     |            |
 |      |     |        | /pause                                    |     |              |     |            |
-|      |  5  |   -    | Add Configure button that opens modal     | 🟡  |     6.4      |  2  |     -      |
+|      |  5  |   ✅   | Add Configure button that opens modal     | 🟡  |     6.4      |  2  |    5m      |
 |      |     |        | for parameter editing                     |     |              |     |            |
-|      |  6  |   -    | Create                                    | 🟡  |     6.5      |  5  |     -      |
+|      |  6  |   ✅   | Create                                    | 🟡  |     6.5      |  5  |    20m     |
 |      |     |        | components/strategy/StrategyConfig.tsx    |     |              |     |            |
 |      |     |        | modal with form inputs for EMA            |     |              |     |            |
 |      |     |        | periods, RSI threshold, stop-loss %       |     |              |     |            |
-|      |  7  |   -    | Implement form validation: EMA periods    | 🟡  |     6.6      |  2  |     -      |
+|      |  7  |   ✅   | Implement form validation: EMA periods    | 🟡  |     6.6      |  2  |    5m      |
 |      |     |        | 2-200, RSI 2-50, percentages 0-100        |     |              |     |            |
-|      |  8  |   -    | Submit config changes: PUT                | 🟡  |     6.6      |  2  |     -      |
+|      |  8  |   ✅   | Submit config changes: PUT                | 🟡  |     6.6      |  2  |    5m      |
 |      |     |        | /api/strategies/{id}/parameters           |     |              |     |            |
-|      |  9  |   -    | Test strategy controls: activate,         | 🟡  |     6.4-6.8  |  2  |     -      |
+|      |  9  |   ✅   | Test strategy controls: activate,         | 🟡  |     6.4-6.8  |  2  |  (manual)  |
 |      |     |        | pause, update config, verify changes      |     |              |     |            |
 |      |     |        | persist                                   |     |              |     |            |
 |  7   |     |   -    | **Add WebSocket Real-time Updates**       | 🟢  |      -       |  -  |     -      |
