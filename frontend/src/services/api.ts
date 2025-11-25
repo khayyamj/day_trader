@@ -70,4 +70,13 @@ export const indicatorsAPI = {
   },
 }
 
+export const signalsAPI = {
+  getRecent: async (symbol: string, limit: number = 50): Promise<Signal[]> => {
+    const response = await api.get('/api/signals', {
+      params: { symbol, limit },
+    })
+    return response.data
+  },
+}
+
 export default api

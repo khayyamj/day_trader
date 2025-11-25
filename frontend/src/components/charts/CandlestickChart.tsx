@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
-import { createChart, IChartApi, ISeriesApi, CandlestickData } from 'lightweight-charts'
-import { marketDataAPI } from '@services/api'
-import type { OHLCVData } from '@types/index'
+import { createChart, IChartApi, ISeriesApi, CandlestickData, HistogramData, LineData, SeriesMarker, Time } from 'lightweight-charts'
+import { marketDataAPI, indicatorsAPI, signalsAPI } from '@services/api'
+import type { OHLCVData, Signal } from '@types/index'
 
 interface CandlestickChartProps {
   symbol: string
@@ -11,6 +11,9 @@ export default function CandlestickChart({ symbol }: CandlestickChartProps) {
   const chartContainerRef = useRef<HTMLDivElement>(null)
   const chartRef = useRef<IChartApi | null>(null)
   const seriesRef = useRef<ISeriesApi<'Candlestick'> | null>(null)
+  const volumeSeriesRef = useRef<ISeriesApi<'Histogram'> | null>(null)
+  const ema20SeriesRef = useRef<ISeriesApi<'Line'> | null>(null)
+  const ema50SeriesRef = useRef<ISeriesApi<'Line'> | null>(null)
   const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
 
@@ -49,8 +52,38 @@ export default function CandlestickChart({ symbol }: CandlestickChartProps) {
       wickDownColor: '#ef5350',
     })
 
+    const volumeSeries = chart.addHistogramSeries({
+      color: '#26a69a',
+      priceFormat: {
+        type: 'volume',
+      },
+      priceScaleId: 'volume',
+    })
+
+    chart.priceScale('volume').applyOptions({
+      scaleMargins: {
+        top: 0.8,
+        bottom: 0,
+      },
+    })
+
+    const ema20Series = chart.addLineSeries({
+      color: '#2962FF',
+      lineWidth: 2,
+      title: 'EMA 20',
+    })
+
+    const ema50Series = chart.addLineSeries({
+      color: '#FF6D00',
+      lineWidth: 2,
+      title: 'EMA 50',
+    })
+
     chartRef.current = chart
     seriesRef.current = candlestickSeries
+    volumeSeriesRef.current = volumeSeries
+    ema20SeriesRef.current = ema20Series
+    ema50SeriesRef.current = ema50Series
 
     const handleResize = () => {
       if (chartContainerRef.current && chartRef.current) {
@@ -70,7 +103,7 @@ export default function CandlestickChart({ symbol }: CandlestickChartProps) {
 
   useEffect(() => {
     const fetchData = async () => {
-      if (!seriesRef.current) return
+      if (!seriesRef.current || !volumeSeriesRef.current) return
 
       setIsLoading(true)
       setError(null)
@@ -86,7 +119,56 @@ export default function CandlestickChart({ symbol }: CandlestickChartProps) {
           close: item.close,
         }))
 
+        const volumeData: HistogramData[] = data.map((item: OHLCVData, index: number) => {
+          const isUp = index === 0 || item.close >= item.open
+          return {
+            time: new Date(item.time).getTime() / 1000,
+            value: item.volume,
+            color: isUp ? '#26a69a80' : '#ef535080',
+          }
+        })
+
         seriesRef.current.setData(formattedData)
+        volumeSeriesRef.current.setData(volumeData)
+
+        try {
+          const indicators = await indicatorsAPI.calculate(symbol, ['ema_20', 'ema_50'])
+
+          if (indicators.ema_20 && ema20SeriesRef.current) {
+            const ema20Data: LineData[] = indicators.ema_20.map((item) => ({
+              time: new Date(item.timestamp).getTime() / 1000,
+              value: item.value,
+            }))
+            ema20SeriesRef.current.setData(ema20Data)
+          }
+
+          if (indicators.ema_50 && ema50SeriesRef.current) {
+            const ema50Data: LineData[] = indicators.ema_50.map((item) => ({
+              time: new Date(item.timestamp).getTime() / 1000,
+              value: item.value,
+            }))
+            ema50SeriesRef.current.setData(ema50Data)
+          }
+        } catch (indicatorErr) {
+          console.warn('Indicators not available:', indicatorErr)
+        }
+
+        try {
+          const signals = await signalsAPI.getRecent(symbol, 50)
+          const markers: SeriesMarker<Time>[] = signals.map((signal: Signal) => ({
+            time: new Date(signal.timestamp).getTime() / 1000 as Time,
+            position: signal.signal_type === 'buy' ? 'belowBar' : 'aboveBar',
+            color: signal.signal_type === 'buy' ? '#26a69a' : '#ef5350',
+            shape: signal.signal_type === 'buy' ? 'arrowUp' : 'arrowDown',
+            text: signal.signal_type === 'buy' ? 'BUY' : 'SELL',
+          }))
+
+          if (seriesRef.current && markers.length > 0) {
+            seriesRef.current.setMarkers(markers)
+          }
+        } catch (signalErr) {
+          console.warn('Signals not available:', signalErr)
+        }
 
         if (chartRef.current && formattedData.length > 0) {
           chartRef.current.timeScale().fitContent()

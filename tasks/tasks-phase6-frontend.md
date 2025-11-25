@@ -100,7 +100,7 @@
 |      |     |        | to screen size (1920x1080, 1366x768)      |     |              |     |            |
 |      |  7  |   ✅   | Test layout in browser at different       | 🟡  |     2.6      |  1  |    5m      |
 |      |     |        | sizes, verify no overflow                 |     |              |     |            |
-|  3   |     |   🔄   | **Implement Candlestick Chart             | 🟢  |      -       |  -  |     -      |
+|  3   |     |   ✅   | **Implement Candlestick Chart             | 🟢  |      -       |  -  |    95m     |
 |      |     |        | Component**                               |     |              |     |            |
 |      |  1  |   ✅   | Install lightweight-charts library:       | 🟢  |      -       |  1  |    (1.2)   |
 |      |     |        | npm install lightweight-charts            |     |              |     |            |
@@ -120,29 +120,29 @@
 |      |     |        | pan, crosshair                            |     |              |     |            |
 |      |  7  |   ✅   | Add stock symbol selector dropdown to     | 🟡  |     3.2      |  2  |    10m     |
 |      |     |        | switch between watchlist stocks           |     |              |     |            |
-|      |  8  |   -    | Test chart with real OHLCV data from      | 🟡  |     3.7      |  2  |     -      |
+|      |  8  |   ✅   | Test chart with real OHLCV data from      | 🟡  |     3.7      |  2  |  (manual)  |
 |      |     |        | backend, verify displays correctly        |     |              |     |            |
-|  4   |     |   -    | **Build Volume and Indicator Charts**     | 🟢  |      -       |  -  |     -      |
-|      |  1  |   -    | Install recharts library: npm install     | 🟢  |      -       |  1  |     -      |
+|  4   |     |   ✅   | **Build Volume and Indicator Charts**     | 🟢  |      -       |  -  |    95m     |
+|      |  1  |   ✅   | Install recharts library: npm install     | 🟢  |      -       |  1  |    (1.2)   |
 |      |     |        | recharts                                  |     |              |     |            |
-|      |  2  |   -    | Create components/charts/VolumeChart.tsx  | 🟡  |     4.1      |  5  |     -      |
+|      |  2  |   ✅   | Create components/charts/VolumeChart.tsx  | 🟡  |     4.1      |  5  |    25m     |
 |      |     |        | using Recharts BarChart                   |     |              |     |            |
-|      |  3  |   -    | Synchronize volume chart timeline with    | 🟡  |     3, 4.2   |  3  |     -      |
+|      |  3  |   ✅   | Synchronize volume chart timeline with    | 🟡  |     3, 4.2   |  3  |    10m     |
 |      |     |        | main candlestick chart (shared X-axis)    |     |              |     |            |
-|      |  4  |   -    | Color volume bars: green on up days,      | 🟡  |     4.2      |  2  |     -      |
+|      |  4  |   ✅   | Color volume bars: green on up days,      | 🟡  |     4.2      |  2  |    10m     |
 |      |     |        | red on down days                          |     |              |     |            |
-|      |  5  |   -    | Create                                    | 🟡  |     3        |  5  |     -      |
+|      |  5  |   ✅   | Create                                    | 🟡  |     3        |  5  |    15m     |
 |      |     |        | components/charts/IndicatorOverlay.tsx    |     |              |     |            |
 |      |     |        | to add EMA lines to main chart            |     |              |     |            |
-|      |  6  |   -    | Fetch indicator data: GET                 | 🟡  |     4.5      |  2  |     -      |
+|      |  6  |   ✅   | Fetch indicator data: GET                 | 🟡  |     4.5      |  2  |    10m     |
 |      |     |        | /api/indicators/calculate with EMA(20),   |     |              |     |            |
 |      |     |        | EMA(50)                                   |     |              |     |            |
-|      |  7  |   -    | Add EMA(20) line series to chart (blue)   | 🟡  |     4.6      |  2  |     -      |
-|      |  8  |   -    | Add EMA(50) line series to chart          | 🟡  |     4.7      |  2  |     -      |
+|      |  7  |   ✅   | Add EMA(20) line series to chart (blue)   | 🟡  |     4.6      |  2  |    5m      |
+|      |  8  |   ✅   | Add EMA(50) line series to chart          | 🟡  |     4.7      |  2  |    5m      |
 |      |     |        | (orange)                                  |     |              |     |            |
-|      |  9  |   -    | Add buy/sell signal markers on chart      | 🟡  |     4.5      |  3  |     -      |
+|      |  9  |   ✅   | Add buy/sell signal markers on chart      | 🟡  |     4.5      |  3  |    10m     |
 |      |     |        | (arrows or triangles)                     |     |              |     |            |
-|      | 10  |   -    | Test charts with indicators and signals,  | 🟡  |     4.9      |  2  |     -      |
+|      | 10  |   ✅   | Test charts with indicators and signals,  | 🟡  |     4.9      |  2  |  (manual)  |
 |      |     |        | verify overlays display correctly         |     |              |     |            |
 |  5   |     |   -    | **Create Positions and Trades Tables**    | 🟢  |      -       |  -  |     -      |
 |      |  1  |   -    | Create                                    | 🟢  |      -       |  5  |     -      |
