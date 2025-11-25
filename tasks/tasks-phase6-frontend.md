@@ -212,24 +212,24 @@
 |      |  9  |   ✅   | Test WebSocket: connect, receive price    | 🟡  |     7.8      |  2  |  (manual)  |
 |      |     |        | updates, verify tables/charts update      |     |              |     |            |
 |      |     |        | in real-time                              |     |              |     |            |
-|  8   |     |   -    | **Implement Alert/Notification UI**       | 🟢  |      -       |  -  |     -      |
-|      |  1  |   -    | Create components/alerts/AlertToast.tsx   | 🟢  |      -       |  3  |     -      |
+|  8   |     |   ✅   | **Implement Alert/Notification UI**       | 🟢  |      -       |  -  |    60m     |
+|      |  1  |   ✅   | Create components/alerts/AlertToast.tsx   | 🟢  |      -       |  3  |    10m     |
 |      |     |        | for toast notifications (library:         |     |              |     |            |
 |      |     |        | react-hot-toast)                          |     |              |     |            |
-|      |  2  |   -    | Install react-hot-toast: npm install      | 🟡  |     8.1      |  1  |     -      |
+|      |  2  |   ✅   | Install react-hot-toast: npm install      | 🟡  |     8.1      |  1  |    (1.2)   |
 |      |     |        | react-hot-toast                           |     |              |     |            |
-|      |  3  |   -    | Create AlertContext for global alert      | 🟡  |     8.1      |  3  |     -      |
+|      |  3  |   ✅   | Create AlertContext for global alert      | 🟡  |     8.1      |  3  |    10m     |
 |      |     |        | management with show/hide methods         |     |              |     |            |
-|      |  4  |   -    | Implement alert types: info (blue),       | 🟡  |     8.3      |  2  |     -      |
+|      |  4  |   ✅   | Implement alert types: info (blue),       | 🟡  |     8.3      |  2  |    10m     |
 |      |     |        | warning (yellow), error (red), success    |     |              |     |            |
 |      |     |        | (green)                                   |     |              |     |            |
-|      |  5  |   -    | Create components/alerts/AlertPanel.tsx   | 🟡  |     8.3      |  3  |     -      |
+|      |  5  |   ✅   | Create components/alerts/AlertPanel.tsx   | 🟡  |     8.3      |  3  |    10m     |
 |      |     |        | showing recent alerts (last 20)           |     |              |     |            |
-|      |  6  |   -    | Fetch alerts from WebSocket: listen for   | 🟡  |     7, 8.5   |  3  |     -      |
+|      |  6  |   ✅   | Fetch alerts from WebSocket: listen for   | 🟡  |     7, 8.5   |  3  |    10m     |
 |      |     |        | 'alert' message type                      |     |              |     |            |
-|      |  7  |   -    | Show toast for: trade execution, signal   | 🟡  |     8.6      |  2  |     -      |
+|      |  7  |   ✅   | Show toast for: trade execution, signal   | 🟡  |     8.6      |  2  |    5m      |
 |      |     |        | generated, risk limit warning, errors     |     |              |     |            |
-|      |  8  |   -    | Test alerts: manually trigger events in   | 🟡  |     8.7      |  2  |     -      |
+|      |  8  |   ✅   | Test alerts: manually trigger events in   | 🟡  |     8.7      |  2  |  (manual)  |
 |      |     |        | backend, verify toasts display            |     |              |     |            |
 |  9   |     |   -    | **Polish UI/UX and Error Handling**       | 🟢  |      -       |  -  |     -      |
 |      |  1  |   -    | Add loading states: spinner while         | 🟢  |      8       |  3  |     -      |

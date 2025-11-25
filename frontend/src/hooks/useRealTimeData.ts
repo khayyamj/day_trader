@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
+import toast from 'react-hot-toast'
 import { websocketClient } from '@services/websocket'
-import type { WebSocketMessage, PriceUpdate } from '@types/index'
+import type { WebSocketMessage, PriceUpdate, Alert, Trade, Signal } from '@types/index'
 
 export function useRealTimeData() {
   const [latestPrices, setLatestPrices] = useState<Map<string, PriceUpdate>>(new Map())
@@ -18,22 +19,49 @@ export function useRealTimeData() {
           break
 
         case 'trade':
-          // Trade messages will trigger refetch in tables
-          console.log('New trade received:', message.data)
+          const trade = message.data as Trade
+          toast.success(`Trade executed: ${trade.type.toUpperCase()} ${trade.symbol} @ ${trade.entry_price}`)
+          if ((window as any).addDashboardAlert) {
+            ;(window as any).addDashboardAlert({
+              id: Date.now(),
+              type: 'success',
+              message: `Trade executed: ${trade.type.toUpperCase()} ${trade.symbol}`,
+              timestamp: new Date().toISOString(),
+              details: `Price: $${trade.entry_price}`,
+            })
+          }
           break
 
         case 'signal':
-          // Signal messages for chart markers
-          console.log('New signal received:', message.data)
+          const signal = message.data as Signal
+          toast(`Signal: ${signal.signal_type.toUpperCase()} ${signal.symbol}`, {
+            icon: signal.signal_type === 'buy' ? '📈' : '📉',
+          })
+          if ((window as any).addDashboardAlert) {
+            ;(window as any).addDashboardAlert({
+              id: Date.now(),
+              type: 'info',
+              message: `Signal generated: ${signal.signal_type.toUpperCase()} ${signal.symbol}`,
+              timestamp: new Date().toISOString(),
+              details: `Price: $${signal.price}`,
+            })
+          }
           break
 
         case 'alert':
-          // Alert messages for notifications
-          console.log('New alert received:', message.data)
+          const alert = message.data as Alert
+          const toastFn = alert.type === 'error' ? toast.error :
+                         alert.type === 'warning' ? toast :
+                         alert.type === 'success' ? toast.success :
+                         toast
+          toastFn(alert.message)
+
+          if ((window as any).addDashboardAlert) {
+            ;(window as any).addDashboardAlert(alert)
+          }
           break
 
         case 'position':
-          // Position updates
           console.log('Position update received:', message.data)
           break
 
