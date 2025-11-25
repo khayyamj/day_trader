@@ -100,25 +100,25 @@
 |      |     |        | to screen size (1920x1080, 1366x768)      |     |              |     |            |
 |      |  7  |   ✅   | Test layout in browser at different       | 🟡  |     2.6      |  1  |    5m      |
 |      |     |        | sizes, verify no overflow                 |     |              |     |            |
-|  3   |     |   -    | **Implement Candlestick Chart             | 🟢  |      -       |  -  |     -      |
+|  3   |     |   🔄   | **Implement Candlestick Chart             | 🟢  |      -       |  -  |     -      |
 |      |     |        | Component**                               |     |              |     |            |
-|      |  1  |   -    | Install lightweight-charts library:       | 🟢  |      -       |  1  |     -      |
+|      |  1  |   ✅   | Install lightweight-charts library:       | 🟢  |      -       |  1  |    (1.2)   |
 |      |     |        | npm install lightweight-charts            |     |              |     |            |
-|      |  2  |   -    | Create                                    | 🟡  |     3.1      |  8  |     -      |
+|      |  2  |   ✅   | Create                                    | 🟡  |     3.1      |  8  |    30m     |
 |      |     |        | components/charts/CandlestickChart.tsx    |     |              |     |            |
 |      |     |        | with chart initialization using           |     |              |     |            |
 |      |     |        | createChart()                             |     |              |     |            |
-|      |  3  |   -    | Implement data fetching: GET              | 🟡  |     3.2      |  3  |     -      |
+|      |  3  |   ✅   | Implement data fetching: GET              | 🟡  |     3.2      |  3  |    15m     |
 |      |     |        | /api/market-data/ohlcv for selected       |     |              |     |            |
 |      |     |        | stock                                     |     |              |     |            |
-|      |  4  |   -    | Format data for Lightweight Charts:       | 🟡  |     3.3      |  2  |     -      |
+|      |  4  |   ✅   | Format data for Lightweight Charts:       | 🟡  |     3.3      |  2  |    10m     |
 |      |     |        | convert to {time, open, high, low,        |     |              |     |            |
 |      |     |        | close}                                    |     |              |     |            |
-|      |  5  |   -    | Add candlestick series to chart with      | 🟡  |     3.4      |  2  |     -      |
+|      |  5  |   ✅   | Add candlestick series to chart with      | 🟡  |     3.4      |  2  |    10m     |
 |      |     |        | styling (green up, red down)              |     |              |     |            |
-|      |  6  |   -    | Implement chart controls: zoom,           | 🟡  |     3.5      |  3  |     -      |
+|      |  6  |   ✅   | Implement chart controls: zoom,           | 🟡  |     3.5      |  3  |    10m     |
 |      |     |        | pan, crosshair                            |     |              |     |            |
-|      |  7  |   -    | Add stock symbol selector dropdown to     | 🟡  |     3.2      |  2  |     -      |
+|      |  7  |   ✅   | Add stock symbol selector dropdown to     | 🟡  |     3.2      |  2  |    10m     |
 |      |     |        | switch between watchlist stocks           |     |              |     |            |
 |      |  8  |   -    | Test chart with real OHLCV data from      | 🟡  |     3.7      |  2  |     -      |
 |      |     |        | backend, verify displays correctly        |     |              |     |            |
