@@ -106,28 +106,28 @@
 |      |     |        | recent events with filters                |     |              |     |            |
 |      |  8  |   ✅   | Test event logging: trigger various       | 🟢  |      -       |  2  |     5m     |
 |      |     |        | scenarios, verify events logged           |     |              |     |            |
-|  3   |     |   -    | **Create Crash Recovery Procedure**       | 🟢  |      -       |  -  |     -      |
-|      |  1  |   -    | Create services/monitoring/recovery.py    | 🟢  |      -       |  5  |     -      |
+|  3   |     |   ✅   | **Create Crash Recovery Procedure**       | 🟢  |      -       |  -  |   2h 15m   |
+|      |  1  |   ✅   | Create services/monitoring/recovery.py    | 🟢  |      -       |  5  |    30m     |
 |      |     |        | with RecoveryService class                |     |              |     |            |
-|      |  2  |   -    | Implement detect_crash() that checks if   | 🟡  |     3.1      |  3  |     -      |
+|      |  2  |   ✅   | Implement detect_crash() that checks if   | 🟢  |      -       |  3  |    15m     |
 |      |     |        | system_state.last_updated > 5 minutes     |     |              |     |            |
 |      |     |        | ago                                       |     |              |     |            |
-|      |  3  |   -    | Implement run_recovery() method that      | 🟡  |     3.2      |  5  |     -      |
+|      |  3  |   ✅   | Implement run_recovery() method that      | 🟢  |      -       |  5  |    30m     |
 |      |     |        | loads last state, reconciles with         |     |              |     |            |
 |      |     |        | broker, logs recovery event               |     |              |     |            |
-|      |  4  |   -    | Add system_state table with               | 🟡  |     3.1      |  2  |     -      |
+|      |  4  |   ✅   | Add system_state table with               | 🟢  |      -       |  2  |    10m     |
 |      |     |        | last_updated, system_status,              |     |              |     |            |
 |      |     |        | metadata fields                           |     |              |     |            |
-|      |  5  |   -    | Add recovery_events table to log all      | 🟡  |     3.4      |  2  |     -      |
+|      |  5  |   ✅   | Add recovery_events table to log all      | 🟢  |      -       |  2  |    10m     |
 |      |     |        | recovery attempts and outcomes            |     |              |     |            |
-|      |  6  |   -    | Update system_state.last_updated every    | 🟡  |     3.3      |  2  |     -      |
+|      |  6  |   ✅   | Update system_state.last_updated every    | 🟢  |      -       |  2  |    15m     |
 |      |     |        | 30 seconds via heartbeat                  |     |              |     |            |
-|      |  7  |   -    | Run recovery on app startup               | 🟡  |     3.3      |  2  |     -      |
+|      |  7  |   ✅   | Run recovery on app startup               | 🟢  |      -       |  2  |    15m     |
 |      |     |        | automatically                             |     |              |     |            |
-|      |  8  |   -    | Send recovery report email with           | 🟡  |     1, 3.7   |  3  |     -      |
+|      |  8  |   ✅   | Send recovery report email with           | 🟢  |      -       |  3  |    10m     |
 |      |     |        | discrepancies, actions taken,             |     |              |     |            |
 |      |     |        | positions status                          |     |              |     |            |
-|      |  9  |   -    | Test recovery: stop app during active     | 🟡  |     3.8      |  3  |     -      |
+|      |  9  |   ✅   | Test recovery: stop app during active     | 🟢  |      -       |  3  |    10m     |
 |      |     |        | trade, restart, verify reconciliation     |     |              |     |            |
 |  4   |     |   -    | **Set Up Auto-Restart Service            | 🟢  |      -       |  -  |     -      |
 |      |     |        | (systemd)**                               |     |              |     |            |

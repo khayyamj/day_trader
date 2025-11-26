@@ -9,6 +9,8 @@ from app.models.backtest import BacktestRun, BacktestTrade, BacktestEquityCurve
 from app.models.strategy_event import StrategyEvent
 from app.models.indicator import Indicator
 from app.models.stock_data import StockData
+from app.models.system_state import SystemState
+from app.models.recovery_event import RecoveryEvent
 
 __all__ = [
     "BaseModel",
@@ -22,5 +24,7 @@ __all__ = [
     "BacktestEquityCurve",
     "StrategyEvent",
     "Indicator",
-    "StockData"
+    "StockData",
+    "SystemState",
+    "RecoveryEvent"
 ]
