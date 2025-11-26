@@ -1,0 +1,43 @@
+[Unit]
+Description=Trading Bot Application
+Documentation=https://github.com/yourusername/trading-bot
+After=network.target postgresql.service redis.service
+Requires=postgresql.service redis.service
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=trading
+Group=trading
+WorkingDirectory=/opt/trading-bot
+
+# Environment
+Environment="PYTHONUNBUFFERED=1"
+EnvironmentFile=/opt/trading-bot/.env
+
+# Start command
+ExecStart=/opt/trading-bot/backend/venv/bin/python -m uvicorn app.main:app --host 0.0.0.0 --port 8000
+
+# Restart policy
+Restart=always
+RestartSec=10s
+
+# Restart limits (max 5 restarts in 10 minutes)
+StartLimitInterval=600
+StartLimitBurst=5
+
+# Logging
+StandardOutput=append:/var/log/trading-bot/app.log
+StandardError=append:/var/log/trading-bot/error.log
+SyslogIdentifier=trading-bot
+
+# Security settings
+NoNewPrivileges=true
+PrivateTmp=true
+
+# Resource limits
+LimitNOFILE=65536
+MemoryMax=2G
+
+[Install]
+WantedBy=multi-user.target

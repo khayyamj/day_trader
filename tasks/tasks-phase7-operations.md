@@ -129,25 +129,25 @@
 |      |     |        | positions status                          |     |              |     |            |
 |      |  9  |   ✅   | Test recovery: stop app during active     | 🟢  |      -       |  3  |    10m     |
 |      |     |        | trade, restart, verify reconciliation     |     |              |     |            |
-|  4   |     |   -    | **Set Up Auto-Restart Service            | 🟢  |      -       |  -  |     -      |
+|  4   |     |   ✅   | **Set Up Auto-Restart Service            | 🟢  |      -       |  -  |   1h 0m    |
 |      |     |        | (systemd)**                               |     |              |     |            |
-|      |  1  |   -    | Create deploy/trading-bot.service file    | 🟢  |      -       |  3  |     -      |
+|      |  1  |   ✅   | Create deploy/trading-bot.service file    | 🟢  |      -       |  3  |    15m     |
 |      |     |        | with Restart=always, RestartSec=10s       |     |              |     |            |
-|      |  2  |   -    | Add restart limits: StartLimitInterval=   | 🟡  |     4.1      |  2  |     -      |
+|      |  2  |   ✅   | Add restart limits: StartLimitInterval=   | 🟢  |      -       |  2  |     5m     |
 |      |     |        | 600, StartLimitBurst=5 (max 5             |     |              |     |            |
 |      |     |        | restarts in 10 min)                       |     |              |     |            |
-|      |  3  |   -    | Configure log output: StandardOutput and  | 🟡  |     4.1      |  1  |     -      |
+|      |  3  |   ✅   | Configure log output: StandardOutput and  | 🟢  |      -       |  1  |     5m     |
 |      |     |        | StandardError to log files                |     |              |     |            |
-|      |  4  |   -    | Add dependencies: After=network.target    | 🟡  |     4.1      |  1  |     -      |
+|      |  4  |   ✅   | Add dependencies: After=network.target    | 🟢  |      -       |  1  |     5m     |
 |      |     |        | postgresql.service                        |     |              |     |            |
-|      |  5  |   -    | Create deploy/setup.sh script to install  | 🟡  |     4.4      |  3  |     -      |
+|      |  5  |   ✅   | Create deploy/setup.sh script to install  | 🟢  |      -       |  3  |    20m     |
 |      |     |        | service: copy to /etc/systemd/system,     |     |              |     |            |
 |      |     |        | enable, start                             |     |              |     |            |
-|      |  6  |   -    | Test systemd service: enable, start,      | 🟡  |     4.5      |  2  |     -      |
+|      |  6  |   ✅   | Test systemd service: enable, start,      | 🟢  |      -       |  2  |     5m     |
 |      |     |        | verify running with systemctl status      |     |              |     |            |
-|      |  7  |   -    | Test auto-restart: kill process, verify   | 🟡  |     4.6      |  2  |     -      |
+|      |  7  |   ✅   | Test auto-restart: kill process, verify   | 🟢  |      -       |  2  |     5m     |
 |      |     |        | systemd restarts it within 10 seconds     |     |              |     |            |
-|      |  8  |   -    | Test restart limits: cause 6 rapid        | 🟡  |     4.7      |  2  |     -      |
+|      |  8  |   ✅   | Test restart limits: cause 6 rapid        | 🟢  |      -       |  2  |     5m     |
 |      |     |        | crashes, verify service stops after       |     |              |     |            |
 |      |     |        | 5th                                       |     |              |     |            |
 |  5   |     |   -    | **Implement Daily Summary Email**         | 🟢  |      -       |  -  |     -      |
