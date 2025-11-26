@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+        .container {
+            background-color: #ffffff;
+            border-radius: 8px;
+            padding: 30px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .header {
+            border-bottom: 3px solid {% if severity == 'CRITICAL' %}#dc2626{% elif severity == 'WARNING' %}#f59e0b{% else %}#3b82f6{% endif %};
+            padding-bottom: 15px;
+            margin-bottom: 20px;
+        }
+        h1 {
+            margin: 0;
+            color: {% if severity == 'CRITICAL' %}#dc2626{% elif severity == 'WARNING' %}#f59e0b{% else %}#3b82f6{% endif %};
+            font-size: 24px;
+        }
+        .severity-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: bold;
+            margin-top: 10px;
+            background-color: {% if severity == 'CRITICAL' %}#fecaca{% elif severity == 'WARNING' %}#fef3c7{% else %}#dbeafe{% endif %};
+            color: {% if severity == 'CRITICAL' %}#991b1b{% elif severity == 'WARNING' %}#92400e{% else %}#1e3a8a{% endif %};
+        }
+        .alert-content {
+            background-color: {% if severity == 'CRITICAL' %}#fee2e2{% elif severity == 'WARNING' %}#fef3c7{% else %}#eff6ff{% endif %};
+            border-left: 4px solid {% if severity == 'CRITICAL' %}#dc2626{% elif severity == 'WARNING' %}#f59e0b{% else %}#3b82f6{% endif %};
+            border-radius: 6px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        .message {
+            font-size: 16px;
+            color: #111827;
+            margin-bottom: 15px;
+        }
+        .details {
+            background-color: #ffffff;
+            border-radius: 4px;
+            padding: 15px;
+            margin-top: 15px;
+        }
+        .detail-row {
+            padding: 8px 0;
+            border-bottom: 1px solid #e5e7eb;
+        }
+        .detail-row:last-child {
+            border-bottom: none;
+        }
+        .label {
+            font-weight: bold;
+            color: #6b7280;
+            display: inline-block;
+            min-width: 120px;
+        }
+        .value {
+            color: #111827;
+        }
+        .footer {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #e5e7eb;
+            font-size: 12px;
+            color: #6b7280;
+            text-align: center;
+        }
+        .timestamp {
+            font-size: 14px;
+            color: #6b7280;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>{{ alert_type }}</h1>
+            <span class="severity-badge">{{ severity }}</span>
+            <div class="timestamp">{{ timestamp }}</div>
+        </div>
+
+        <div class="alert-content">
+            <div class="message">
+                <strong>{{ message }}</strong>
+            </div>
+
+            {% if details %}
+            <div class="details">
+                {% for key, value in details.items() %}
+                <div class="detail-row">
+                    <span class="label">{{ key }}:</span>
+                    <span class="value">{{ value }}</span>
+                </div>
+                {% endfor %}
+            </div>
+            {% endif %}
+        </div>
+
+        {% if action_required %}
+        <div style="background-color: #fef3c7; border: 1px solid #f59e0b; border-radius: 6px; padding: 15px; margin: 20px 0;">
+            <strong>⚠️ Action Required:</strong> {{ action_required }}
+        </div>
+        {% endif %}
+
+        <div class="footer">
+            <p>This is an automated alert from your Trading Bot.</p>
+            <p>Timestamp: {{ timestamp }}</p>
+        </div>
+    </div>
+</body>
+</html>

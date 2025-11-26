@@ -60,32 +60,32 @@
 
 | Task |  #  | Status | Description                               |     | Dependencies | Pts | Time Spent |
 | :--: | :-: | :----: | ----------------------------------------- | :-: | :----------: | :-: | :--------: |
-|  1   |     |   -    | **Implement Email Notification Service**  | 🟢  |      -       |  -  |     -      |
-|      |  1  |   -    | Add SMTP settings to .env: SMTP_HOST,     | 🟢  |      -       |  1  |     -      |
+|  1   |     |   ✅   | **Implement Email Notification Service**  | 🟢  |      -       |  -  |   2h 30m   |
+|      |  1  |   ✅   | Add SMTP settings to .env: SMTP_HOST,     | 🟢  |      -       |  1  |    10m     |
 |      |     |        | SMTP_PORT, SMTP_USER, SMTP_PASSWORD,      |     |              |     |            |
 |      |     |        | EMAIL_FROM                                |     |              |     |            |
-|      |  2  |   -    | Create                                    | 🟡  |     1.1      |  5  |     -      |
+|      |  2  |   ✅   | Create                                    | 🟢  |      -       |  5  |    20m     |
 |      |     |        | services/notifications/email_service.py   |     |              |     |            |
 |      |     |        | with EmailService class using             |     |              |     |            |
 |      |     |        | smtplib                                   |     |              |     |            |
-|      |  3  |   -    | Implement send_email() method with HTML   | 🟡  |     1.2      |  3  |     -      |
+|      |  3  |   ✅   | Implement send_email() method with HTML   | 🟢  |      -       |  3  |    15m     |
 |      |     |        | and plain text support                    |     |              |     |            |
-|      |  4  |   -    | Add retry logic for email sending (3      | 🟡  |     1.3      |  2  |     -      |
+|      |  4  |   ✅   | Add retry logic for email sending (3      | 🟢  |      -       |  2  |    10m     |
 |      |     |        | attempts, 5 second delay)                 |     |              |     |            |
-|      |  5  |   -    | Create HTML email templates using Jinja2  | 🟡  |     1.2      |  3  |     -      |
+|      |  5  |   ✅   | Create HTML email templates using Jinja2  | 🟢  |      -       |  3  |    15m     |
 |      |     |        | for trade_execution.html                  |     |              |     |            |
-|      |  6  |   -    | Create templates for alert.html and       | 🟡  |     1.5      |  3  |     -      |
+|      |  6  |   ✅   | Create templates for alert.html and       | 🟢  |      -       |  3  |    25m     |
 |      |     |        | daily_summary.html                        |     |              |     |            |
-|      |  7  |   -    | Test email sending: send test email to    | 🟡  |     1.6      |  1  |     -      |
+|      |  7  |   ✅   | Test email sending: send test email to    | 🟢  |      -       |  1  |     5m     |
 |      |     |        | your address, verify received             |     |              |     |            |
-|      |  8  |   -    | Create                                    | 🟡  |     1.2      |  5  |     -      |
+|      |  8  |   ✅   | Create                                    | 🟢  |      -       |  5  |    20m     |
 |      |     |        | services/notifications/notification_manager.py |   |              |     |            |
 |      |     |        | that coordinates all notifications        |     |              |     |            |
-|      |  9  |   -    | Implement notify_trade_execution() that   | 🟡  |     1.8      |  3  |     -      |
+|      |  9  |   ✅   | Implement notify_trade_execution() that   | 🟢  |      -       |  3  |    10m     |
 |      |     |        | sends email on trade entry/exit           |     |              |     |            |
-|      | 10  |   -    | Implement notify_risk_warning() for       | 🟡  |     1.8      |  2  |     -      |
+|      | 10  |   ✅   | Implement notify_risk_warning() for       | 🟢  |      -       |  2  |    10m     |
 |      |     |        | daily loss limit warnings                 |     |              |     |            |
-|      | 11  |   -    | Implement notify_system_error() for       | 🟡  |     1.8      |  2  |     -      |
+|      | 11  |   ✅   | Implement notify_system_error() for       | 🟢  |      -       |  2  |    10m     |
 |      |     |        | critical errors and crashes               |     |              |     |            |
 |  2   |     |   -    | **Build Event Logging System**            | 🟢  |      -       |  -  |     -      |
 |      |  1  |   -    | Enhance existing logging to include       | 🟢  |      -       |  3  |     -      |

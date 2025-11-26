@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+        .container {
+            background-color: #ffffff;
+            border-radius: 8px;
+            padding: 30px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .header {
+            border-bottom: 3px solid {% if action == 'BUY' or action == 'ENTRY' %}#10b981{% else %}#ef4444{% endif %};
+            padding-bottom: 15px;
+            margin-bottom: 20px;
+        }
+        h1 {
+            margin: 0;
+            color: {% if action == 'BUY' or action == 'ENTRY' %}#10b981{% else %}#ef4444{% endif %};
+            font-size: 24px;
+        }
+        .trade-info {
+            background-color: #f9fafb;
+            border-radius: 6px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid #e5e7eb;
+        }
+        .info-row:last-child {
+            border-bottom: none;
+        }
+        .label {
+            font-weight: bold;
+            color: #6b7280;
+        }
+        .value {
+            color: #111827;
+            text-align: right;
+        }
+        .footer {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #e5e7eb;
+            font-size: 12px;
+            color: #6b7280;
+            text-align: center;
+        }
+        .timestamp {
+            font-size: 14px;
+            color: #6b7280;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>{{ action }} Order Executed</h1>
+            <div class="timestamp">{{ timestamp }}</div>
+        </div>
+
+        <div class="trade-info">
+            <div class="info-row">
+                <span class="label">Symbol:</span>
+                <span class="value">{{ symbol }}</span>
+            </div>
+            <div class="info-row">
+                <span class="label">Strategy:</span>
+                <span class="value">{{ strategy_name }}</span>
+            </div>
+            <div class="info-row">
+                <span class="label">Action:</span>
+                <span class="value">{{ action }}</span>
+            </div>
+            <div class="info-row">
+                <span class="label">Quantity:</span>
+                <span class="value">{{ quantity }}</span>
+            </div>
+            <div class="info-row">
+                <span class="label">Price:</span>
+                <span class="value">${{ "%.2f"|format(price) }}</span>
+            </div>
+            <div class="info-row">
+                <span class="label">Total Value:</span>
+                <span class="value">${{ "%.2f"|format(quantity * price) }}</span>
+            </div>
+            {% if order_id %}
+            <div class="info-row">
+                <span class="label">Order ID:</span>
+                <span class="value">{{ order_id }}</span>
+            </div>
+            {% endif %}
+        </div>
+
+        {% if reason %}
+        <div style="background-color: #fef3c7; border-left: 4px solid #f59e0b; padding: 15px; margin: 20px 0;">
+            <strong>Reason:</strong> {{ reason }}
+        </div>
+        {% endif %}
+
+        <div class="footer">
+            <p>This is an automated notification from your Trading Bot.</p>
+            <p>Timestamp: {{ timestamp }}</p>
+        </div>
+    </div>
+</body>
+</html>

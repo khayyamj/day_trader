@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+        .container {
+            background-color: #ffffff;
+            border-radius: 8px;
+            padding: 30px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .header {
+            border-bottom: 3px solid #3b82f6;
+            padding-bottom: 15px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        h1 {
+            margin: 0;
+            color: #1e40af;
+            font-size: 28px;
+        }
+        h2 {
+            color: #1e40af;
+            font-size: 20px;
+            margin-top: 30px;
+            margin-bottom: 15px;
+            border-bottom: 2px solid #e5e7eb;
+            padding-bottom: 10px;
+        }
+        .date {
+            font-size: 16px;
+            color: #6b7280;
+            margin-top: 5px;
+        }
+        .summary-cards {
+            display: flex;
+            gap: 15px;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+        .card {
+            flex: 1;
+            min-width: 150px;
+            background-color: #f9fafb;
+            border-radius: 6px;
+            padding: 20px;
+            text-align: center;
+        }
+        .card-label {
+            font-size: 12px;
+            color: #6b7280;
+            text-transform: uppercase;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+        .card-value {
+            font-size: 24px;
+            font-weight: bold;
+            color: #111827;
+        }
+        .card-value.positive {
+            color: #10b981;
+        }
+        .card-value.negative {
+            color: #ef4444;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+            background-color: #ffffff;
+        }
+        th {
+            background-color: #f3f4f6;
+            padding: 12px;
+            text-align: left;
+            font-weight: bold;
+            color: #374151;
+            border-bottom: 2px solid #e5e7eb;
+        }
+        td {
+            padding: 12px;
+            border-bottom: 1px solid #e5e7eb;
+        }
+        tr:last-child td {
+            border-bottom: none;
+        }
+        .profit {
+            color: #10b981;
+            font-weight: bold;
+        }
+        .loss {
+            color: #ef4444;
+            font-weight: bold;
+        }
+        .watchlist-item {
+            background-color: #f9fafb;
+            border-radius: 6px;
+            padding: 15px;
+            margin: 10px 0;
+            border-left: 4px solid #3b82f6;
+        }
+        .watchlist-symbol {
+            font-weight: bold;
+            font-size: 16px;
+            color: #111827;
+        }
+        .watchlist-reason {
+            color: #6b7280;
+            font-size: 14px;
+            margin-top: 5px;
+        }
+        .footer {
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid #e5e7eb;
+            font-size: 12px;
+            color: #6b7280;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Daily Trading Summary</h1>
+            <div class="date">{{ date }}</div>
+        </div>
+
+        <div class="summary-cards">
+            <div class="card">
+                <div class="card-label">Total P&L</div>
+                <div class="card-value {{ 'positive' if total_pnl >= 0 else 'negative' }}">
+                    ${{ "%.2f"|format(total_pnl) }}
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-label">Trades Today</div>
+                <div class="card-value">{{ trades_count }}</div>
+            </div>
+            <div class="card">
+                <div class="card-label">Win Rate</div>
+                <div class="card-value">{{ "%.1f"|format(win_rate) }}%</div>
+            </div>
+            <div class="card">
+                <div class="card-label">Open Positions</div>
+                <div class="card-value">{{ open_positions }}</div>
+            </div>
+        </div>
+
+        {% if trades and trades|length > 0 %}
+        <h2>Today's Trades</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Time</th>
+                    <th>Symbol</th>
+                    <th>Action</th>
+                    <th>Quantity</th>
+                    <th>Price</th>
+                    <th>P&L</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for trade in trades %}
+                <tr>
+                    <td>{{ trade.time }}</td>
+                    <td>{{ trade.symbol }}</td>
+                    <td>{{ trade.action }}</td>
+                    <td>{{ trade.quantity }}</td>
+                    <td>${{ "%.2f"|format(trade.price) }}</td>
+                    <td class="{{ 'profit' if trade.pnl >= 0 else 'loss' }}">
+                        {% if trade.pnl is not none %}
+                            ${{ "%.2f"|format(trade.pnl) }}
+                        {% else %}
+                            -
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <h2>Today's Trades</h2>
+        <p style="color: #6b7280; text-align: center; padding: 20px;">No trades executed today.</p>
+        {% endif %}
+
+        {% if positions and positions|length > 0 %}
+        <h2>Current Open Positions</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Symbol</th>
+                    <th>Strategy</th>
+                    <th>Quantity</th>
+                    <th>Entry Price</th>
+                    <th>Current Price</th>
+                    <th>Unrealized P&L</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for position in positions %}
+                <tr>
+                    <td>{{ position.symbol }}</td>
+                    <td>{{ position.strategy }}</td>
+                    <td>{{ position.quantity }}</td>
+                    <td>${{ "%.2f"|format(position.entry_price) }}</td>
+                    <td>${{ "%.2f"|format(position.current_price) }}</td>
+                    <td class="{{ 'profit' if position.unrealized_pnl >= 0 else 'loss' }}">
+                        ${{ "%.2f"|format(position.unrealized_pnl) }}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% endif %}
+
+        {% if watchlist and watchlist|length > 0 %}
+        <h2>Tomorrow's Watchlist</h2>
+        {% for item in watchlist %}
+        <div class="watchlist-item">
+            <div class="watchlist-symbol">{{ item.symbol }}</div>
+            <div class="watchlist-reason">{{ item.reason }}</div>
+        </div>
+        {% endfor %}
+        {% endif %}
+
+        <div class="footer">
+            <p>This is an automated daily summary from your Trading Bot.</p>
+            <p>Report generated at {{ timestamp }}</p>
+        </div>
+    </div>
+</body>
+</html>

@@ -54,6 +54,14 @@ class Settings(BaseSettings):
         default=["http://localhost:3000", "http://localhost:8000"]
     )
 
+    # Email/SMTP Configuration
+    SMTP_HOST: str = Field(default="smtp.gmail.com")
+    SMTP_PORT: int = Field(default=587)
+    SMTP_USER: Optional[str] = Field(default=None)
+    SMTP_PASSWORD: Optional[str] = Field(default=None)
+    EMAIL_FROM: Optional[str] = Field(default=None)
+    EMAIL_TO: Optional[str] = Field(default=None)
+
     @field_validator("BACKEND_CORS_ORIGINS", mode="before")
     @classmethod
     def parse_cors_origins(cls, v):
