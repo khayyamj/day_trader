@@ -165,23 +165,23 @@
 |      |  6  |   ✅   | Test daily summary: manually trigger job, | 🟢  |      -       |  2  |     5m     |
 |      |     |        | verify email received with correct        |     |              |     |            |
 |      |     |        | data                                      |     |              |     |            |
-|  6   |     |   -    | **Create System Health Monitoring**       | 🟢  |      -       |  -  |     -      |
-|      |  1  |   -    | Create                                    | 🟢  |      -       |  5  |     -      |
+|  6   |     |   ✅   | **Create System Health Monitoring**       | 🟢  |      -       |  -  |   1h 20m   |
+|      |  1  |   ✅   | Create                                    | 🟢  |      -       |  5  |    25m     |
 |      |     |        | services/monitoring/health_check.py       |     |              |     |            |
 |      |     |        | with HealthChecker class                  |     |              |     |            |
-|      |  2  |   -    | Implement check_database() that tests     | 🟡  |     6.1      |  2  |     -      |
+|      |  2  |   ✅   | Implement check_database() that tests     | 🟢  |      -       |  2  |    10m     |
 |      |     |        | DB connection and query                   |     |              |     |            |
-|      |  3  |   -    | Implement check_broker_connection() that  | 🟡  |     6.1      |  2  |     -      |
+|      |  3  |   ✅   | Implement check_broker_connection() that  | 🟢  |      -       |  2  |    10m     |
 |      |     |        | tests IBKR API connection                 |     |              |     |            |
-|      |  4  |   -    | Implement check_scheduler() that verifies | 🟡  |     6.1      |  2  |     -      |
+|      |  4  |   ✅   | Implement check_scheduler() that verifies | 🟢  |      -       |  2  |    10m     |
 |      |     |        | scheduled jobs are running                |     |              |     |            |
-|      |  5  |   -    | Implement check_disk_space() that warns   | 🟡  |     6.1      |  2  |     -      |
+|      |  5  |   ✅   | Implement check_disk_space() that warns   | 🟢  |      -       |  2  |    10m     |
 |      |     |        | if < 1GB free                             |     |              |     |            |
-|      |  6  |   -    | Create GET /api/health endpoint returning | 🟡  |     6.1      |  3  |     -      |
+|      |  6  |   ✅   | Create GET /api/health endpoint returning | 🟢  |      -       |  3  |    15m     |
 |      |     |        | overall status and component checks       |     |              |     |            |
-|      |  7  |   -    | Create GET /api/health/detailed with full | 🟡  |     6.6      |  2  |     -      |
+|      |  7  |   ✅   | Create GET /api/health/detailed with full | 🟢  |      -       |  2  |    10m     |
 |      |     |        | system metrics                            |     |              |     |            |
-|      |  8  |   -    | Test health checks: disconnect DB, stop   | 🟡  |     6.7      |  2  |     -      |
+|      |  8  |   ✅   | Test health checks: disconnect DB, stop   | 🟢  |      -       |  2  |     5m     |
 |      |     |        | IBKR, verify endpoint reports issues      |     |              |     |            |
 |  7   |     |   -    | **Run Comprehensive Integration Tests**   | 🟢  |      -       |  -  |     -      |
 |      |  1  |   -    | Create tests/integration/ directory for   | 🟢  |      -       |  2  |     -      |
