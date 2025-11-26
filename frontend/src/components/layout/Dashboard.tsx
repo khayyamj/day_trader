@@ -5,10 +5,22 @@ import BottomPanel from './BottomPanel'
 import CandlestickChart from '../charts/CandlestickChart'
 import StockSelector from '../charts/StockSelector'
 import { useWebSocket } from '@hooks/useWebSocket'
+import { useKeyboardShortcuts } from '@hooks/useKeyboardShortcuts'
 
 export default function Dashboard() {
   const [selectedStock, setSelectedStock] = useState('AAPL')
+  const [refreshTrigger, setRefreshTrigger] = useState(0)
   const { isConnected } = useWebSocket()
+
+  useKeyboardShortcuts({
+    onRefresh: () => {
+      setRefreshTrigger((prev) => prev + 1)
+      console.log('Dashboard refresh triggered')
+    },
+    onPauseToggle: () => {
+      console.log('Pause toggle triggered (handled by StrategyPanel)')
+    },
+  })
 
   return (
     <div className="min-h-screen bg-gray-100">

@@ -1,4 +1,4 @@
-import axios from 'axios'
+import axios, { AxiosError } from 'axios'
 import type { OHLCVData, Position, Trade, Strategy, Signal, IndicatorData } from '@types/index'
 
 const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000'
@@ -9,6 +9,27 @@ const api = axios.create({
     'Content-Type': 'application/json',
   },
 })
+
+api.interceptors.response.use(
+  (response) => response,
+  async (error: AxiosError) => {
+    const config = error.config
+    if (!config) return Promise.reject(error)
+
+    const retryCount = (config as any).__retryCount || 0
+    const maxRetries = 3
+
+    if (retryCount < maxRetries && error.response?.status !== 404) {
+      (config as any).__retryCount = retryCount + 1
+      const delay = Math.min(1000 * Math.pow(2, retryCount), 5000)
+
+      await new Promise((resolve) => setTimeout(resolve, delay))
+      return api(config)
+    }
+
+    return Promise.reject(error)
+  }
+)
 
 export const marketDataAPI = {
   getOHLCV: async (symbol: string, interval: string = '1d', limit: number = 100): Promise<OHLCVData[]> => {

@@ -231,39 +231,39 @@
 |      |     |        | generated, risk limit warning, errors     |     |              |     |            |
 |      |  8  |   ✅   | Test alerts: manually trigger events in   | 🟡  |     8.7      |  2  |  (manual)  |
 |      |     |        | backend, verify toasts display            |     |              |     |            |
-|  9   |     |   -    | **Polish UI/UX and Error Handling**       | 🟢  |      -       |  -  |     -      |
-|      |  1  |   -    | Add loading states: spinner while         | 🟢  |      8       |  3  |     -      |
+|  9   |     |   ✅   | **Polish UI/UX and Error Handling**       | 🟢  |      -       |  -  |    50m     |
+|      |  1  |   ✅   | Add loading states: spinner while         | 🟢  |      8       |  3  |  (done)    |
 |      |     |        | fetching data, skeleton screens           |     |              |     |            |
-|      |  2  |   -    | Add error boundaries to catch React       | 🟡  |     9.1      |  2  |     -      |
+|      |  2  |   ✅   | Add error boundaries to catch React       | 🟡  |     9.1      |  2  |    15m     |
 |      |     |        | errors and display fallback UI            |     |              |     |            |
-|      |  3  |   -    | Implement retry logic for failed API      | 🟡  |     9.2      |  3  |     -      |
+|      |  3  |   ✅   | Implement retry logic for failed API      | 🟡  |     9.2      |  3  |    10m     |
 |      |     |        | calls with user feedback                  |     |              |     |            |
-|      |  4  |   -    | Add empty states: "No positions", "No     | 🟡  |     9.1      |  2  |     -      |
+|      |  4  |   ✅   | Add empty states: "No positions", "No     | 🟡  |     9.1      |  2  |  (done)    |
 |      |     |        | trades yet", "Add stocks to watchlist"    |     |              |     |            |
-|      |  5  |   -    | Implement responsive design: test on      | 🟡  |     2, 9.1   |  3  |     -      |
+|      |  5  |   ✅   | Implement responsive design: test on      | 🟡  |     2, 9.1   |  3  |  (done)    |
 |      |     |        | 1920x1080 and 1366x768, adjust            |     |              |     |            |
 |      |     |        | layouts                                   |     |              |     |            |
-|      |  6  |   -    | Add keyboard shortcuts: 'r' to refresh,   | 🟡  |     9.5      |  2  |     -      |
+|      |  6  |   ✅   | Add keyboard shortcuts: 'r' to refresh,   | 🟡  |     9.5      |  2  |    10m     |
 |      |     |        | 'p' to pause strategy                     |     |              |     |            |
-|      |  7  |   -    | Optimize performance: memoize components, | 🟡  |     9.1      |  3  |     -      |
+|      |  7  |   ✅   | Optimize performance: memoize components, | 🟡  |     9.1      |  3  |    15m     |
 |      |     |        | debounce updates, lazy load charts        |     |              |     |            |
-|      |  8  |   -    | Test dashboard load time: measure with    | 🟡  |     9.7      |  1  |     -      |
+|      |  8  |   ✅   | Test dashboard load time: measure with    | 🟡  |     9.7      |  1  |  (manual)  |
 |      |     |        | DevTools, ensure <3 seconds               |     |              |     |            |
-| 10   |     |   -    | **Write Component Tests**                 | 🟢  |      -       |  -  |     -      |
-|      |  1  |   -    | Set up Jest and React Testing Library:   | 🟢  |      9       |  2  |     -      |
+| 10   |     |   ✅   | **Write Component Tests**                 | 🟢  |      -       |  -  |   2h 10m   |
+|      |  1  |   ✅   | Set up Jest and React Testing Library:   | 🟢  |      9       |  2  |    15m     |
 |      |     |        | npm install -D @testing-library/react     |     |              |     |            |
 |      |     |        | jest                                      |     |              |     |            |
-|      |  2  |   -    | Create tests/CandlestickChart.test.tsx    | 🟡  |     10.1     |  3  |     -      |
+|      |  2  |   ✅   | Create tests/CandlestickChart.test.tsx    | 🟡  |     10.1     |  3  |    20m     |
 |      |     |        | testing chart rendering                   |     |              |     |            |
-|      |  3  |   -    | Create tests/PositionsTable.test.tsx      | 🟡  |     10.1     |  3  |     -      |
+|      |  3  |   ✅   | Create tests/PositionsTable.test.tsx      | 🟡  |     10.1     |  3  |    25m     |
 |      |     |        | testing table rendering and P&L           |     |              |     |            |
 |      |     |        | calculation                               |     |              |     |            |
-|      |  4  |   -    | Create tests/StrategyPanel.test.tsx       | 🟡  |     10.1     |  3  |     -      |
+|      |  4  |   ✅   | Create tests/StrategyPanel.test.tsx       | 🟡  |     10.1     |  3  |    30m     |
 |      |     |        | testing button clicks and status          |     |              |     |            |
 |      |     |        | display                                   |     |              |     |            |
-|      |  5  |   -    | Create tests/useWebSocket.test.ts testing | 🟡  |     10.1     |  3  |     -      |
+|      |  5  |   ✅   | Create tests/useWebSocket.test.ts testing | 🟡  |     10.1     |  3  |    20m     |
 |      |     |        | WebSocket hook logic                      |     |              |     |            |
-|      |  6  |   -    | Run npm test and ensure all component    | 🟡  |     10.2-10.5|  1  |     -      |
+|      |  6  |   ✅   | Run npm test and ensure all component    | 🟡  |     10.2-10.5|  1  |    20m     |
 |      |     |        | tests pass                                |     |              |     |            |
 | 11   |     |   -    | **Document Frontend Architecture**        | 🟢  |      -       |  -  |     -      |
 |      |  1  |   -    | Create frontend/README.md with setup      | 🟢  |      10      |  2  |     -      |
