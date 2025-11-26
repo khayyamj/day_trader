@@ -265,15 +265,15 @@
 |      |     |        | WebSocket hook logic                      |     |              |     |            |
 |      |  6  |   ✅   | Run npm test and ensure all component    | 🟡  |     10.2-10.5|  1  |    20m     |
 |      |     |        | tests pass                                |     |              |     |            |
-| 11   |     |   -    | **Document Frontend Architecture**        | 🟢  |      -       |  -  |     -      |
-|      |  1  |   -    | Create frontend/README.md with setup      | 🟢  |      10      |  2  |     -      |
+| 11   |     |   ✅   | **Document Frontend Architecture**        | 🟢  |      -       |  -  |    45m     |
+|      |  1  |   ✅   | Create frontend/README.md with setup      | 🟢  |      10      |  2  |    20m     |
 |      |     |        | instructions, available scripts           |     |              |     |            |
-|      |  2  |   -    | Document component structure and          | 🟡  |     11.1     |  3  |     -      |
+|      |  2  |   ✅   | Document component structure and          | 🟡  |     11.1     |  3  |    10m     |
 |      |     |        | organization                              |     |              |     |            |
-|      |  3  |   -    | Document WebSocket message format and     | 🟡  |     11.2     |  2  |     -      |
+|      |  3  |   ✅   | Document WebSocket message format and     | 🟡  |     11.2     |  2  |    5m      |
 |      |     |        | event types                               |     |              |     |            |
-|      |  4  |   -    | Document API service methods and usage    | 🟡  |     11.2     |  2  |     -      |
-|      |  5  |   -    | Add screenshots of dashboard to docs      | 🟡  |     11.4     |  1  |     -      |
+|      |  4  |   ✅   | Document API service methods and usage    | 🟡  |     11.2     |  2  |    5m      |
+|      |  5  |   ✅   | Add screenshots of dashboard to docs      | 🟡  |     11.4     |  1  |    5m      |
 
 ---
 
