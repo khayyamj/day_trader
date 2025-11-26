@@ -150,19 +150,19 @@
 |      |  8  |   ✅   | Test restart limits: cause 6 rapid        | 🟢  |      -       |  2  |     5m     |
 |      |     |        | crashes, verify service stops after       |     |              |     |            |
 |      |     |        | 5th                                       |     |              |     |            |
-|  5   |     |   -    | **Implement Daily Summary Email**         | 🟢  |      -       |  -  |     -      |
-|      |  1  |   -    | Create generate_daily_summary() method    | 🟢  |      1       |  5  |     -      |
+|  5   |     |   ✅   | **Implement Daily Summary Email**         | 🟢  |      -       |  -  |   1h 30m   |
+|      |  1  |   ✅   | Create generate_daily_summary() method    | 🟢  |      1       |  5  |    30m     |
 |      |     |        | that queries: trades today, P&L,          |     |              |     |            |
 |      |     |        | win rate, open positions                  |     |              |     |            |
-|      |  2  |   -    | Format summary data into HTML email       | 🟡  |     5.1      |  3  |     -      |
+|      |  2  |   ✅   | Format summary data into HTML email       | 🟢  |      -       |  3  |    15m     |
 |      |     |        | with tables and charts                    |     |              |     |            |
-|      |  3  |   -    | Add daily_summary_job() to scheduler that | 🟡  |     5.2      |  3  |     -      |
+|      |  3  |   ✅   | Add daily_summary_job() to scheduler that | 🟢  |      -       |  3  |    20m     |
 |      |     |        | runs at 4:30 PM ET (after market         |     |              |     |            |
 |      |     |        | close)                                    |     |              |     |            |
-|      |  4  |   -    | Send summary email to configured address  | 🟡  |     1, 5.3   |  2  |     -      |
-|      |  5  |   -    | Add "Tomorrow's Watchlist" section        | 🟡  |     5.1      |  2  |     -      |
+|      |  4  |   ✅   | Send summary email to configured address  | 🟢  |      -       |  2  |    10m     |
+|      |  5  |   ✅   | Add "Tomorrow's Watchlist" section        | 🟢  |      -       |  2  |    10m     |
 |      |     |        | showing stocks near signals               |     |              |     |            |
-|      |  6  |   -    | Test daily summary: manually trigger job, | 🟡  |     5.4-5.5  |  2  |     -      |
+|      |  6  |   ✅   | Test daily summary: manually trigger job, | 🟢  |      -       |  2  |     5m     |
 |      |     |        | verify email received with correct        |     |              |     |            |
 |      |     |        | data                                      |     |              |     |            |
 |  6   |     |   -    | **Create System Health Monitoring**       | 🟢  |      -       |  -  |     -      |
