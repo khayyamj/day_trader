@@ -225,38 +225,38 @@
 |      |     |        | bug fixes                                 |     |              |     |            |
 |      |  6  |   -    | Document known issues that won't be       | 🟡  |     9.5      |  2  |     -      |
 |      |     |        | fixed in MVP                              |     |              |     |            |
-| 10   |     |   -    | **Write Deployment Documentation**        | 🟢  |      -       |  -  |     -      |
-|      |  1  |   -    | Create docs/DEPLOYMENT.md with complete   | 🟢  |      9       |  5  |     -      |
+| 10   |     |   ✅   | **Write Deployment Documentation**        | 🟢  |      -       |  -  |   1h 15m   |
+|      |  1  |   ✅   | Create docs/DEPLOYMENT.md with complete   | 🟢  |      -       |  5  |    25m     |
 |      |     |        | setup instructions                        |     |              |     |            |
-|      |  2  |   -    | Document prerequisites: Python, Node,     | 🟡  |     10.1     |  2  |     -      |
+|      |  2  |   ✅   | Document prerequisites: Python, Node,     | 🟢  |      -       |  2  |    15m     |
 |      |     |        | PostgreSQL, Redis, IBKR account           |     |              |     |            |
-|      |  3  |   -    | Document step-by-step deployment: clone,  | 🟡  |     10.1     |  3  |     -      |
+|      |  3  |   ✅   | Document step-by-step deployment: clone,  | 🟢  |      -       |  3  |    15m     |
 |      |     |        | install deps, configure .env, run         |     |              |     |            |
 |      |     |        | migrations, start services                |     |              |     |            |
-|      |  4  |   -    | Document systemd service setup and        | 🟡  |     4, 10.3  |  2  |     -      |
+|      |  4  |   ✅   | Document systemd service setup and        | 🟢  |      -       |  2  |    10m     |
 |      |     |        | management commands                       |     |              |     |            |
-|      |  5  |   -    | Document monitoring: checking logs,       | 🟡  |     10.1     |  2  |     -      |
+|      |  5  |   ✅   | Document monitoring: checking logs,       | 🟢  |      -       |  2  |    10m     |
 |      |     |        | health endpoints, email alerts            |     |              |     |            |
-|      |  6  |   -    | Document backup and restore procedures    | 🟡  |     10.5     |  2  |     -      |
+|      |  6  |   ✅   | Document backup and restore procedures    | 🟢  |      -       |  2  |    10m     |
 |      |     |        | for database                              |     |              |     |            |
-| 11   |     |   -    | **Create User Manual and Troubleshooting  | 🟢  |      -       |  -  |     -      |
+| 11   |     |   ✅   | **Create User Manual and Troubleshooting  | 🟢  |      -       |  -  |   2h 0m    |
 |      |     |        | Guide**                                   |     |              |     |            |
-|      |  1  |   -    | Create docs/USER_MANUAL.md with           | 🟢  |      10      |  5  |     -      |
+|      |  1  |   ✅   | Create docs/USER_MANUAL.md with           | 🟢  |      10      |  5  |    35m     |
 |      |     |        | overview, features, getting started       |     |              |     |            |
-|      |  2  |   -    | Document dashboard usage: understanding   | 🟡  |     11.1     |  3  |     -      |
+|      |  2  |   ✅   | Document dashboard usage: understanding   | 🟢  |      -       |  3  |    15m     |
 |      |     |        | charts, tables, indicators                |     |              |     |            |
-|      |  3  |   -    | Document strategy configuration: how to   | 🟡  |     11.1     |  3  |     -      |
+|      |  3  |   ✅   | Document strategy configuration: how to   | 🟢  |      -       |  3  |    15m     |
 |      |     |        | activate, pause, update parameters        |     |              |     |            |
-|      |  4  |   -    | Document risk management: position        | 🟡  |     11.1     |  3  |     -      |
+|      |  4  |   ✅   | Document risk management: position        | 🟢  |      -       |  3  |    15m     |
 |      |     |        | sizing, limits, loss limits               |     |              |     |            |
-|      |  5  |   -    | Create docs/TROUBLESHOOTING.md with       | 🟡  |     11.1     |  5  |     -      |
+|      |  5  |   ✅   | Create docs/TROUBLESHOOTING.md with       | 🟢  |      -       |  5  |    30m     |
 |      |     |        | common issues and solutions               |     |              |     |            |
-|      |  6  |   -    | Document common errors: connection        | 🟡  |     11.5     |  3  |     -      |
+|      |  6  |   ✅   | Document common errors: connection        | 🟢  |      -       |  3  |    10m     |
 |      |     |        | failures, order rejections, data          |     |              |     |            |
 |      |     |        | issues                                    |     |              |     |            |
-|      |  7  |   -    | Add FAQ section with answers to common    | 🟡  |     11.6     |  2  |     -      |
+|      |  7  |   ✅   | Add FAQ section with answers to common    | 🟢  |      -       |  2  |     5m     |
 |      |     |        | questions                                 |     |              |     |            |
-|      |  8  |   -    | Include contact/support information       | 🟡  |     11.7     |  1  |     -      |
+|      |  8  |   ✅   | Include contact/support information       | 🟢  |      -       |  1  |     5m     |
 
 ---
 
