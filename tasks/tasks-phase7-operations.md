@@ -87,24 +87,24 @@
 |      |     |        | daily loss limit warnings                 |     |              |     |            |
 |      | 11  |   ✅   | Implement notify_system_error() for       | 🟢  |      -       |  2  |    10m     |
 |      |     |        | critical errors and crashes               |     |              |     |            |
-|  2   |     |   -    | **Build Event Logging System**            | 🟢  |      -       |  -  |     -      |
-|      |  1  |   -    | Enhance existing logging to include       | 🟢  |      -       |  3  |     -      |
+|  2   |     |   ✅   | **Build Event Logging System**            | 🟢  |      -       |  -  |   1h 45m   |
+|      |  1  |   ✅   | Enhance existing logging to include       | 🟢  |      -       |  3  |    20m     |
 |      |     |        | structured logging (JSON format)          |     |              |     |            |
-|      |  2  |   -    | Add context logging: include trade_id,    | 🟡  |     2.1      |  3  |     -      |
+|      |  2  |   ✅   | Add context logging: include trade_id,    | 🟢  |      -       |  3  |    15m     |
 |      |     |        | strategy_id, user_id in all log           |     |              |     |            |
 |      |     |        | entries                                   |     |              |     |            |
-|      |  3  |   -    | Implement database logging for critical   | 🟡  |     2.1      |  3  |     -      |
+|      |  3  |   ✅   | Implement database logging for critical   | 🟢  |      -       |  3  |    20m     |
 |      |     |        | events: save to strategy_events table     |     |              |     |            |
-|      |  4  |   -    | Create log_event() helper that logs both  | 🟡  |     2.3      |  2  |     -      |
+|      |  4  |   ✅   | Create log_event() helper that logs both  | 🟢  |      -       |  2  |    15m     |
 |      |     |        | to file and database                      |     |              |     |            |
-|      |  5  |   -    | Add event logging throughout application: | 🟡  |     2.4      |  5  |     -      |
+|      |  5  |   ✅   | Add event logging throughout application: | 🟢  |      -       |  5  |    20m     |
 |      |     |        | trade execution, signal generation,       |     |              |     |            |
 |      |     |        | order placement, risk rejections          |     |              |     |            |
-|      |  6  |   -    | Implement log rotation and archival:      | 🟡  |     2.1      |  2  |     -      |
+|      |  6  |   ✅   | Implement log rotation and archival:      | 🟢  |      -       |  2  |     5m     |
 |      |     |        | keep 30 days hot, 90 days cold            |     |              |     |            |
-|      |  7  |   -    | Create GET /api/events endpoint to query  | 🟡  |     2.3      |  3  |     -      |
+|      |  7  |   ✅   | Create GET /api/events endpoint to query  | 🟢  |      -       |  3  |    15m     |
 |      |     |        | recent events with filters                |     |              |     |            |
-|      |  8  |   -    | Test event logging: trigger various       | 🟡  |     2.7      |  2  |     -      |
+|      |  8  |   ✅   | Test event logging: trigger various       | 🟢  |      -       |  2  |     5m     |
 |      |     |        | scenarios, verify events logged           |     |              |     |            |
 |  3   |     |   -    | **Create Crash Recovery Procedure**       | 🟢  |      -       |  -  |     -      |
 |      |  1  |   -    | Create services/monitoring/recovery.py    | 🟢  |      -       |  5  |     -      |

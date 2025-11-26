@@ -8,7 +8,7 @@ from datetime import datetime
 
 from app.core.config import settings
 from app.core.logging import logger, get_logger
-from app.api.endpoints import market_data, stocks, scheduler, market, indicators, signals, strategies, backtests
+from app.api.endpoints import market_data, stocks, scheduler, market, indicators, signals, strategies, backtests, events
 from app.services.data.realtime_service import connection_manager
 from app.services.data.scheduler import data_scheduler
 from app.db.session import SessionLocal
@@ -187,6 +187,7 @@ app.include_router(indicators.router, prefix="/api")
 app.include_router(signals.router, prefix="/api")
 app.include_router(strategies.router, prefix="/api")
 app.include_router(backtests.router, prefix="/api")
+app.include_router(events.router, prefix="/api")
 
 
 @app.get("/health")
